@@ -11,8 +11,10 @@
   },
   "dependencies": {
     "@nuxt/icon": "^1.5.6",
+    "chart.js": "^4.4.5",
     "nuxt": "^3.13.2",
     "vue": "latest",
+    "vue-chartjs": "^5.3.1",
     "vue-router": "latest"
   },
   "devDependencies": {

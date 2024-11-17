@@ -1,8 +1,11 @@
 <template>
-  <div v-if="available" class="container mx-auto flex flex-row gap-4 h-full w-full">
-    <div class="grid grid-rows-12 grid-cols-1 gap-4 w-[60%]">
-      <div class="row-span-8 flex flex-col">
-        <div class="flex mb-2">
+  <div id="layout" class="md:mx-auto my-6 mx-auto flex">
+    <div class="shrink-0 w-[5%]"></div>
+    <div class="h-[92vh] w-[100vw]">
+      <div v-if="available" class="pt-4 mx-auto flex flex-row gap-4 w-[98%] h-[100%]">
+        <div class="w-[60%] flex flex-col">
+          <div class="mb-6">
+            <!-- <div class="flex mb-2">
           <div class="shrink my-auto">
             <p>{{ year.minValue }}</p>
           </div>
@@ -17,68 +20,73 @@
           </div>
           <button
             class="border h-full border-[#034EA2] mx-4 px-4 rounded-full hover:text-white hover:bg-[#034EA2] transition ease-in-out font-semibold">Submit</button>
+        </div> -->
+            <GraphGeneralLine class="" id="2" :dataset="lineData" :title="['Nilai Tambah', 'Pendapatan']"
+              :key="`line2-${state}`" />
+          </div>
+          <div class="row-span-2 grid grid-cols-12 gap-4">
+            <div class="col-span-5">
+              <GraphGeneralDoughnut id="3" :config="pieOptions" :dataset="pieData" title="Perbandingan Nilai Tambah"
+                :key="`doughnut-${state}`" />
+            </div>
+            <div class="col-span-7 ">
+              <GraphGeneralInfo :value="infoData" />
+            </div>
+
+          </div>
         </div>
-        <GraphGeneralLine class="h-full" id="2" :dataset="lineData" :title="['Nilai Tambah']" :key="`line2-${state}`" />
-      </div>
-      <div class="row-span-2 grid grid-cols-12 gap-4">
-        <div class="col-span-5">
-          <GraphGeneralDoughnut id="3" :config="pieOptions" :dataset="pieData" title="Perbandingan Nilai Tambah"
-            :key="`doughnut-${state}`" />
-        </div>
-        <div class="col-span-7 ">
-          <GraphGeneralInfo :value="infoData" />
+        <div class="flex flex-col gap-4 w-[40%] overflow-y-auto">
+          <div class="pr-2">
+            <div class="mb-4">
+              <GraphGeneralBar id="10" :config="chartOptions"
+                :title="barData.produktivitas_tenaga_kerja.labels.length > 1 ? `${barData.produktivitas_tenaga_kerja.labels[1]} - Produktivitas Tenaga Kerja (%)` : `${barData.produktivitas_tenaga_kerja.labels[0]} - Produktivitas Tenaga Kerja (%)`"
+                :dataset="barData.produktivitas_tenaga_kerja" :key="`bar1-${state}`" />
+            </div>
+            <div class="my-4">
+              <GraphGeneralBar id="10" :config="chartOptions"
+                :title="barData.daya_saing_kerja.labels.length > 1 ? `${barData.daya_saing_kerja.labels[1]} - Daya Saing Kerja (%)` : `${barData.daya_saing_kerja.labels[0]} - Daya Saing Kerja (%)`"
+                :dataset="barData.daya_saing_kerja" :key="`bar2-${state}`" />
+            </div>
+            <div class="my-4 ">
+              <GraphGeneralBar id="10" :config="chartOptions"
+                :title="barData.profitabilitas.labels.length > 1 ? `${barData.profitabilitas.labels[1]} - Profitabilitas (%)` : `${barData.profitabilitas.labels[0]} - Profitabilitas (%)`"
+                :dataset="barData.profitabilitas" :key="`bar3-${state}`" />
+            </div>
+            <div class="my-4 ">
+              <GraphGeneralBar id="10" :config="chartOptions"
+                :title="barData.produktivitas_modal.labels.length > 1 ? `${barData.produktivitas_modal.labels[1]} - Produktivitas Modal (%)` : `${barData.produktivitas_modal.labels[0]} - Produktivitas Modal (%)`"
+                :dataset="barData.produktivitas_modal" :key="`bar3-${state}`" />
+            </div>
+            <div class="my-4 ">
+              <GraphGeneralBar id="10" :config="chartOptions"
+                :title="barData.intensitas_modal.labels.length > 1 ? `${barData.intensitas_modal.labels[1]} - Intensitas Modal (%)` : `${barData.intensitas_modal.labels[0]} - Intensitas Modal (%)`"
+                :dataset="barData.intensitas_modal" :key="`bar3-${state}`" />
+            </div>
+            <div class="my-4 ">
+              <GraphGeneralBar id="10" :config="chartOptions"
+                :title="barData.konten_nilai_tambah.labels.length > 1 ? `${barData.konten_nilai_tambah.labels[1]} - Konten Nilai Tambah (%)` : `${barData.konten_nilai_tambah.labels[0]} - Konten Nilai Tambah (%)`"
+                :dataset="barData.konten_nilai_tambah" :key="`bar3-${state}`" />
+            </div>
+          </div>
         </div>
 
+      </div>
+
+      <div v-else>
+        <p class="text-xl text-center text-black">
+          Belum Ada Laporan
+        </p>
       </div>
     </div>
-    <div class="grid grid-rows-12 grid-cols-1 gap-4 w-[40%] h-[100%] overflow-y-auto">
-      <div class="row-span-4 ">
-        <GraphGeneralBar id="10" :config="chartOptions"
-          :title="barData.produktivitas_tenaga_kerja.labels.length > 1 ? `${barData.produktivitas_tenaga_kerja.labels[1]} - Produktivitas Tenaga Kerja (%)` : `${barData.produktivitas_tenaga_kerja.labels[0]} - Produktivitas Tenaga Kerja (%)`"
-          :dataset="barData.produktivitas_tenaga_kerja" :key="`bar1-${state}`" />
-      </div>
-      <div class="row-span-4">
-        <GraphGeneralBar id="10" :config="chartOptions"
-          :title="barData.daya_saing_kerja.labels.length > 1 ? `${barData.daya_saing_kerja.labels[1]} - Daya Saing Kerja (%)` : `${barData.daya_saing_kerja.labels[0]} - Daya Saing Kerja (%)`"
-          :dataset="barData.daya_saing_kerja" :key="`bar2-${state}`" />
-      </div>
-      <div class="row-span-4 ">
-        <GraphGeneralBar id="10" :config="chartOptions"
-          :title="barData.profitabilitas.labels.length > 1 ? `${barData.profitabilitas.labels[1]} - Profitabilitas (%)` : `${barData.profitabilitas.labels[0]} - Profitabilitas (%)`"
-          :dataset="barData.profitabilitas" :key="`bar3-${state}`" />
-      </div>
-      <div class="row-span-4 ">
-        <GraphGeneralBar id="10" :config="chartOptions"
-          :title="barData.produktivitas_modal.labels.length > 1 ? `${barData.produktivitas_modal.labels[1]} - Produktivitas Modal (%)` : `${barData.produktivitas_modal.labels[0]} - Produktivitas Modal (%)`"
-          :dataset="barData.produktivitas_modal" :key="`bar3-${state}`" />
-      </div>
-      <div class="row-span-4 ">
-        <GraphGeneralBar id="10" :config="chartOptions"
-          :title="barData.intensitas_modal.labels.length > 1 ? `${barData.intensitas_modal.labels[1]} - Intensitas Modal (%)` : `${barData.intensitas_modal.labels[0]} - Intensitas Modal (%)`"
-          :dataset="barData.intensitas_modal" :key="`bar3-${state}`" />
-      </div>
-      <div class="row-span-4 ">
-        <GraphGeneralBar id="10" :config="chartOptions"
-          :title="barData.konten_nilai_tambah.labels.length > 1 ? `${barData.konten_nilai_tambah.labels[1]} - Konten Nilai Tambah (%)` : `${barData.konten_nilai_tambah.labels[0]} - Konten Nilai Tambah (%)`"
-          :dataset="barData.konten_nilai_tambah" :key="`bar3-${state}`" />
-      </div>
-    </div>
-
-  </div>
-
-  <div v-else>
-    <p class="text-xl text-center text-black">
-      Belum Ada Laporan
-    </p>
   </div>
   <Loading v-if="loading" text="Fetching Data" />
   <Popup v-if="modal.show" :message="modal.message" :status="modal.status" :type="modal.type" @close="closeModal" />
 </template>
 
 <script setup>
-// definePageMeta({
-//   layout: 'dashboard',
-// });
+definePageMeta({
+  layout: 'dashboard',
+});
 import dummy from '~/assets/dummy_produktivitas.json'
 
 const dummyData = dummy
@@ -121,16 +129,16 @@ const lineData = ref({
       },
     ]
   },
-  // "Pendapatan": {
-  //   labels: null,
-  //   datasets: [
-  //     {
-  //       label: "",
-  //       backgroundColor: '#034EA2',
-  //       data: null,
-  //     }
-  //   ]
-  // }
+  "Pendapatan": {
+    labels: null,
+    datasets: [
+      {
+        label: "",
+        backgroundColor: '#034EA2',
+        data: null,
+      }
+    ]
+  }
 })
 
 const barData = ref({
@@ -392,6 +400,8 @@ const dskParamsFunc = ((raw) => {
     data.dsk2[1] = Math.round(10000 * (year_2.daya_saing_kerja_2 - year_1.daya_saing_kerja_2) / year_1.daya_saing_kerja_2) / 100
     data.dsk3[1] = Math.round(10000 * (year_2.daya_saing_kerja_3 - year_1.daya_saing_kerja_3) / year_1.daya_saing_kerja_3) / 100
   }
+  // console.log(data);
+
   return data
 })
 
@@ -569,8 +579,8 @@ const renewData = (data) => {
   let knt = kntParamsFunc(data)
   let pf = pfParamsFunc(data)
   let rasio = rasioFunc(data)
-  console.log(nt);
-  // console.log(dsk);
+
+  console.log(dsk);
   // console.log(pm);
   // console.log(im);
   // console.log(knt);
@@ -579,8 +589,8 @@ const renewData = (data) => {
 
   lineData.value["Nilai Tambah"].labels = nt.label
   lineData.value["Nilai Tambah"].datasets[0].data = nt.value
-  // lineData.value["Pendapatan"].labels = pndpt.label
-  // lineData.value["Pendapatan"].datasets[0].data = pndpt.value
+  lineData.value["Pendapatan"].labels = pndpt.label
+  lineData.value["Pendapatan"].datasets[0].data = pndpt.value
 
   console.log(lineData.value["Nilai Tambah"]);
 
@@ -593,24 +603,24 @@ const renewData = (data) => {
 
   // daya saing kerja
   barData.value.daya_saing_kerja.labels = dsk.label
-  barData.value.daya_saing_kerja.datasets[0].data = dsk.ptk1
-  barData.value.daya_saing_kerja.datasets[1].data = dsk.ptk2
-  barData.value.daya_saing_kerja.datasets[2].data = dsk.ptk3
+  barData.value.daya_saing_kerja.datasets[0].data = dsk.dsk1
+  barData.value.daya_saing_kerja.datasets[1].data = dsk.dsk2
+  barData.value.daya_saing_kerja.datasets[2].data = dsk.dsk3
 
   // produktivitas modal
   barData.value.produktivitas_modal.labels = pm.label
   barData.value.produktivitas_modal.datasets[0].data = pm.pm1
 
   // intensitas modal
-  barData.value.intensitas_modal.labels = pf.label
-  barData.value.intensitas_modal.datasets[0].data = im.pf1
-  barData.value.intensitas_modal.datasets[1].data = im.pf2
+  barData.value.intensitas_modal.labels = im.label
+  barData.value.intensitas_modal.datasets[0].data = im.im1
+  barData.value.intensitas_modal.datasets[1].data = im.im2
 
   // konten nilai tambah
   barData.value.konten_nilai_tambah.labels = knt.label
-  barData.value.konten_nilai_tambah.datasets[0].data = knt.pm1
+  barData.value.konten_nilai_tambah.datasets[0].data = knt.knt1
 
-  // intensitas modal
+  // profitabilitas
   barData.value.profitabilitas.labels = pf.label
   barData.value.profitabilitas.datasets[0].data = pf.pf1
   barData.value.profitabilitas.datasets[1].data = pf.pf2

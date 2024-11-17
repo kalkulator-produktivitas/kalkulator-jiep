@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col shadow-lg rounded-lg border border-gray-100">
-    <div class="p-1.5 flex ">
+    <div class="px-1.5 py-3 flex ">
       <form class="w-[50%] ">
         <label for="underline_select" class="sr-only"></label>
         <select id="underline_select" v-model="label"
@@ -9,7 +9,7 @@
         </select>
       </form>
     </div>
-    <div class="my-auto px-4">
+    <div class="my-auto px-4 py-2">
       <Line :options="lineOptions" :data="dataset[label]" />
     </div>
   </div>
@@ -43,7 +43,7 @@ const props = defineProps(['dataset', 'config', 'title'])
 const lineOptions = {
   responsive: true,
   maintainAspectRatio: false,
-  aspectRatio: 1.2,
+  aspectRatio: 1,
   plugins: {
     legend: {
       display: false,
@@ -59,7 +59,7 @@ const lineOptions = {
   }
 }
 
-const label = ref("Produktivitas")
+const label = ref("Nilai Tambah")
 
 
 

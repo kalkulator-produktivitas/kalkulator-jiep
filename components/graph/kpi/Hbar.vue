@@ -1,7 +1,8 @@
 <template>
   <div class="flex flex-col relative rounded-lg shadow-md border border-gray-100">
     <div class="flex justify-between pt-4 bg-transparent">
-      <div class="w-[15%] flex">
+      <div class="text-lg font-bold w-[50%] ml-4">Top 5 Karyawan Divisi</div>
+      <div class="w-[30%] flex">
         <p class="my-auto mr-2">Tahun</p>
         <label for="underline_select" class="sr-only"></label>
         <select id="underline_select" v-model="selectedYear"

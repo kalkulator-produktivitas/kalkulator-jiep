@@ -5,22 +5,6 @@
       <div v-if="available" class="pt-4 mx-auto flex flex-row gap-4 w-[98%] h-[100%]">
         <div class="w-[60%] flex flex-col">
           <div class="mb-6">
-            <!-- <div class="flex mb-2">
-          <div class="shrink my-auto">
-            <p>{{ year.minValue }}</p>
-          </div>
-          <div class="grow">
-            <WidgetSlider :min-threshold="year.min" :max-threshold="year.max" :min="year.minValue" :max="year.maxValue"
-              @update:min="value => year.minValue = value" @update:max="value => year.maxValue = value" :id="state"
-              v-if="showSlider" :key="state">
-            </WidgetSlider>
-          </div>
-          <div class="shrink my-auto">
-            <p>{{ year.maxValue }}</p>
-          </div>
-          <button
-            class="border h-full border-[#034EA2] mx-4 px-4 rounded-full hover:text-white hover:bg-[#034EA2] transition ease-in-out font-semibold">Submit</button>
-        </div> -->
             <GraphGeneralLine class="" id="2" :dataset="lineData" :title="['Nilai Tambah', 'Pendapatan']"
               :key="`line2-${state}`" />
           </div>
@@ -78,9 +62,10 @@
         </p>
       </div>
     </div>
+    <Loading v-if="loading" text="Fetching Data" />
+    <Popup v-if="modal.show" :message="modal.message" :status="modal.status" :type="modal.type" @close="closeModal" />
+
   </div>
-  <Loading v-if="loading" text="Fetching Data" />
-  <Popup v-if="modal.show" :message="modal.message" :status="modal.status" :type="modal.type" @close="closeModal" />
 </template>
 
 <script setup>

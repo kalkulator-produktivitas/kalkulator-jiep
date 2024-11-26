@@ -1,6 +1,7 @@
 <template>
   <div class="overflow-none rounded-lg shadow-md border border-gray-100 relative">
-    <div class="p-1 bg-transparent w-[75%] h-[15%]">
+    <div class="p-1 bg-transparent w-[85%] h-[15%]">
+      <p class="font-bold text-lg text-black ml-2">Rata-rata KPI per Departemen</p>
       <p class="font-bold text-lg text-black ml-2">{{ title }}</p>
     </div>
     <div class="absolute top-5 right-2 flex">

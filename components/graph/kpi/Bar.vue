@@ -6,7 +6,7 @@
         <label for="underline_select" class="sr-only"></label>
         <select id="underline_select" v-model="selectedDept"
           class="px-2 block text-center text-md text-gray-800 bg-transparent border border-gray-400 appearance-none dark:text-gray-700 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-600 peer">
-          <option v-for="dept of deptList" class="text-sm">{{ dept }}</option>
+          <option v-for="dept of deptList" :key="dept" class="text-sm">{{ dept }}</option>
         </select>
       </div>
       <div class="w-[15%] flex">
@@ -14,7 +14,7 @@
         <label for="underline_select" class="sr-only"></label>
         <select id="underline_select" v-model="selectedYear"
           class="px-2 block text-center text-md text-gray-800 bg-transparent border border-gray-400 appearance-none dark:text-gray-700 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-600 peer">
-          <option v-for="tahun of years" class="text-sm">{{ tahun }}</option>
+          <option v-for="tahun of years" :key="tahun" class="text-sm">{{ tahun }}</option>
         </select>
       </div>
     </div>

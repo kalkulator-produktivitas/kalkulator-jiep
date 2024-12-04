@@ -1,24 +1,22 @@
 <template>
-  <div class="flex flex-col relative rounded-lg shadow-md border border-gray-100">
-    <div class="flex justify-between pt-4 bg-transparent">
-      <div class="w-[80%] pl-4 flex">
-        <p class="my-auto mr-2">Departemen</p>
-        <label for="underline_select" class="sr-only"></label>
-        <select id="underline_select" v-model="selectedDept"
-          class="px-2 block text-center text-md text-gray-800 bg-transparent border border-gray-400 appearance-none dark:text-gray-700 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-600 peer">
-          <option v-for="dept of deptList" :key="dept" class="text-sm">{{ dept }}</option>
+  <div class="flex flex-col relative rounded-xl bg-white shadow-lg border border-gray-200/50">
+    <div class="flex justify-between mb-6 bg-gradient-to-r from-blue-100 to-blue-50 py-3">
+      <div class="flex items-center space-x-3 pl-6">
+        <p class="text-gray-600 font-medium">Departemen</p>
+        <select v-model="selectedDept"
+          class="rounded-lg px-4 py-2 text-gray-700 bg-white/50 border border-blue-200 hover:border-blue-400 hover:bg-white transition-all duration-200 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+          <option v-for="dept of deptList" :key="dept">{{ dept }}</option>
         </select>
       </div>
-      <div class="w-[15%] flex">
-        <p class="my-auto mr-2">Tahun</p>
-        <label for="underline_select" class="sr-only"></label>
-        <select id="underline_select" v-model="selectedYear"
-          class="px-2 block text-center text-md text-gray-800 bg-transparent border border-gray-400 appearance-none dark:text-gray-700 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-600 peer">
-          <option v-for="tahun of years" :key="tahun" class="text-sm">{{ tahun }}</option>
+      <div class="flex items-center space-x-3 pr-6">
+        <p class="text-gray-600 font-medium">Tahun</p>
+        <select v-model="selectedYear"
+          class="rounded-lg px-4 py-2 text-gray-700 bg-white/50 border border-blue-200 hover:border-blue-400 hover:bg-white transition-all duration-200 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+          <option v-for="tahun of years" :key="tahun">{{ tahun }}</option>
         </select>
       </div>
     </div>
-    <div class="my-auto p-4">
+    <div class="bg-white rounded-lg p-4">
       <Bar :options="chartOptions" :data="dataset" />
     </div>
   </div>
@@ -66,10 +64,23 @@ let dataset = computed(() => {
   let filterData = props.dataset.filter(x => x.Departemen === selectedDept.value)
   let yearData = filterData.map(x => x[String(selectedYear.value)].length > 0 ? parseFloat(x[String(selectedYear.value)]) : null)
   let karyawanData = filterData.map(x => x.Karyawan)
+
+  // Create gradient colors based on data values
+  const colors = yearData.map(value => {
+    // You can adjust these color ranges
+    if (value >= 80) return '#2563eb'      // Deep blue for highest values
+    if (value >= 60) return '#3b82f6'      // Medium blue
+    if (value >= 40) return '#60a5fa'      // Light blue
+    if (value >= 20) return '#93c5fd'      // Lighter blue
+    return '#bfdbfe'                       // Lightest blue for lowest values
+  })
+
   return {
     labels: karyawanData,
     datasets: [{
-      backgroundColor: '#0047AB',
+      backgroundColor: colors,
+      hoverBackgroundColor: '#2563eb',
+      borderRadius: 6,
       data: yearData
     }]
   }
@@ -78,10 +89,22 @@ let dataset = computed(() => {
 const chartOptions = {
   responsive: true,
   maintainAspectRatio: false,
-  aspectRatio: 1.2,
+  aspectRatio: 1.5,
   plugins: {
     legend: {
       display: false,
+    },
+    tooltip: {
+      backgroundColor: 'rgba(0, 0, 0, 0.8)',
+      padding: 12,
+      cornerRadius: 8,
+      titleFont: {
+        size: 14,
+        weight: 'bold'
+      },
+      bodyFont: {
+        size: 13
+      }
     }
   },
   scales: {
@@ -90,9 +113,13 @@ const chartOptions = {
         display: false
       },
       grid: {
-        display: true,
-        drawOnChartArea: false,
-        drawTicks: false,
+        display: false
+      },
+      ticks: {
+        font: {
+          size: 12
+        },
+        color: '#64748b'
       }
     },
     y: {
@@ -101,8 +128,14 @@ const chartOptions = {
       },
       grid: {
         display: true,
-        drawOnChartArea: true,
+        color: '#e2e8f0',
         drawTicks: false
+      },
+      ticks: {
+        font: {
+          size: 12
+        },
+        color: '#64748b'
       }
     }
   }

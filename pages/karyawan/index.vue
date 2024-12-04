@@ -8,7 +8,7 @@
         <option v-for="year in yearOptions" :key="year" :value="year">{{ year }}</option>
       </select>
     </div>
-    <div class="container max-w flex flex-row mt-6">
+    <div class="w-full flex flex-row mt-6">
       <div class="overflow-y-auto px-1 shrink-0 h-[85vh] border-r-2">
         <ul class="flex list-none flex-col flex-wrap border-b-0 pl-0">
           <li v-for="tabName in divisi" :key="tabName" class="mr-2">
@@ -19,8 +19,8 @@
           </li>
         </ul>
       </div>
-      <div class="col-span-6 overflow-y-auto flex w-[90%] pl-2">
-        <div class="w-[45%] h-[85vh] overflow-y-auto border-r-2">
+      <div class="col-span-6 overflow-y-auto flex w-[100%] pl-2">
+        <div class="w-[55%] h-[85vh] overflow-y-auto border-r-2">
           <div class="flex w-full">
             <div class="block text-sm font-bold mr-8 md:text-right w-[120px]">
 
@@ -28,9 +28,10 @@
             <div class="flex w-[400px]">
               <p class="text-lg font-bold w-[80px] text-center">CAPAIAN</p>
               <p class="text-lg font-bold w-[80px] ml-4 text-center">KPI</p>
-              <button v-if="allSelectedDivisionFilled && shareGain['gain share'] && shareGain['koefisien kontribusi']"
-                @click="employeeDivisionShare(selectedDivisi)"
-                class="text-sm ml-4 text-center border rounded-md px-2 py-1 hover:bg-gray-200 transition-all">Calculate
+              <button @click="employeeDivisionShare(selectedDivisi)"
+                :disabled="!allSelectedDivisionFilled || !shareGain['gain share'] || !shareGain['koefisien kontribusi']"
+                class="text-sm ml-4 text-center border rounded-md px-2 py-1 hover:bg-blue-700 transition-all"
+                :class="!allSelectedDivisionFilled || !shareGain['gain share'] || !shareGain['koefisien kontribusi'] ? 'bg-gray-200 text-gray-400' : 'bg-blue-500 text-white hover:bg-blue-700'">Calculate
                 Share</button>
             </div>
 
@@ -52,23 +53,23 @@
                   @keypress="(e) => !/^\d$/.test(e.key) && e.preventDefault()">
                 <p v-if="param.bobot"
                   class="w-full ml-4 text-gray-700 self-center leading-tight focus:outline-none focus:shadow-outline text-left"
-                  :id="param.karyawan">Rp {{ maskNumber2(param.bobot * parseInt(shareGain['gain share'].replaceAll(".",
-                    "")) / 100) }}</p>
+                  :id="param.karyawan">Rp
+                  {{ maskNumber2(parseInt(param.bobot * (parseInt(shareGain['gain share'].replaceAll(".", "")) * 15 /
+                    100))) }}</p>
 
               </div>
               <div class="flex">
 
               </div>
             </div>
-
           </div>
         </div>
-        <div class="w-[50%] h-[70%] flex mx-auto my-auto relative">
+        <div class="w-[60%] h-[80%] flex flex-col mx-auto relative ">
           <button @click="showParameter = !showParameter"
-            class="absolute top-10 left-1/2 -translate-x-1/2 bg-blue-500 text-white text-lg h-12 rounded-full px-4 py-1.5 hover:bg-blue-700 transition-all">Lihat
+            class="bg-blue-500 text-white h-10 rounded-full w-[50%] hover:bg-blue-700 transition-all mx-auto font-bold">
             Parameter
             Pengupahan</button>
-          <div v-if="showParameter" class="mt-[20%] w-full border border-gray-600 rounded-md p-4">
+          <div v-if="showParameter" class="w-full rounded-md px-8 mt-10">
             <div class="flex">
               <div class="w-[25%] self-center text-right mr-2 my-4">
                 <label class="block font-bold">
@@ -173,14 +174,17 @@
       </div>
     </div>
 
-    <div class="absolute bottom-[5%] right-[5%]">
+    <div class="absolute bottom-[5%] right-[5%] flex flex-col gap-1">
+      <button @click="prompt2 = true" type="button"
+        class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-4 rounded-full h-9 mr-4">
+        Save as Draft
+      </button>
       <button @click="prompt = true" type="button"
         class="text-white font-bold py-1 bg-blue-500 hover:bg-blue-700 px-4 rounded-full w-32 h-9">
         Submit
       </button>
     </div>
 
-    <!-- {{ parameters }} -->
     <Loading v-if="loading" text="Menginput Data" />
     <ModalsPrompt v-if="prompt" @submit="formRequest()" @close="prompt = false" title="Submit laporan?"
       sub="Laporan bersifat final dan hanya bisa diubah dengan izin admin P3D" />
@@ -193,6 +197,8 @@
 
 const router = useRouter()
 import dummy from '~/assets/dummy_karyawan_new.json'
+import dummy_2 from '~/assets/dummy_produktivitas.json'
+console.log('Loaded dummy_2:', dummy_2)
 
 const formatter = new Intl.NumberFormat("de-DE");
 
@@ -231,7 +237,7 @@ function generateYearOptions() {
 const bulan = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 const divisi = Array.from(new Set(dummy.list.map(x => x.Divisi)))
 
-const selectedYear = ref(new Date().getFullYear())
+const selectedYear = ref(2021)
 const selectedDivisi = ref(divisi[0])
 
 const tab = ref('default')
@@ -257,17 +263,39 @@ const selectDiv = computed(() => {
 
 
 const selectedMonth = ref("Jan")
-const yearOptions = ref(generateYearOptions())
+const yearOptions = ref([2021, 2022, 2023])
 
 const shareGain = ref({
-  "nilai tambah": "179.217.852.727",
-  "rasio nilai tambah": 2.04,
-  "upah dibayarkan": "72.332.929.047",
-  "reserve ratio": 25,
+  "nilai tambah": "0",
+  "rasio nilai tambah": null,
+  "upah dibayarkan": "0",
+  "reserve ratio": null,
   "gain share": null,
   "koefisien kontribusi": null,
 })
 
+const updateShareGainValues = (year) => {
+  try {
+    const yearData = dummy_2.analisis.find(x => x.tahun === year)
+    if (yearData) {
+      console.log(yearData);
+      shareGain.value["nilai tambah"] = yearData.nilai_tambah?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.') ?? "0"
+      shareGain.value["upah dibayarkan"] = yearData.total_biaya_tenaga_kerja?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.') ?? "0"
+    }
+  } catch (error) {
+    console.error('Error updating share gain values:', error)
+    shareGain.value["nilai tambah"] = "0"
+    shareGain.value["upah dibayarkan"] = "0"
+  }
+}
+
+onMounted(() => {
+  updateShareGainValues(selectedYear.value)
+})
+
+watch(selectedYear, (newYear) => {
+  updateShareGainValues(newYear)
+})
 
 function maskNumber(param, value) {
   // Remove non-digit characters and format with thousand separators
@@ -291,7 +319,6 @@ const calculateShare = () => {
   let upah_dibayarkan = shareGain.value['upah dibayarkan'] ? parseFloat(shareGain.value['upah dibayarkan'].replaceAll(".", "")) : 0
 
   let tempData = ((nilai_tambah / parseFloat(shareGain.value['rasio nilai tambah'])) - (upah_dibayarkan)) * (1 - parseFloat(shareGain.value['reserve ratio']) / 100)
-  // console.log(tempData);
 
   shareGain.value['gain share'] = parseInt(tempData).toString()
     .replace(/\D/g, '')
@@ -318,6 +345,7 @@ const employeeDivisionShare = (divisi) => {
   // Calculate total score only for employees with both capaian and kpi values
   const totalScore = divisionEmployees.reduce((acc, curr) => {
     if (curr.capaian && curr.kpi) {
+      // console.log(curr.capaian / curr.kpi * 100);
       return acc + (curr.capaian / curr.kpi * 100)
     }
     return acc
@@ -329,6 +357,8 @@ const employeeDivisionShare = (divisi) => {
     if (employee.capaian && employee.kpi) {
       const individualScore = (employee.capaian / employee.kpi * 100)
       employee.bobot = individualScore / totalScore
+      console.log(employee.bobot);
+
     } else {
       employee.bobot = 0
     }

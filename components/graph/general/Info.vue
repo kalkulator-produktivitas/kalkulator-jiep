@@ -1,51 +1,48 @@
 <template>
-  <div class="h-full overflow flex flex-col shadow-lg p-2 rounded-lg border border-gray-100">
-    <div class=" flex gap-0 justify-between">
-      <form class="w-[80%]">
-        <label for="underline_select" class="sr-only"></label>
-        <select id="underline_select" v-model="selectedLabel"
-          class="py-1 px-2 w-full text-md font-bold text-black bg-transparent rounded-lg border-2 border-gray-100 dark:text-black peer shadow hover:border-gray-300">
-          <option v-for="title of label" class="text-sm">{{ title }}</option>
+  <div class="h-full overflow flex flex-col shadow-lg rounded-lg border border-gray-200 bg-white">
+    <div class="flex gap-2 justify-between items-center bg-gradient-to-r from-blue-100 to-blue-50 px-2">
+      <form class="w-[100%] px-2">
+        <select id="underline_select bg-transaprent" v-model="selectedLabel"
+          class="py-4 w-full text-md font-semibold text-gray-700 bg-transparent rounded-lg focus:outline-none transition duration-200">
+          <option v-for="title of label" :key="title" class="text-sm">{{ title }}</option>
         </select>
       </form>
-      <div class="">
-        <p class="text-[18px] font-bold text-right">{{ value.label[0] }}</p>
+      <div>
+        <p class="text-lg font-semibold text-right text-gray-800">{{ value.label[0] }}</p>
       </div>
     </div>
-    <div class="h-full flex p-1 gap-4 mt-2">
+    <div class="h-full flex p-2 gap-4 mt-3">
       <div class="w-[42%] shrink-0 flex">
         <div class="h-[60%] my-auto mx-auto text-center" v-if="selectedLabel !== 'Nilai Tambah'">
-          <p class="text-[24px] font-bold mx-auto my-auto">{{ value[selectedLabel].previous }}
-          </p>
-          <p class="text-[24px] font-bold mx-auto my-auto">
+          <p class="text-2xl font-semibold mx-auto my-auto text-gray-800">{{ value[selectedLabel].previous }}</p>
+          <p class="text-2xl font-semibold mx-auto my-auto">
             <Icon name="fe:drop-down" class="mb-1"
-              :class="(value[selectedLabel].latest) - (value[selectedLabel].previous) < 0 ? 'text-red-700' : 'text-green-700'" />
+              :class="(value[selectedLabel].latest) - (value[selectedLabel].previous) < 0 ? 'text-red-600' : 'text-green-600'" />
           </p>
-          <p class="text-[32px] font-bold mx-auto my-auto">
+          <p class="text-3xl font-semibold mx-auto my-auto">
             <span
-              :class="(value[selectedLabel].latest) - (value[selectedLabel].previous) < 0 ? 'text-red-700' : 'text-green-700'">{{
+              :class="(value[selectedLabel].latest) - (value[selectedLabel].previous) < 0 ? 'text-red-600' : 'text-green-600'">{{
                 value[selectedLabel].latest }}</span>
           </p>
         </div>
         <div class="h-[60%] my-auto mx-auto text-center" v-else>
-          <p class="text-[24px] font-bold mx-auto my-auto">{{ rupiah(value[selectedLabel].previous) }}
+          <p class="text-2xl font-semibold mx-auto my-auto text-gray-800">{{ rupiah(value[selectedLabel].previous) }}
           </p>
-          <p class="text-[24px] font-bold mx-auto my-auto">
+          <p class="text-2xl font-semibold mx-auto my-auto">
             <Icon name="fe:drop-down" class="mb-1"
-              :class="(value[selectedLabel].latest) - (value[selectedLabel].previous) < 0 ? 'text-red-700' : 'text-green-700'" />
+              :class="(value[selectedLabel].latest) - (value[selectedLabel].previous) < 0 ? 'text-red-600' : 'text-green-600'" />
           </p>
-          <p class="text-[32px] font-bold mx-auto my-auto">
+          <p class="text-3xl font-semibold mx-auto my-auto">
             <span
-              :class="(value[selectedLabel].latest) - (value[selectedLabel].previous) < 0 ? 'text-red-700' : 'text-green-700'">{{
+              :class="(value[selectedLabel].latest) - (value[selectedLabel].previous) < 0 ? 'text-red-600' : 'text-green-600'">{{
                 rupiah(value[selectedLabel].latest) }}</span>
           </p>
         </div>
       </div>
       <div class="h-full w-[58%] flex">
-        <p class="font-light text-sm text-slate-500 my-auto">{{ value[selectedLabel].details }}</p>
+        <p class="font-light text-sm text-gray-500 my-auto">{{ value[selectedLabel].details }}</p>
       </div>
     </div>
-
   </div>
 </template>
 
@@ -90,4 +87,6 @@ const rupiah = (params) => {
 
 </script>
 
-<style scoped></style>
+<style scoped>
+/* Add any additional modern styles here */
+</style>

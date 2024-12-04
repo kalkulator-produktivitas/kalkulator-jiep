@@ -1,20 +1,23 @@
 <template>
-  <div class="flex flex-col shadow-md rounded-md border border-gray-100">
-    <div class="flex">
-      <div class="py-1.5 pl-2 flex flex-col w-[20%] my-auto h-full">
-        <select id="karyawan-select" v-model="selectedKaryawanIds" multiple
-          class="h-[100%] px-2 block text-center text-md text-gray-800 bg-white border border-gray-400 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+  <div class="flex flex-col bg-white rounded-xl shadow-lg border border-gray-200/50 ">
+    <div class="bg-gradient-to-r from-blue-100 to-blue-50 p-3">
+      <h2 class="text-lg font-semibold text-gray-800">Pertumbuhan KPI Karyawan</h2>
+    </div>
+    <div class="flex gap-4 p-3">
+      <div class="w-[20%] h-full my-auto">
+        <select id="karyawan-select" v-model="selectedKaryawanIds" multiple class="w-full h-[100%] px-3 py-2 text-sm text-gray-700 bg-gray-50 border border-gray-200 rounded-lg 
+                 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 
+                 transition-all duration-200">
           <option v-for="karyawan in karyawanList" :key="karyawan.No" :value="karyawan.No">
             {{ karyawan.Karyawan }}
           </option>
         </select>
       </div>
-      <div class="w-full">
+      <div class="flex-1 h-[250px]">
         <Line :options="lineOptions" :key="reaction" :data="lineData" />
       </div>
     </div>
   </div>
-
 </template>
 
 <script setup>
@@ -119,35 +122,24 @@ const lineData = computed(() => {
   return final
 })
 
-// const unit = computed(() => {
-//   let units = ''
-//   if (label.value === 'Capaian Target' || label.value === 'Produk tidak Reject') {
-//     units = 'Persen'
-//   } else if (label.value === 'Waktu Produksi') {
-//     units = 'Unit / Detik'
-//   } else if (label.value === 'Material Produksi') {
-//     units = 'Unit / Kg'
-//   } else {
-//     units = 'Skor'
-//   }
-//   return units
-// })
 
 const lineOptions = ref({
   responsive: true,
   maintainAspectRatio: false,
-  aspectRatio: 1.1,
   plugins: {
     legend: {
       display: true,
-      align: 'center',
+      align: 'start',
       position: 'right',
       labels: {
-        boxWidth: 15,
-        padding: 12,
+        boxWidth: 12,
+        padding: 15,
         font: {
-          size: 10
-        }
+          size: 11,
+          family: "'Inter', sans-serif" // Add Inter font for better typography
+        },
+        usePointStyle: true, // Makes legend markers circular
+        pointStyle: 'circle'
       }
     }
   },
@@ -155,6 +147,14 @@ const lineOptions = ref({
     y: {
       title: {
         display: true,
+      },
+      grid: {
+        color: 'rgba(0,0,0,0.05)' // Lighter grid lines
+      }
+    },
+    x: {
+      grid: {
+        display: false // Remove vertical grid lines
       }
     }
   }
@@ -162,4 +162,7 @@ const lineOptions = ref({
 
 </script>
 
-<style scoped></style>
+<style scoped>
+/* Optional: Add if you want to use Inter font */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+</style>

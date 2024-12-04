@@ -1,21 +1,19 @@
 <template>
-  <div class="flex flex-col relative rounded-lg shadow-md border border-gray-100">
-    <div class="flex justify-between pt-4 bg-transparent">
-      <div class="text-lg font-bold w-[50%] ml-4">Top 5 Karyawan Divisi</div>
-      <div class="w-[30%] flex">
-        <p class="my-auto mr-2">Tahun</p>
-        <label for="underline_select" class="sr-only"></label>
-        <select id="underline_select" v-model="selectedYear"
-          class="px-2 block text-center text-md text-gray-800 bg-transparent border border-gray-400 appearance-none dark:text-gray-700 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-600 peer">
+  <div
+    class="flex flex-col relative rounded-xl bg-white shadow-lg border border-gray-100/50 hover:shadow-xl transition-shadow duration-300">
+    <div class="flex justify-between p-4 bg-gradient-to-r from-blue-100 to-blue-50">
+      <div class="text-lg font-semibold text-gray-800 w-[50%]">Top 5 Karyawan Divisi</div>
+      <div class="w-[40%] flex items-center">
+        <p class="text-gray-600 mr-3">Tahun</p>
+        <select v-model="selectedYear"
+          class="px-3 py-1.5 rounded-lg text-gray-700 bg-gray-50 border border-gray-200 appearance-none hover:border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-200">
           <option v-for="tahun of years" class="text-sm">{{ tahun }}</option>
         </select>
       </div>
     </div>
-    <div class="my-auto p-4">
+    <div class="p-6 pt-2">
       <Bar :options="chartOptions" :data="dataset" />
-      <!-- {{ dataset }} -->
     </div>
-
   </div>
 </template>
 
@@ -68,6 +66,18 @@ const chartOptions = {
   plugins: {
     legend: {
       display: false,
+    },
+    tooltip: {
+      backgroundColor: 'rgba(0, 0, 0, 0.8)',
+      padding: 12,
+      cornerRadius: 8,
+      titleFont: {
+        size: 14,
+        weight: 'normal'
+      },
+      bodyFont: {
+        size: 13
+      }
     }
   },
   scales: {
@@ -79,6 +89,13 @@ const chartOptions = {
         display: true,
         drawOnChartArea: false,
         drawTicks: false,
+        color: 'rgba(0, 0, 0, 0.05)'
+      },
+      ticks: {
+        font: {
+          size: 12
+        },
+        color: '#64748b'
       }
     },
     y: {
@@ -88,7 +105,14 @@ const chartOptions = {
       grid: {
         display: true,
         drawOnChartArea: true,
-        drawTicks: false
+        drawTicks: false,
+        color: 'rgba(0, 0, 0, 0.05)'
+      },
+      ticks: {
+        font: {
+          size: 12
+        },
+        color: '#64748b'
       }
     }
   }

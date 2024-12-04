@@ -1,20 +1,21 @@
 <template>
-  <div class="overflow-none rounded-lg shadow-md border border-gray-100 relative">
-    <div class="p-1 bg-transparent w-[85%] h-[15%]">
-      <p class="font-bold text-lg text-black ml-2">Rata-rata KPI per Departemen</p>
-      <p class="font-bold text-lg text-black ml-2">{{ title }}</p>
-    </div>
-    <div class="absolute top-5 right-2 flex">
-      <label for="underline_select" class="sr-only"></label>
-      <select id="underline_select" v-model="selectedYear"
-        class="px-2 block text-center text-md text-gray-800 bg-transparent border border-gray-400 appearance-none dark:text-gray-700 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-600 peer">
-        <option v-for="tahun of years" class="text-sm">{{ tahun }}</option>
+  <div
+    class="bg-white rounded-xl shadow-lg border border-gray-100 relative hover:shadow-xl transition-shadow duration-300">
+    <div class="flex justify-between items-center mb-6 bg-gradient-to-r p-3 from-blue-100 to-blue-50">
+      <div class="space-y-1">
+        <h3 class="font-semibold text-gray-800 text-lg">Average KPI</h3>
+        <p class="text-gray-600 font-medium">{{ title }}</p>
+      </div>
+
+      <select v-model="selectedYear"
+        class="px-3 py-1.5 rounded-lg border border-gray-200 text-gray-700 text-sm font-medium hover:border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 transition-all duration-200 outline-none">
+        <option v-for="tahun of years" :key="tahun">{{ tahun }}</option>
       </select>
     </div>
-    <div class="mt-2 p-2">
+
+    <div class="mt-2">
       <Doughnut :options="pieOptions" :data="calculatedData" />
     </div>
-    <!-- {{ calculatedData }} -->
   </div>
 </template>
 
@@ -70,18 +71,32 @@ let calculatedData = computed(() => {
 const pieOptions = {
   responsive: true,
   maintainAspectRatio: true,
-  aspectRatio: 1.2,
+  aspectRatio: 1.5,
   plugins: {
     legend: {
-      display: false,
-      position: 'right',
+      display: true,
+      position: 'bottom',
       align: 'center',
       labels: {
-        boxWidth: 15,
-        padding: 12,
+        boxWidth: 12,
+        padding: 15,
+        usePointStyle: true,
         font: {
-          size: 10
+          size: 11,
+          family: "'Inter', sans-serif"
         }
+      }
+    },
+    tooltip: {
+      backgroundColor: 'rgba(0, 0, 0, 0.8)',
+      padding: 12,
+      cornerRadius: 8,
+      titleFont: {
+        size: 13,
+        weight: 'bold'
+      },
+      bodyFont: {
+        size: 12
       }
     }
   },

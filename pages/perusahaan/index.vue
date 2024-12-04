@@ -20,17 +20,16 @@
           </select>
         </div>
         <div v-if="reportType.type !== 'Tahun'" class="relative inline-block w-[40%]">
-          <template v-if="reportType.type === 'Semester'">
-            <option v-for="val of [1, 2]" :key="val">{{ val }}</option>
-          </template>
-          <template v-else-if="reportType.type === 'Triwulan'">
-            <option v-for="val of [1, 2, 3, 4]" :key="val">{{ val }}</option>
-          </template>
+          <select
+            class="block py-1 w-[20px] text-md text-center text-gray-500 bg-transparent border-0 border-b-2 border-gray-400 appearance-none focus:outline-none focus:ring-0 peer">
+            <option v-if="reportType.type === 'Semester'" v-for="val of [1, 2]" :key="val">{{ val }}</option>
+            <option v-if="reportType.type === 'Triwulan'" v-for="val of [1, 2, 3, 4]" :key="val">{{ val }}</option>
+          </select>
         </div>
       </div>
       <div class="container max-w h-full flex flex-row">
         <div class="overflow-y-auto px-1 shrink-0">
-          <ul class="flex list-none flex-col flex-wrap border-b-0 border-r-2 pl-0">
+          <ul class="flex list-none flex-col flex-wrap border-b-0 border-r-2 pl-0 mt-8">
             <li v-for="tabName in tabList" :key="tabName" class="mr-2">
               <button class="inline-block px-4 py-3" @click="tab = tabName"
                 :class="tab === tabName ? 'text-blue-600 border-l-2 border-blue-600 active' : 'border-l-2 border-transparent hover:text-gray-600 hover:border-gray-300'">
@@ -215,7 +214,7 @@
             </template>
 
           </div>
-          <div class="absolute bottom-[82%] right-10 lg:bottom-[4%] lg:right-[4%] flex lg:flex-col gap-4">
+          <div class="absolute bottom-[82%] right-10 lg:top-[4%] lg:right-[4%] flex lg:flex-col gap-4">
             <button @click="prompt2 = true" type="button"
               class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-4 rounded-full h-9 mr-4">
               Save as Draft
@@ -251,14 +250,6 @@
 </template>
 
 <script setup>
-// definePageMeta({
-//   layout: 'app',
-//   middleware: ['auth']
-// });
-// const global = useRuntimeConfig();
-// import { postReport } from '~/_service/write/reportPage';
-// import { useRequest } from '~/composables/useRequest';
-// import { ErrorApiResponse } from '~/_service/http/schema';
 
 
 const formatter = new Intl.NumberFormat("de-DE");
@@ -313,7 +304,7 @@ const subtab = ref('')
 //   'Biaya Administrasi', 'Penyusutan', 'Pajak', 'Aktiva Perusahaan', 'Laba', 'Jumlah Tenaga Kerja', 'Informasi Tambahan'])
 
 const tabList = ref(['Pendapatan', 'Modal', 'Biaya Tenaga Kerja', 'Beban Operasional', 'Beban Non Operasional',
-  'Penyusutan', 'Bunga', 'Pajak', 'Laba', 'Laba', 'Tenaga Kerja', 'Informasi Tambahan'])
+  'Penyusutan', 'Bunga', 'Pajak', 'Laba', 'Tenaga Kerja', 'Informasi Tambahan'])
 
 // const parameters = ref({
 //   'Penjualan dan Modal': { 'Penjualan': null, 'Modal Operasi': null, 'Investasi': null },

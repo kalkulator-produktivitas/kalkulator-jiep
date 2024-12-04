@@ -1,11 +1,11 @@
 <template>
-  <div class="flex flex-col shadow-lg rounded-lg border border-gray-100">
-    <div class="px-1.5 py-3 flex ">
-      <form class="w-[50%] ">
+  <div class="flex flex-col shadow-lg rounded-lg border border-gray-100 bg-white">
+    <div class=" bg-gray-50 rounded-t-lg">
+      <form class="w-full">
         <label for="underline_select" class="sr-only"></label>
         <select id="underline_select" v-model="label"
-          class="py-1 px-4 w-full text-lg font-bold text-black bg-transparent rounded-lg border-2 border-gray-100 dark:text-black peer shadow hover:border-gray-300">
-          <option v-for="title of props.title" class="text-sm">{{ title }}</option>
+          class="py-2 px-2 w-full text-lg font-bold text-black bg-gradient-to-r from-blue-100 to-blue-50 rounded-t-lg  border-gray-200 dark:text-black peer hover:border-gray-300 focus:outline-none">
+          <option v-for="title of props.title" :key="title" class="text-sm">{{ title }}</option>
         </select>
       </form>
     </div>
@@ -51,10 +51,65 @@ const lineOptions = {
   },
   scales: {
     y: {
+      grid: {
+        color: '#f0f0f0',
+        drawBorder: false,
+      },
+      border: {
+        display: false,
+      },
+      ticks: {
+        font: {
+          family: "'Inter', sans-serif",
+          size: 12
+        },
+        color: '#64748b',
+        padding: 8
+      },
       title: {
         display: true,
-        text: 'Rupiah'
+        text: 'Rupiah',
+        font: {
+          family: "'Inter', sans-serif",
+          size: 14,
+          weight: '500'
+        },
+        color: '#334155',
+        padding: 16
       }
+    },
+    x: {
+      grid: {
+        display: false,
+      },
+      border: {
+        display: false,
+      },
+      ticks: {
+        font: {
+          family: "'Inter', sans-serif",
+          size: 12
+        },
+        color: '#64748b',
+        padding: 8
+      }
+    }
+  },
+  elements: {
+    line: {
+      tension: 0.4,
+      borderWidth: 2,
+      borderColor: '#3b82f6',
+      fill: true,
+      backgroundColor: 'rgba(59, 130, 246, 0.1)'
+    },
+    point: {
+      radius: 4,
+      borderWidth: 2,
+      backgroundColor: '#ffffff',
+      borderColor: '#3b82f6',
+      hoverRadius: 6,
+      hoverBorderWidth: 3
     }
   }
 }

@@ -7,6 +7,13 @@
         v-model="selectedYear">
         <option v-for="year in yearOptions" :key="year" :value="year">{{ year }}</option>
       </select>
+      <div class="ml-8">
+        <button class="flex gap-2 justify-center items-center rounded-full px-4 py-2 bg-blue-500 text-white text-sm" @click="openFileInputModal = true">
+          <Icon name="mdi:upload"/>
+          <p>Upload dari Excel</p>
+        </button>
+        <FileUploadModal title="Upload File KPI Karyawan" v-model:show="openFileInputModal" @file-selected="handleFileSelected"/>
+      </div>
     </div>
     <div class="w-full flex flex-row mt-6">
       <div class="overflow-y-auto px-1 shrink-0 h-[85vh] border-r-2">
@@ -211,7 +218,7 @@ const modal = ref({
 
 const prompt = ref(false)
 const prompt2 = ref(false)
-
+const openFileInputModal = ref(false);
 
 const loading = ref(false)
 
@@ -219,6 +226,11 @@ const tidakSiap = () => {
   modal.value.show = true
   modal.value.message = "Mohon maaf, fitur belum siap"
   modal.value.type = 'WARNING'
+}
+
+function handleFileSelected(f) {
+  console.info('file: ', f)
+  openFileInputModal.value = false;
 }
 
 // function labeling(label) {

@@ -26,6 +26,13 @@
             <option v-if="reportType.type === 'Triwulan'" v-for="val of [1, 2, 3, 4]" :key="val">{{ val }}</option>
           </select>
         </div>
+        <div class="ml-8">
+          <button class="flex gap-2 justify-center items-center rounded-full px-4 py-2 bg-blue-500 text-white text-sm" @click="openFileInputModal = true">
+            <Icon name="mdi:upload"/>
+            <p>Upload dari Excel</p>
+          </button>
+          <FileUploadModal title="Upload File Perusahaan" v-model:show="openFileInputModal" @file-selected="handleFileSelected"/>
+        </div>
       </div>
       <div class="container max-w h-full flex flex-row">
         <div class="overflow-y-auto px-1 shrink-0">
@@ -263,6 +270,12 @@ const modal = ref({
 
 const prompt = ref(false)
 const prompt2 = ref(false)
+const openFileInputModal = ref(false);
+
+const handleFileSelected = (f) => {
+  console.info('file: ', f);
+  openFileInputModal.value = false;
+}
 
 // const { data, loading, call, request, error } = useRequest(postReport);
 

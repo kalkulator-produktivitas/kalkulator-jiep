@@ -8,11 +8,13 @@
         <option v-for="year in yearOptions" :key="year" :value="year">{{ year }}</option>
       </select>
       <div class="ml-8">
-        <button class="flex gap-2 justify-center items-center rounded-full px-4 py-2 bg-blue-500 text-white text-sm" @click="openFileInputModal = true">
-          <Icon name="mdi:upload"/>
+        <button class="flex gap-2 justify-center items-center rounded-full px-4 py-2 bg-blue-500 text-white text-sm"
+          @click="openFileInputModal = true">
+          <Icon name="mdi:upload" />
           <p>Upload dari Excel</p>
         </button>
-        <FileUploadModal title="Upload File KPI Karyawan" v-model:show="openFileInputModal" @file-selected="handleFileSelected"/>
+        <FileUploadModal title="Upload File KPI Karyawan" v-model:show="openFileInputModal"
+          @file-selected="handleFileSelected" />
       </div>
     </div>
     <div class="w-full flex flex-row mt-6">
@@ -27,91 +29,97 @@
         </ul>
       </div>
       <div class="col-span-6 overflow-y-auto flex w-[100%] pl-2">
-        <div class="w-[55%] h-[85vh] overflow-y-auto border-r-2">
-          <div class="flex w-full">
-            <div class="block text-sm font-bold mr-8 md:text-right w-[120px]">
-
+        <div class="w-[50%] h-[85vh] overflow-y-auto bg-white rounded-lg shadow-sm p-4">
+          <div class="flex w-full items-center mb-4">
+            <div class="w-[150px]"></div>
+            <div class="flex items-center">
+              <div class="flex space-x-8">
+                <div class="text-center">
+                  <p class="text-sm font-semibold text-gray-600 uppercase tracking-wider">Capaian</p>
+                  <div class="h-1 w-16 bg-blue-500 mx-auto mt-1 rounded-full"></div>
+                </div>
+                <div class="text-center">
+                  <p class="text-sm font-semibold text-gray-600 uppercase tracking-wider">KPI</p>
+                  <div class="h-1 w-16 bg-blue-500 mx-auto mt-1 rounded-full"></div>
+                </div>
+                <button @click="employeeDivisionShare(selectedDivisi)"
+                  :disabled="!allSelectedDivisionFilled || !shareGain['gain share'] || !shareGain['koefisien kontribusi']"
+                  class="ml-4 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                  :class="!allSelectedDivisionFilled || !shareGain['gain share'] || !shareGain['koefisien kontribusi'] ?
+                    'bg-gray-100 text-gray-400 cursor-not-allowed' :
+                    'bg-blue-500 text-white hover:bg-blue-600 shadow-sm'">
+                  Calculate Share
+                </button>
+              </div>
             </div>
-            <div class="flex w-[400px]">
-              <p class="text-lg font-bold w-[80px] text-center">CAPAIAN</p>
-              <p class="text-lg font-bold w-[80px] ml-4 text-center">KPI</p>
-              <button @click="employeeDivisionShare(selectedDivisi)"
-                :disabled="!allSelectedDivisionFilled || !shareGain['gain share'] || !shareGain['koefisien kontribusi']"
-                class="text-sm ml-4 text-center border rounded-md px-2 py-1 hover:bg-blue-700 transition-all"
-                :class="!allSelectedDivisionFilled || !shareGain['gain share'] || !shareGain['koefisien kontribusi'] ? 'bg-gray-200 text-gray-400' : 'bg-blue-500 text-white hover:bg-blue-700'">Calculate
-                Share</button>
-            </div>
-
           </div>
-          <hr class="mt-2 border-black border-1 ml-4 w-[60%]">
-          <div v-for="param in selectDiv" :key="param.karyawan" class="mb-4 md:flex md:items-center">
-            <div class="flex w-full my-0.5">
-              <label class="block text-sm font-bold mr-8 md:text-right w-[120px] self-end" :for="param.karyawan">
+
+          <div class="space-y-0">
+            <div v-for="param in selectDiv" :key="param.karyawan"
+              class="group flex items-center p-2 transition-colors duration-200 hover:bg-gradient-to-r hover:from-blue-100 hover:to-blue-50 rounded-lg"
+              :class="[(param.capaian < (0.5 * param.kpi)) && (param.bobot !== null) ? 'bg-red-200' : '', (param.capaian > (0.9 * param.kpi)) && (param.bobot !== null) ? 'bg-green-200' : '']">
+              <label class="text-sm font-medium text-gray-700 w-[120px] text-right mr-8" :for="param.karyawan">
                 {{ param.karyawan }}
               </label>
-              <div class="flex w-[400px]">
+              <div class="flex w-[400px] items-center space-x-4">
                 <input
-                  class="appearance-none border-b-2 border-gray-600 w-[80px] py-1.5 text-gray-700 leading-tight focus:outline-none focus:shadow-outline text-center"
-                  :id="param.karyawan" type="number" v-model="param.capaian"
+                  class="w-[80px] py-2 px-3 text-center rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 transition-all duration-200"
+                  :id="`${param.karyawan}-capaian`" type="number" v-model="param.capaian"
                   @keypress="(e) => !/^\d$/.test(e.key) && e.preventDefault()">
                 <input
-                  class="appearance-none border-b-2 border-gray-600 w-[80px] py-1.5 ml-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline text-center"
-                  :id="param.karyawan" type="number" v-model="param.kpi"
+                  class="w-[80px] py-2 px-3 text-center rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 transition-all duration-200"
+                  :id="`${param.karyawan}-kpi`" type="number" v-model="param.kpi"
                   @keypress="(e) => !/^\d$/.test(e.key) && e.preventDefault()">
-                <p v-if="param.bobot"
-                  class="w-full ml-4 text-gray-700 self-center leading-tight focus:outline-none focus:shadow-outline text-left"
-                  :id="param.karyawan">Rp
-                  {{ maskNumber2(parseInt(param.bobot * (parseInt(shareGain['gain share'].replaceAll(".", "")) * 15 /
-                    100))) }}</p>
-
-              </div>
-              <div class="flex">
-
+                <p v-if="param.bobot" class="text-gray-700 font-medium">
+                  Rp {{ maskNumber2(parseInt(param.bobot * (parseInt(shareGain['gain share'].replaceAll(".", "")) * 15 /
+                    100))) }}
+                </p>
               </div>
             </div>
           </div>
         </div>
-        <div class="w-[60%] h-[80%] flex flex-col mx-auto relative ">
-          <button @click="showParameter = !showParameter"
-            class="bg-blue-500 text-white h-10 rounded-full w-[50%] hover:bg-blue-700 transition-all mx-auto font-bold">
-            Parameter
-            Pengupahan</button>
-          <div v-if="showParameter" class="w-full rounded-md px-8 mt-10">
-            <div class="flex">
-              <div class="w-[25%] self-center text-right mr-2 my-4">
-                <label class="block font-bold">
+        <div class="w-[40%] flex flex-col mx-auto relative bg-white shadow-lg rounded-lg ">
+          <div class="bg-gradient-to-r from-blue-100 to-blue-50">
+            <p class="w-full text-center font-bold text-lg py-2">
+              Parameter Pengupahan
+            </p>
+          </div>
+          <div class="w-full rounded-md mt-4 p-6">
+            <div class="mb-4">
+              <div class="mr-4">
+                <label class="block font-semibold text-gray-700">
                   Nilai Tambah
                 </label>
               </div>
-              <div class="flex w-[75%] items-center">
+              <div class="flex w-[50%] ml-2">
                 <input disabled
-                  class="appearance-none border-b-2 h-10 py-2.5 ml-2 text-gray-700 text-sm leading-tight w-6 text-center bg-gray-200 rounded-l-md"
+                  class="appearance-none border-b-2 h-10 py-2.5 text-gray-700 text-sm leading-tight w-6 text-center bg-gray-200 rounded-l-md"
                   type="text" value="Rp">
                 <input disabled
-                  class="appearance-none border-b-2 w-full h-10 py-2.5 px-3 text-gray-700 text-sm leading-tight focus:outline-none focus:shadow-outline bg-gray-200 rounded-r-md"
-                  @keypress="(e) => !/^\d$/.test(e.key) &&
+                  class="appearance-none border-b-2 w-full h-10 py-2.5 px-3 text-gray-700 text-sm leading-tight focus:outline-none focus:shadow-outline bg-gray-200  rounded-r-md"
+                  @input="maskNumber('rasio nilai tambah', $event.target.value)" @keypress="(e) => !/^\d$/.test(e.key) &&
                     !['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight'].includes(e.key) &&
-                    e.preventDefault()" type="text" v-model="shareGain['nilai tambah']" />
+                    e.preventDefault()" type="text" v-model="shareGain['upah dibayarkan']" />
               </div>
             </div>
-            <div class="flex my-4">
-              <div class="w-[25%] self-center text-right mr-2">
-                <label class="block font-bold">
+            <div class="flex flex-col mb-4">
+              <div class="mr-4">
+                <label class="block font-semibold text-gray-700">
                   Rasio Nilai Tambah
                 </label>
               </div>
-              <div class="flex w-[75%]">
-                <input disabled
+              <div class="flex w-[10%] ml-2">
+                <!-- <input disabled
                   class="appearance-none border-b-2 h-10 py-2.5 ml-2 text-gray-700 text-sm leading-tight w-6 text-center bg-white rounded-l-md"
-                  type="text" value="  ">
+                  type="text" value="  "> -->
                 <input
-                  class="appearance-none border-b-2 w-full h-10 py-2.5 px-3 text-gray-700 text-sm leading-tight focus:outline-none focus:shadow-outline bg-white rounded-r-md"
+                  class="appearance-none border-b-2 w-20 h-10 py-2.5 px-3 text-gray-800 text-sm leading-tight focus:outline-none focus:shadow-outline bg-gray-50 rounded-md shadow-sm transition duration-200 ease-in-out focus:ring-1 focus:ring-blue-400"
                   type="number" v-model="shareGain['rasio nilai tambah']" />
               </div>
             </div>
-            <div class="flex my-4">
-              <div class="w-[25%] self-center text-right mr-2">
-                <label class="block font-bold">
+            <div class="flex flex-col mb-4">
+              <div class="mr-4">
+                <label class="block font-semibold text-gray-700">
                   Upah Dibayarkan
                 </label>
               </div>
@@ -128,60 +136,67 @@
                 </div>
               </div>
             </div>
-            <div class="flex my-4">
-              <div class="w-[25%] self-center text-right mr-2">
-                <label class="block font-bold">
+            <div class="flex flex-col mb-4">
+              <div class="mr-4">
+                <label class="block font-semibold text-gray-800">
                   Reserve Ratio
                 </label>
               </div>
-              <div class="flex w-[75%]">
+              <div class="flex w-[75%] items-center">
                 <input disabled
-                  class="appearance-none border-b-2 h-10 py-2.5 ml-2 text-gray-700 text-sm leading-tight w-6 text-center bg-white rounded-l-md"
+                  class="appearance-none border-b-2 h-10 py-2.5 ml-2 text-gray-800 text-sm leading-tight w-6 text-center bg-gray-100 rounded-l-md"
                   type="text" value="%">
                 <input v-model="shareGain['reserve ratio']"
-                  class="appearance-none border-b-2 w-20 h-10 py-2.5 px-3 text-gray-700 text-sm leading-tight focus:outline-none focus:shadow-outline bg-white rounded-r-md" />
+                  class="appearance-none border-b-2 w-20 h-10 py-2.5 px-3 text-gray-800 text-sm leading-tight focus:outline-none focus:shadow-outline bg-gray-50 rounded-r-md shadow-sm transition duration-200 ease-in-out focus:ring-1 focus:ring-blue-400" />
               </div>
             </div>
-            <hr class="h-px mt-8 border-black border-1 ml-12">
-            <div class="flex w-[100%] mt-2">
-              <div class="w-[80%] self-center text-right mr-2">
-                <label class="block font-bold">
-                  Gain Sharing
-                </label>
+            <hr class="h-px mt-8 border-gray-600">
+            <div class="flex mt-4 justify-between">
+              <div class="flex flex-col">
+                <div class="mr-4">
+                  <label class="block font-semibold text-gray-700">
+                    Gain Sharing
+                  </label>
+                </div>
+                <div class="flex">
+                  <input disabled
+                    class="appearance-none border-b-2 h-10 py-2.5 ml-2 text-gray-700 text-sm leading-tight w-6 text-center bg-gray-100 rounded-l-md"
+                    type="text" value="Rp">
+                  <input disabled
+                    class="appearance-none border-b-2 w-full h-10 py-2.5 px-3 text-gray-700 text-sm leading-tight focus:outline-none focus:shadow-outline bg-gray-100 rounded-r-md"
+                    @input="maskNumber('gain share', $event.target.value)" @keypress="(e) => !/^\d$/.test(e.key) &&
+                      !['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight'].includes(e.key) &&
+                      e.preventDefault()" type="text" v-model="shareGain['gain share']" />
+                </div>
               </div>
-              <input disabled
-                class="appearance-none border-b-2 h-10 py-2.5 ml-2 text-gray-700 text-sm leading-tight w-6 text-center bg-gray-200 rounded-l-md"
-                type="text" value="Rp">
-              <input disabled
-                class="appearance-none border-b-2 w-full h-10 py-2.5 px-3 text-gray-700 text-sm leading-tight focus:outline-none focus:shadow-outline  bg-gray-200 rounded-r-md"
-                @input="maskNumber('gain share', $event.target.value)" @keypress="(e) => !/^\d$/.test(e.key) &&
-                  !['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight'].includes(e.key) &&
-                  e.preventDefault()" type="text" v-model="shareGain['gain share']" />
-              <button
-                class="self-center justify-self-end bg-transparent ml-8 hover:text-white hover:bg-gray-400 hover:border-transparent  text-gray-400 font-bold py-1 px-4 border border-blue  rounded"
-                @click="calculateShare">
-                Calc
-              </button>
+              <div>
+                <button
+                  class="self-center justify-self-end bg-blue-500 text-white ml-8 hover:bg-blue-600 transition-all font-bold py-1 px-4 rounded"
+                  @click="calculateShare">
+                  Hitung
+                </button>
+              </div>
             </div>
-            <div class="flex w-[80%] mt-2">
-              <div class="w-[40%] self-center text-right mr-2">
-                <label class="block font-bold">
+            <div class="flex flex-col mt-4">
+              <div class="mr-4">
+                <label class="block font-semibold text-gray-700">
                   Koefisien Kontribusi
                 </label>
               </div>
-              <input disabled
-                class="appearance-none border-b-2 h-10 py-2.5 ml-2 text-gray-700 text-sm leading-tight w-6 text-center bg-white rounded-l-md"
-                type="text" value="%">
-              <input v-model="shareGain['koefisien kontribusi']"
-                class="appearance-none border-b-2 w-20 h-10 py-2.5 px-3 text-gray-700 text-sm leading-tight focus:outline-none focus:shadow-outline  bg-white rounded-r-md" />
+              <div class="flex">
+                <input disabled
+                  class="appearance-none border-b-2 h-10 py-2.5 ml-2 text-gray-800 text-sm leading-tight w-6 text-center bg-gray-100 rounded-l-md"
+                  type="text" value="%">
+                <input v-model="shareGain['koefisien kontribusi']"
+                  class="appearance-none border-b-2 w-20 h-10 py-2.5 px-3 text-gray-800 text-sm leading-tight focus:outline-none focus:shadow-outline bg-gray-50 rounded-r-md shadow-sm transition duration-200 ease-in-out focus:ring-1 focus:ring-blue-400" />
+              </div>
             </div>
-
           </div>
         </div>
       </div>
     </div>
 
-    <div class="absolute bottom-[5%] right-[5%] flex flex-col gap-1">
+    <div class="absolute top-[2%] right-[5%] flex flex-row gap-1">
       <button @click="prompt2 = true" type="button"
         class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-4 rounded-full h-9 mr-4">
         Save as Draft

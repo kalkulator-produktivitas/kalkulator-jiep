@@ -2,16 +2,31 @@
   <div id="layout" class="md:mx-auto my-6 mx-auto flex">
     <div class="shrink-0 w-[5%]"></div>
     <div class="h-[92vh] w-[100vw]">
+
       <div v-if="available" class="pt-4 mx-auto flex flex-row gap-4 w-[98%] h-[100%]">
+
         <div class="w-[60%] flex flex-col">
+          <div class="flex justify-center my-2">
+            <select id="tahun"
+              class="px-4 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              v-model="year.minValue">
+              <option v-for="year in yearOptions" :key="year" :value="year">{{ year }}</option>
+            </select>
+            <p class="my-auto mx-2 text-gray-500 text-xl font-bold"> - </p>
+            <select id="tahun"
+              class="px-4 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              v-model="year.maxValue">
+              <option v-for="year in yearOptions" :key="year" :value="year">{{ year }}</option>
+            </select>
+          </div>
           <div class="mb-6">
             <GraphGeneralLine class="" id="2" :dataset="lineData" :title="['Nilai Tambah', 'Pendapatan']"
               :key="`line2-${state}`" />
           </div>
           <div class="row-span-2 grid grid-cols-12 gap-4">
             <div class="col-span-5">
-              <GraphGeneralDoughnut id="3" :config="pieOptions" :dataset="pieData" title="Perbandingan Nilai Tambah"
-                :key="`doughnut-${state}`" />
+              <GraphGeneralDoughnut id="3" :config="pieOptions" :dataset="pieData" :year="year.maxValue"
+                title="Perbandingan Nilai Tambah" :key="`doughnut-${state}`" />
             </div>
             <div class="col-span-7 ">
               <GraphGeneralInfo :value="infoData" />
@@ -64,7 +79,6 @@
     </div>
     <Loading v-if="loading" text="Fetching Data" />
     <Popup v-if="modal.show" :message="modal.message" :status="modal.status" :type="modal.type" @close="closeModal" />
-
   </div>
 </template>
 
@@ -96,12 +110,17 @@ const closeModal = () => {
 const state = ref(0)
 const showSlider = ref(false)
 
+const yearOptions = ref([2021, 2022, 2023])
+
 let year = ref({
   min: 0,
   max: 0,
   minValue: 0,
   maxValue: 0
 })
+
+// year.min = dummyData.length - 3
+// year.max = dummyData.length - 1
 
 const lineData = ref({
   "Nilai Tambah": {

@@ -2,31 +2,27 @@
   <div v-if="show" class="modal-overlay" @click="closeModal">
     <div class="modal-box" @click.stop>
       <div class="flex gap-2 items-center justify-center text-lg text-black font-bold">
-        <Icon name="mdi:upload"/>
+        <Icon name="mdi:upload" />
         <h1 class="">{{ title ?? 'Upload File' }}</h1>
       </div>
-      <input 
-        type="file" 
-        ref="fileInput" 
-        class="hidden" 
-        @change="handleFileChange" 
-      />
-      <div class="file-box mt-8" @click="openFileDialog">
+      <button class="text-sm text-blue-500 hover:text-blue-600 transition-all duration-200">Download Template</button>
+      <input type="file" ref="fileInput" class="hidden" @change="handleFileChange" />
+      <div class="file-box mt-4" @click="openFileDialog">
         <div v-if="selectedFile">
           <p class="text-sm text-neutral-500 pb-4">File terpilih:</p>
-          <p >{{ selectedFile.name }}</p>
+          <p>{{ selectedFile.name }}</p>
         </div>
         <p v-else class="text-neutral-500 italic text-sm">Klik untuk memilih file</p>
       </div>
       <div class="flex gap-4 my-4 justify-center items-center">
-        <button class="rounded-full bg-neutral-100 border border-neutral-300 text-sm font-bold px-4 py-2.5 hover:bg-neutral-200 transition-all ease-in-out" @click="closeModal">Tutup</button>
-        <button 
-          class="rounded-full bg-green-500 text-white text-sm font-bold px-4 py-2.5 hover:bg-green-600 transition-all ease-in-out disabled:bg-neutral-100 disabled:text-neutral-200" 
-          :disabled="!selectedFile" 
-          @click="handleConfirmFile"
-        >
-        Konfirmasi
-      </button>
+        <button
+          class="rounded-full bg-neutral-100 border border-neutral-300 text-sm font-bold px-4 py-2.5 hover:bg-neutral-200 transition-all ease-in-out"
+          @click="closeModal">Tutup</button>
+        <button
+          class="rounded-full bg-green-500 text-white text-sm font-bold px-4 py-2.5 hover:bg-green-600 transition-all ease-in-out disabled:bg-neutral-100 disabled:text-neutral-200"
+          :disabled="!selectedFile" @click="handleConfirmFile">
+          Konfirmasi
+        </button>
       </div>
     </div>
   </div>

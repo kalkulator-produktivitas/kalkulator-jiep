@@ -3,7 +3,7 @@
     class="flex flex-col relative bg-white rounded-xl shadow-lg border border-gray-100 hover:shadow-xl transition-shadow duration-300">
     <div
       class="flex justify-between p-3 bg-gradient-to-r from-blue-100 to-blue-50 rounded-t-xl border-b border-gray-100">
-      <p class="font-bold text-lg ml-2 text-gray-800">{{ title }}</p>
+      <p class="font-bold text-md ml-2 text-gray-800">{{ title }}</p>
       <button
         class="px-4 py-1.5 bg-blue-600 hover:bg-blue-700 transition-colors duration-200 rounded-lg text-white text-sm font-medium shadow-sm hover:shadow-md"
         @mouseover="showTooltip = true" @mouseout="showTooltip = false">

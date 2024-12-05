@@ -8,12 +8,13 @@
         </select>
       </form>
       <div>
-        <p class="text-lg font-semibold text-right text-gray-800">{{ value.label[0] }}</p>
+        <p class="text-lg font-semibold text-right text-gray-800 mr-2">{{ value.label[0] }}</p>
       </div>
     </div>
     <div class="h-full flex p-2 gap-4 mt-3">
       <div class="w-[42%] shrink-0 flex">
-        <div class="h-[60%] my-auto mx-auto text-center" v-if="selectedLabel !== 'Nilai Tambah'">
+        <div class="h-[60%] my-auto mx-auto text-center"
+          v-if="selectedLabel !== 'Nilai Tambah' && selectedLabel !== 'Biaya Tenaga Kerja / Jml Tenaga Kerja'">
           <p class="text-2xl font-semibold mx-auto my-auto text-gray-800">{{ value[selectedLabel].previous }}</p>
           <p class="text-2xl font-semibold mx-auto my-auto">
             <Icon name="fe:drop-down" class="mb-1"
@@ -52,9 +53,9 @@ defineProps(['value'])
 
 const label = [
   "Nilai Tambah",
-  "Nilai Tambah / Penjualan",
-  "Nilai Tambah / Pembelian Bahan",
-  "Laba / Biaya Tenaga Kerja"
+  "Nilai Tambah / Biaya Tenaga Kerja",
+  "Biaya Tenaga Kerja / Jml Tenaga Kerja",
+  "Nilai Tambah / Total Output"
 ]
 
 const selectedLabel = ref("Nilai Tambah")

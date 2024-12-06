@@ -99,7 +99,7 @@
                   class="appearance-none border-b-2 w-full h-10 py-2.5 px-3 text-gray-700 text-sm leading-tight focus:outline-none focus:shadow-outline bg-gray-200  rounded-r-md"
                   @input="maskNumber('rasio nilai tambah', $event.target.value)" @keypress="(e) => !/^\d$/.test(e.key) &&
                     !['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight'].includes(e.key) &&
-                    e.preventDefault()" type="text" v-model="shareGain['upah dibayarkan']" />
+                    e.preventDefault()" type="text" v-model="shareGain['nilai tambah']" />
               </div>
             </div>
             <div class="flex flex-col mb-4">

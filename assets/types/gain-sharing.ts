@@ -2,11 +2,10 @@ export type GainSharingData = {
   base_data: {
     tahun: number,
     nilai_tambah: number,
-    rasio_nilai_tambah?: number|undefined,
+    rasio_nilai_tambah: number,
     upah_dibayarkan: number,
-    reserve_ratio?: number|undefined,
-    koefisien_kontribusi?: number|undefined,
-    gain_sharing?: number|undefined,
+    reserve_ratio: number,
+    gain_sharing: number,
   },
   division_percentages: Array<{
     division_id: string,

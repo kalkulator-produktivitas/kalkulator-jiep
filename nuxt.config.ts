@@ -6,4 +6,9 @@ export default defineNuxtConfig({
     '@nuxtjs/tailwindcss',
     '@nuxt/icon'
   ],
+  app: {
+    head: {
+      title: 'Kalkulator Produktivitas Jasa'
+    }
+  }
 })

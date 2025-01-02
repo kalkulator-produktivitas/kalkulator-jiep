@@ -21,7 +21,7 @@ const reserveRatio = ref<number>(25);
 const gainSharingTotal = computed<number|undefined>(() => {
   if (!rasioNilaiTambah || Number.isNaN(rasioNilaiTambah) || !reserveRatio || Number.isNaN(reserveRatio)) return undefined;
   const { nilai_tambah, total_biaya_tenaga_kerja } = analisis.value;
-  return nilai_tambah / rasioNilaiTambah.value - total_biaya_tenaga_kerja * (1 - (reserveRatio.value / 100));
+  return (nilai_tambah / rasioNilaiTambah.value - total_biaya_tenaga_kerja) * (1 - (reserveRatio.value / 100));
 })
 const divisionPercentages = ref<Array<{
   division_id: string,
@@ -35,6 +35,9 @@ const divisionPercentages = ref<Array<{
   }
 }));
 const resultSelectedDivision = ref<typeof divisionPercentages.value[number]|undefined>(undefined)
+const totalPercentage = computed<number>(() => {
+  return divisionPercentages.value.map(v => v.value).reduce((prev, curr) => prev + curr, 0)
+})
 
 function onYearChange(ev: any) {
   const v = mockLaporanAnalisis.analisis.find(v => v.tahun === Number(ev.target.value));
@@ -149,13 +152,14 @@ function calculateEmployeeGainSharing(emp: typeof mockKpiKaryawan[number]): numb
                   </table>
                 </div>
               </div>
-              <div class="flex justify-center w-full mt-4">
+              <div class="flex flex-col justify-center items-center w-full mt-4">
                 <h3 
                   class="font-bold text-neutral-500 text-xl"
-                  :class="{'text-red-500': divisionPercentages.map(v => v.value).reduce((prev, curr) => prev + curr, 0) !== 100}"
+                  :class="{'text-red-500': totalPercentage !== 100}"
                 >
-                  Total: {{ divisionPercentages.map(v => v.value).reduce((prev, curr) => prev + curr, 0).toFixed(2) }}%
+                  Total: {{ totalPercentage.toFixed(2) }}%
                 </h3>
+                <p v-if="totalPercentage !== 100" class="text-xs text-red-500 italic">Total harus = 100</p>
               </div>
             </div>
           </div>

@@ -9,7 +9,12 @@ import { ChartColors, generateColors } from '~/assets/helpers/colors';
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const props = defineProps<{
-  gainSharingData: GainSharingData,
+  divisionPercentages: Array<{
+    division_id: string,
+    division_name: string,
+    value: number,
+  }>,
+  gainSharing: number,
 }>();
 
 const options = {
@@ -30,11 +35,11 @@ const options = {
   },
 }
 const data = {
-  labels: props.gainSharingData.division_percentages.map(v => v.division_name),
+  labels: props.divisionPercentages.map(v => v.division_name),
   datasets: [
     {
       label: 'Gain Sharing',
-      data: props.gainSharingData.division_percentages.map(v => v.value * (props.gainSharingData.base_data.gain_sharing ?? 10_000_000_000) / 100),
+      data: props.divisionPercentages.map(v => v.value * props.gainSharing / 100),
       // backgroundColor: generateColors(props.gainSharingData.division_percentages.length),
       backgroundColor: ChartColors,
       hoverOffset: 9,

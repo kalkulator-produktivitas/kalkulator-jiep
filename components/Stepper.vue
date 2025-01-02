@@ -39,14 +39,14 @@
           class="px-4 py-2 bg-gray-200 rounded-md"
           :disabled="currentStep === 0"
         >
-          Previous
+          Balik
         </button>
         <button
           @click="nextStep"
           class="px-4 py-2 bg-blue-500 text-white rounded-md"
           :disabled="currentStep === steps.length - 1"
         >
-          Next
+          {{ currentStep === steps.length - 1 ? (confirmText ?? 'Konfirmasi') : 'Lanjut' }}
         </button>
       </div>
       <slot />
@@ -63,6 +63,7 @@
 type StepperProps = {
   steps: string[];
   initialStep?: number;
+  confirmText?: string;
 }
 
 const props = defineProps<StepperProps>();

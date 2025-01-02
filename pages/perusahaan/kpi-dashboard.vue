@@ -6,14 +6,14 @@ import type { GainSharingData } from '~/assets/types/gain-sharing';
 type KPI = {
   id: string,
   name: string,
-  value: number,
 }
 type Indicator = {
   id: string,
   name: string,
-  value: number,
-  kpi: number,
+  value: string,
+  kpi: string,
   relatedKpiGroups: string[],
+  isRed?: boolean,
 }
 
 const mode = ref<string>('kpi');
@@ -30,52 +30,54 @@ const gainSharingSteps: Array<string> = [
 // --- MOCK DATA
 // TODO: replace with fetch data
 const _mockKpiList: KPI[] = [
-  { id: 'financial', name: 'Financial', value: 100 },
-  { id: 'customer', name: 'Customer', value: 100 },
-  { id: 'process_business', name: 'Process Business', value: 100 },
-  { id: 'learning_and_growth', name: 'Learning and Growth', value: 100 },
+  { id: 'financial', name: 'Financial', },
+  { id: 'customer', name: 'Customer' },
+  { id: 'process_business', name: 'Process Business' },
+  { id: 'learning_and_growth', name: 'Learning and Growth' },
 ]
 const _mockIndicatorList: Indicator[] = [
   {
     id: 'total_assets',
     name: 'Total Assets',
-    value: 200000,
-    kpi: 100000,
+    value: "Rp 20.000.000.000",
+    kpi: "Rp 23.210.000.000",
     relatedKpiGroups: ['financial'],
+    isRed: true,
   },
   {
     id: 'roi',
     name: 'Return on Investment',
-    value: 2.5,
-    kpi: 1.5,
+    value: "2.5%",
+    kpi: "1.5%",
     relatedKpiGroups: ['financial'],
   },
   {
     id: 'revenue',
     name: 'Revenue',
-    value: 1000000,
-    kpi: 1250000,
+    value: "Rp 1.244.934.000",
+    kpi: "Rp 1.350.000.000",
     relatedKpiGroups: ['financial'],
+    isRed: true,
   },
   {
     id: 'employee_count',
     name: 'Jumlah Karyawan',
-    value: 200,
-    kpi: 200,
+    value: "200",
+    kpi: "200",
     relatedKpiGroups: ['financial'],
   },
   {
     id: 'customer_count',
     name: 'Jumlah Customer',
-    value: 1000,
-    kpi: 900,
+    value: "1000",
+    kpi: "900",
     relatedKpiGroups: ['customer'],
   },
   {
     id: 'market_share',
     name: 'Market Share',
-    value: 25,
-    kpi: 20,
+    value: "25%",
+    kpi: "20%",
     relatedKpiGroups: ['customer'],
   },
 ]
@@ -100,6 +102,16 @@ watch(
   () => mode.value,
   () => selectedKpi.value = undefined,
 );
+
+watch(
+  () => gainSharingData.value?.base_data,
+  (baseDataValue) => {
+    console.log('changed', baseDataValue);
+    if (gainSharingData.value && baseDataValue && baseDataValue.koefisien_kontribusi && baseDataValue.rasio_nilai_tambah && baseDataValue.reserve_ratio) {
+      gainSharingData.value.base_data.gain_sharing = baseDataValue.nilai_tambah / baseDataValue.rasio_nilai_tambah - baseDataValue.upah_dibayarkan * (1 - (baseDataValue.reserve_ratio/100))
+    }
+  }
+)
 
 </script>
 
@@ -152,14 +164,14 @@ watch(
               type="button"
               v-for="_kpi in _mockKpiList"
               :class="`px-8 py-4 rounded-lg border border-neutral-200 hover:border-blue-500 hover:bg-blue-50 transition ease-in-out flex justify-between ${selectedKpi?.id === _kpi.id ? 'border-blue-500 bg-blue-50' : ''}`"
-              @click="selectedKpi?.id === _kpi.id ? selectedKpi = undefined : selectedKpi = _kpi"
+              @click="selectedKpi = _kpi"
             >
               <p>{{ _kpi.name }}</p>
               <!-- <p class="font-bold">{{ _kpi.value }}</p> -->
             </button>
           </div>
           <div v-if="selectedKpi" class="rounded-lg border border-neutral-200 p-4">
-            <table class="table">
+            <table class="table text-sm">
               <thead>
                 <tr>
                   <th>Indikator</th>
@@ -167,10 +179,10 @@ watch(
                   <th>KPI</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody class="text-xs">
                 <tr 
                   v-for="indicator in _mockIndicatorList.filter(v => v.relatedKpiGroups.includes(selectedKpi?.id ?? ''))" 
-                  :class="`hover:bg-blue-50 transition ease-in-out cursor-pointer ${indicator.id === selectedIndicator?.id ? 'bg-blue-50' : ''}`"
+                  :class="`hover:bg-blue-50 transition ease-in-out cursor-pointer text-sm ${indicator.id === selectedIndicator?.id ? 'bg-blue-50' : ''}`"
                   :key="indicator.id"
                   @click="selectedIndicator = indicator"
                 >
@@ -181,6 +193,9 @@ watch(
               </tbody>
             </table>
           </div>
+          <div v-else class="py-8 flex justify-center items-center">
+            <p class="text-neutral-500 italic text-sm">Silahkan pilih perspektif</p>
+          </div>
 
           <div v-if="selectedIndicator" class="rounded-lg border border-neutral-200 p-4">
             <h3 class="font-bold text-xl text-neutral-600 mb-2">{{ selectedIndicator.name }}</h3>
@@ -188,14 +203,17 @@ watch(
             <p class="text-sm text-neutral-700 mt-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur a semper erat, id rutrum turpis. Nulla ac faucibus erat, eget luctus sem. Vivamus lectus elit, placerat ac nisi a.</p>
             <div class="grid grid-cols-2 gap-2 mt-4">
               <div class="">
-                <h4 class="text-sm font-bold text-neutral-700">Nilai</h4>
-                <p class="text-xl font-bold">{{ selectedIndicator.value }}</p>
+                <h4 class="text-sm font-bold text-neutral-500">Nilai</h4>
+                <p class="text-xl font-bold text-green-500" :class="{'text-red-500': selectedIndicator.isRed}">{{ selectedIndicator.value }}</p>
               </div>
               <div class="">
-                <h4 class="text-sm font-bold text-neutral-700">KPI</h4>
+                <h4 class="text-sm font-bold text-neutral-500">KPI</h4>
                 <p class="text-xl font-bold">{{ selectedIndicator.kpi }}</p>
               </div>
             </div>
+          </div>
+          <div v-else-if="selectedKpi" class="py-8 flex justify-center items-center">
+            <p class="text-neutral-500 italic text-sm">Silahkan pilih indikator</p>
           </div>
         </div>
       </div>
@@ -242,26 +260,26 @@ watch(
                     <div class="grid grid-cols-3 gap-4 w-full pb-2.5">
                       <div class="flex flex-col gap-1 w-full">
                         <label htmlFor="gain-sharing.data.rasio-nilai-tambah" class="text-sm font-bold text-neutral-700">Rasio Nilai Tambah</label>
-                        <input id="gain-sharing.data.rasio-nilai-tambah" type="number" class="input input-bordered input-sm" />
+                        <input id="gain-sharing.data.rasio-nilai-tambah" required type="number" class="input input-bordered input-sm" v-model="gainSharingData.base_data.rasio_nilai_tambah"/>
                       </div>
                       <div class="flex flex-col gap-1 w-full">
                         <label htmlFor="gain-sharing.data.reserve-ratio" class="text-sm font-bold text-neutral-700">Reserve Ratio</label>
                         <div class="input input-bordered input-sm flex gap-2 items-center w-full">
-                          <input id="gain-sharing.data.reserve-ratio" type="number" class="w-4/5" />
+                          <input id="gain-sharing.data.reserve-ratio" required type="number" class="w-4/5" v-model="gainSharingData.base_data.reserve_ratio"/>
                           <p class="text-sm">%</p>
                         </div>
                       </div>
                       <div class="flex flex-col gap-1 w-full">
                         <label htmlFor="gain-sharing.data.koefisien-kontribusi" class="text-sm font-bold text-neutral-700">Koefisien Kontribusi</label>
                         <div class="input input-bordered input-sm flex gap-2 items-center w-full">
-                          <input id="gain-sharing.data.koefisien-kontribusi" type="number" class="w-4/5" />
+                          <input id="gain-sharing.data.koefisien-kontribusi" required type="number" class="w-4/5" v-model="gainSharingData.base_data.koefisien_kontribusi"/>
                           <p class="text-sm">%</p>
                         </div>
                       </div>
                     </div>
                     <div class="flex flex-col gap-1 w-full pb-2.5">
                       <label htmlFor="gain-sharing.data.gain-sharing" class="text-sm font-bold text-neutral-700">Nilai Gain Sharing</label>
-                      <input id="gain-sharing.data.gain-sharing" type="string" class="input input-bordered input-sm bg-blue-50 border-blue-500" readonly value="Rp 72.332.929.047"/>
+                      <input id="gain-sharing.data.gain-sharing" type="string" class="input input-bordered input-sm bg-blue-50 border-blue-500" readonly value="Rp 150.565.890"/>
                     </div>
                   </div>
                 </div>

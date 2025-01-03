@@ -1,1475 +1,3530 @@
-import type { GainSharingData } from "../types/gain-sharing";
-import { MockDivisionList, MockEmployeeList } from "./company";
-
 export const mockKpiKaryawan = [
-{
-  "2021": "100.00",
-  "2022": "93.77",
-  "2023": "57.71",
-  "No": "1",
-  "Karyawan": "Karyawan 1",
-  "Jabatan": "Business Development Officer",
-  "Departemen": "Business Development",
-  "Divisi": "Business Development & Planning"
-},
-{
-  "2021": "100.00",
-  "2022": "93.77",
-  "2023": "53.00",
-  "No": "2",
-  "Karyawan": "Karyawan 2",
-  "Jabatan": "Business Development Officer",
-  "Departemen": "Business Development",
-  "Divisi": "Business Development & Planning"
-},
-{
-  "2021": "100.00",
-  "2022": "95.22",
-  "2023": "53.36",
-  "No": "3",
-  "Karyawan": "Karyawan 3",
-  "Jabatan": "AVP Business Development",
-  "Departemen": "Business Development",
-  "Divisi": "Business Development & Planning"
-},
-{
-  "2021": "89.5",
-  "2022": "33.57",
-  "2023": "110.00",
-  "No": "4",
-  "Karyawan": "Karyawan 4",
-  "Jabatan": "VP Business Development & Planning",
-  "Departemen": "Business Development & Planning",
-  "Divisi": "Business Development & Planning"
-},
-{
-  "2021": "89.5",
-  "2022": "69.17",
-  "2023": "99.00",
-  "No": "5",
-  "Karyawan": "Karyawan 5",
-  "Jabatan": "Project Planning Officer",
-  "Departemen": "Project Planning",
-  "Divisi": "Business Development & Planning"
-},
-{
-  "2021": "89.5",
-  "2022": "60.09",
-  "2023": "89.00",
-  "No": "6",
-  "Karyawan": "Karyawan 6",
-  "Jabatan": "Project Planning Officer",
-  "Departemen": "Project Planning",
-  "Divisi": "Business Development & Planning"
-},
-{
-  "2021": "89.5",
-  "2022": "33.57",
-  "2023": "88.00",
-  "No": "7",
-  "Karyawan": "Karyawan 7",
-  "Jabatan": "Project Planning Officer",
-  "Departemen": "Project Planning",
-  "Divisi": "Business Development & Planning"
-},
-{
-  "2021": "75.00",
-  "2022": "67.09",
-  "2023": "110.00",
-  "No": "8",
-  "Karyawan": "Karyawan 8",
-  "Jabatan": "AVP Project Planning",
-  "Departemen": "Project Planning",
-  "Divisi": "Business Development & Planning"
-},
-{
-  "2021": "99.00",
-  "2022": "95.02",
-  "2023": "95.62",
-  "No": "9",
-  "Karyawan": "Karyawan 9",
-  "Jabatan": "AVP Corp. Health, Safety & Environment",
-  "Departemen": "Corporate Health, Safety & Environment",
-  "Divisi": "Corporate Health, Safety & Environment"
-},
-{
-  "2021": "89.5",
-  "2022": "100.82",
-  "2023": "95.67",
-  "No": "10",
-  "Karyawan": "Karyawan 10",
-  "Jabatan": "Environment Officer",
-  "Departemen": "Corporate Health, Safety & Environment",
-  "Divisi": "Corporate Health, Safety & Environment"
-},
-{
-  "2021": "89.5",
-  "2022": "96.12",
-  "2023": "97.00",
-  "No": "11",
-  "Karyawan": "Karyawan 11",
-  "Jabatan": "Environment Officer",
-  "Departemen": "Corporate Health, Safety & Environment",
-  "Divisi": "Corporate Health, Safety & Environment"
-},
-{
-  "2021": "89.5",
-  "2022": "95.88",
-  "2023": "96.00",
-  "No": "12",
-  "Karyawan": "Karyawan 12",
-  "Jabatan": "Health & Safety Officer",
-  "Departemen": "Corporate Health, Safety & Environment",
-  "Divisi": "Corporate Health, Safety & Environment"
-},
-{
-  "2021": "100.00",
-  "2022": "96.51",
-  "2023": "95.44",
-  "No": "13",
-  "Karyawan": "Karyawan 13",
-  "Jabatan": "Health & Safety Officer",
-  "Departemen": "Corporate Health, Safety & Environment",
-  "Divisi": "Corporate Health, Safety & Environment"
-},
-{
-  "2021": "98.00",
-  "2022": "61.84",
-  "2023": "98.00",
-  "No": "14",
-  "Karyawan": "Karyawan 14",
-  "Jabatan": "AVP Litigation & Non Litigation",
-  "Departemen": "Litigation & Non-Litigation",
-  "Divisi": "Corporate Legal"
-},
-{
-  "2021": "98.00",
-  "2022": "67.67",
-  "2023": "94.00",
-  "No": "15",
-  "Karyawan": "Karyawan 15",
-  "Jabatan": "Corporate Legal Officer (Litigation)",
-  "Departemen": "Litigation & Non-Litigation",
-  "Divisi": "Corporate Legal"
-},
-{
-  "2021": "98.00",
-  "2022": "67.82",
-  "2023": "95.00",
-  "No": "16",
-  "Karyawan": "Karyawan 16",
-  "Jabatan": "Corporate Legal Officer (Litigation)",
-  "Departemen": "Litigation & Non-Litigation",
-  "Divisi": "Corporate Legal"
-},
-{
-  "2021": "89.5",
-  "2022": "67.04",
-  "2023": "90.00",
-  "No": "17",
-  "Karyawan": "Karyawan 17",
-  "Jabatan": "Corporate Legal Officer (Litigation)",
-  "Departemen": "Litigation & Non-Litigation",
-  "Divisi": "Corporate Legal"
-},
-{
-  "2021": "100.00",
-  "2022": "68.30",
-  "2023": "93.00",
-  "No": "18",
-  "Karyawan": "Karyawan 18",
-  "Jabatan": "Corporate Regulation Officer (Non Litigation)",
-  "Departemen": "Litigation & Non-Litigation",
-  "Divisi": "Corporate Legal"
-},
-{
-  "2021": "94.00",
-  "2022": "64.24",
-  "2023": "86.00",
-  "No": "19",
-  "Karyawan": "Karyawan 19",
-  "Jabatan": "Ketua Tim Sertifikasi Pertanahan",
-  "Departemen": "Tim Sertifikasi Pertanahan",
-  "Divisi": "Corporate Legal"
-},
-{
-  "2021": "99.00",
-  "2022": "55.20",
-  "2023": "86.00",
-  "No": "20",
-  "Karyawan": "Karyawan 20",
-  "Jabatan": "Tim Sertifikasi Pertanahan",
-  "Departemen": "Tim Sertifikasi Pertanahan",
-  "Divisi": "Corporate Legal"
-},
-{
-  "2021": "95.00",
-  "2022": "66.30",
-  "2023": "97.00",
-  "No": "21",
-  "Karyawan": "Karyawan 21",
-  "Jabatan": "VP Corporate Legal",
-  "Departemen": "Corporate Legal",
-  "Divisi": "Corporate Legal"
-},
-{
-  "2021": "100.00",
-  "2022": "68.09",
-  "2023": "110.00",
-  "No": "22",
-  "Karyawan": "Karyawan 22",
-  "Jabatan": "AVP Corporate Communication & TJSL",
-  "Departemen": "Corporate Communication & TJSL",
-  "Divisi": "Corporate Secretary & TJSL"
-},
-{
-  "2021": "100.00",
-  "2022": "78.86",
-  "2023": "110.00",
-  "No": "23",
-  "Karyawan": "Karyawan 23",
-  "Jabatan": "AVP Corporate Communication & TJSL",
-  "Departemen": "Corporate Communication & TJSL",
-  "Divisi": "Corporate Secretary & TJSL"
-},
-{
-  "2021": "89.5",
-  "2022": "89.5",
-  "2023": "110.00",
-  "No": "24",
-  "Karyawan": "Karyawan 24",
-  "Jabatan": "Corporate Communication Officer",
-  "Departemen": "Corporate Communication & TJSL",
-  "Divisi": "Corporate Secretary & TJSL"
-},
-{
-  "2021": "100.00",
-  "2022": "72.86",
-  "2023": "110.00",
-  "No": "25",
-  "Karyawan": "Karyawan 25",
-  "Jabatan": "Corporate Communication Officer",
-  "Departemen": "Corporate Communication & TJSL",
-  "Divisi": "Corporate Secretary & TJSL"
-},
-{
-  "2021": "94.00",
-  "2022": "64.78",
-  "2023": "110.00",
-  "No": "26",
-  "Karyawan": "Karyawan 26",
-  "Jabatan": "TJSL Officer",
-  "Departemen": "Corporate Communication & TJSL",
-  "Divisi": "Corporate Secretary & TJSL"
-},
-{
-  "2021": "94.00",
-  "2022": "66.79",
-  "2023": "110.00",
-  "No": "27",
-  "Karyawan": "Karyawan 27",
-  "Jabatan": "TJSL Officer",
-  "Departemen": "Corporate Communication & TJSL",
-  "Divisi": "Corporate Secretary & TJSL"
-},
-{
-  "2021": "62.00",
-  "2022": "51.97",
-  "2023": "94.00",
-  "No": "28",
-  "Karyawan": "Karyawan 28",
-  "Jabatan": "VP Corporate Secretary & TJSL",
-  "Departemen": "Corporate Secretary & TJSL",
-  "Divisi": "Corporate Secretary & TJSL"
-},
-{
-  "2021": "100.00",
-  "2022": "79.62",
-  "2023": "100.00",
-  "No": "29",
-  "Karyawan": "Karyawan 29",
-  "Jabatan": "Administration Management Officer",
-  "Departemen": "Secretarial & Administration",
-  "Divisi": "Corporate Secretary & TJSL"
-},
-{
-  "2021": "89.5",
-  "2022": "61.43",
-  "2023": "100.00",
-  "No": "30",
-  "Karyawan": "Karyawan 30",
-  "Jabatan": "Administration Management Officer",
-  "Departemen": "Secretarial & Administration",
-  "Divisi": "Corporate Secretary & TJSL"
-},
-{
-  "2021": "100.00",
-  "2022": "65.57",
-  "2023": "100.00",
-  "No": "31",
-  "Karyawan": "Karyawan 31",
-  "Jabatan": "Administration Management Officer",
-  "Departemen": "Secretarial & Administration",
-  "Divisi": "Corporate Secretary & TJSL"
-},
-{
-  "2021": "98.00",
-  "2022": "98.57",
-  "2023": "60.00",
-  "No": "32",
-  "Karyawan": "Karyawan 32",
-  "Jabatan": "AVP Secretarial & Administration",
-  "Departemen": "Secretarial & Administration",
-  "Divisi": "Corporate Secretary & TJSL"
-},
-{
-  "2021": "100.00",
-  "2022": "71.62",
-  "2023": "100.00",
-  "No": "33",
-  "Karyawan": "Karyawan 33",
-  "Jabatan": "Secretarial",
-  "Departemen": "Secretarial & Administration",
-  "Divisi": "Corporate Secretary & TJSL"
-},
-{
-  "2021": "100.00",
-  "2022": "88.37",
-  "2023": "100.00",
-  "No": "34",
-  "Karyawan": "Karyawan 34",
-  "Jabatan": "Secretarial",
-  "Departemen": "Secretarial & Administration",
-  "Divisi": "Corporate Secretary & TJSL"
-},
-{
-  "2021": "78.00",
-  "2022": "95.88",
-  "2023": "100.00",
-  "No": "35",
-  "Karyawan": "Karyawan 35",
-  "Jabatan": "Secretarial",
-  "Departemen": "Secretarial & Administration",
-  "Divisi": "Corporate Secretary & TJSL"
-},
-{
-  "2021": "100.00",
-  "2022": "62.82",
-  "2023": "60.00",
-  "No": "36",
-  "Karyawan": "Karyawan 36",
-  "Jabatan": "Security & Traffic Management Officer",
-  "Departemen": "Corporate Security & Traffic Management",
-  "Divisi": "Corporate Security & Traffic Management"
-},
-{
-  "2021": "100.00",
-  "2022": "48.12",
-  "2023": "98.00",
-  "No": "37",
-  "Karyawan": "Karyawan 37",
-  "Jabatan": "Security & Traffic Management Officer",
-  "Departemen": "Corporate Security & Traffic Management",
-  "Divisi": "Corporate Security & Traffic Management"
-},
-{
-  "2021": "89.5",
-  "2022": "67.53",
-  "2023": "94.00",
-  "No": "38",
-  "Karyawan": "Karyawan 38",
-  "Jabatan": "Security & Traffic Management Officer",
-  "Departemen": "Corporate Security & Traffic Management",
-  "Divisi": "Corporate Security & Traffic Management"
-},
-{
-  "2021": "51.00",
-  "2022": "35.57",
-  "2023": "110.00",
-  "No": "39",
-  "Karyawan": "Karyawan 39",
-  "Jabatan": "Security & Traffic Management Officer",
-  "Departemen": "Corporate Security & Traffic Management",
-  "Divisi": "Corporate Security & Traffic Management"
-},
-{
-  "2021": "85.00",
-  "2022": "91.37",
-  "2023": "86.00",
-  "No": "40",
-  "Karyawan": "Karyawan 40",
-  "Jabatan": "AVP Corp. Security & Traffic Management",
-  "Departemen": "Corporate Security & Traffic Management",
-  "Divisi": "Corporate Security & Traffic Management"
-},
-{
-  "2021": "100.00",
-  "2022": "93.77",
-  "2023": "53.00",
-  "No": "41",
-  "Karyawan": "Karyawan 41",
-  "Jabatan": "Security & Traffic Management Officer",
-  "Departemen": "Corporate Security & Traffic Management",
-  "Divisi": "Corporate Security & Traffic Management"
-},
-{
-  "2021": "100.00",
-  "2022": "92.86",
-  "2023": "96.29",
-  "No": "42",
-  "Karyawan": "Karyawan 42",
-  "Jabatan": "AVP Corporate Performance Monitoring Specialist",
-  "Departemen": "Corporate Performance Monitoring Specialist",
-  "Divisi": "Corporate Strategy & Planning"
-},
-{
-  "2021": "100.00",
-  "2022": "69.57",
-  "2023": "98.77",
-  "No": "43",
-  "Karyawan": "Karyawan 43",
-  "Jabatan": "Corporate Performance Monitoring Junior",
-  "Departemen": "Corporate Performance Monitoring Specialist",
-  "Divisi": "Corporate Strategy & Planning"
-},
-{
-  "2021": "89.5",
-  "2022": "83.30",
-  "2023": "95.00",
-  "No": "44",
-  "Karyawan": "Karyawan 44",
-  "Jabatan": "Corporate Performance Monitoring Junior",
-  "Departemen": "Corporate Performance Monitoring Specialist",
-  "Divisi": "Corporate Strategy & Planning"
-},
-{
-  "2021": "100.00",
-  "2022": "90.57",
-  "2023": "98.77",
-  "No": "45",
-  "Karyawan": "Karyawan 45",
-  "Jabatan": "Corporate Planning Specialist",
-  "Departemen": "Corporate Planning Specialist",
-  "Divisi": "Corporate Strategy & Planning"
-},
-{
-  "2021": "100.00",
-  "2022": "65.52",
-  "2023": "110.00",
-  "No": "46",
-  "Karyawan": "Karyawan 46",
-  "Jabatan": "Corporate Planning Specialist",
-  "Departemen": "Corporate Planning Specialist",
-  "Divisi": "Corporate Strategy & Planning"
-},
-{
-  "2021": "100.00",
-  "2022": "66.60",
-  "2023": "97.03",
-  "No": "47",
-  "Karyawan": "Karyawan 47",
-  "Jabatan": "Corporate Planning Specialist Junior",
-  "Departemen": "Corporate Planning Specialist",
-  "Divisi": "Corporate Strategy & Planning"
-},
-{
-  "2021": "89.5",
-  "2022": "62.82",
-  "2023": "93.90",
-  "No": "48",
-  "Karyawan": "Karyawan 48",
-  "Jabatan": "Corporate Planning Specialist Junior",
-  "Departemen": "Corporate Planning Specialist",
-  "Divisi": "Corporate Strategy & Planning"
-},
-{
-  "2021": "84.00",
-  "2022": "65.59",
-  "2023": "97.00",
-  "No": "49",
-  "Karyawan": "Karyawan 49",
-  "Jabatan": "Corporate Performance Monitoring Specialist",
-  "Departemen": "Corporate Strategy & Planning",
-  "Divisi": "Corporate Strategy & Planning"
-},
-{
-  "2021": "99.00",
-  "2022": "97.73",
-  "2023": "105.00",
-  "No": "50",
-  "Karyawan": "Karyawan 50",
-  "Jabatan": "VP Corporate Strategy & Planning",
-  "Departemen": "Corporate Strategy & Planning",
-  "Divisi": "Corporate Strategy & Planning"
-},
-{
-  "2021": "89.5",
-  "2022": "53.57",
-  "2023": "110.00",
-  "No": "51",
-  "Karyawan": "Karyawan 51",
-  "Jabatan": "Accounting & Financial Analyst Officer",
-  "Departemen": "Accounting & Tax",
-  "Divisi": "Finance & Accounting"
-},
-{
-  "2021": "100.00",
-  "2022": "53.57",
-  "2023": "110.00",
-  "No": "52",
-  "Karyawan": "Karyawan 52",
-  "Jabatan": "Accounting & Financial Analyst Officer",
-  "Departemen": "Accounting & Tax",
-  "Divisi": "Finance & Accounting"
-},
-{
-  "2021": "100.00",
-  "2022": "71.57",
-  "2023": "110.00",
-  "No": "53",
-  "Karyawan": "Karyawan 53",
-  "Jabatan": "AVP Accounting & Tax",
-  "Departemen": "Accounting & Tax",
-  "Divisi": "Finance & Accounting"
-},
-{
-  "2021": "89.5",
-  "2022": "53.57",
-  "2023": "110.00",
-  "No": "54",
-  "Karyawan": "Karyawan 54",
-  "Jabatan": "Tax Officer",
-  "Departemen": "Accounting & Tax",
-  "Divisi": "Finance & Accounting"
-},
-{
-  "2021": "89.5",
-  "2022": "53.57",
-  "2023": "110.00",
-  "No": "55",
-  "Karyawan": "Karyawan 55",
-  "Jabatan": "Tax Officer",
-  "Departemen": "Accounting & Tax",
-  "Divisi": "Finance & Accounting"
-},
-{
-  "2021": "100.00",
-  "2022": "53.57",
-  "2023": "110.00",
-  "No": "56",
-  "Karyawan": "Karyawan 56",
-  "Jabatan": "VP Finance & Accounting",
-  "Departemen": "Finance & Accounting",
-  "Divisi": "Finance & Accounting"
-},
-{
-  "2021": "100.00",
-  "2022": "54.30",
-  "2023": "110.00",
-  "No": "57",
-  "Karyawan": "Karyawan 57",
-  "Jabatan": "AVP Finance & Treasury",
-  "Departemen": "Finance & Treasury",
-  "Divisi": "Finance & Accounting"
-},
-{
-  "2021": "100.00",
-  "2022": "61.32",
-  "2023": "91.00",
-  "No": "58",
-  "Karyawan": "Karyawan 58",
-  "Jabatan": "Investment & Financial Risk Officer",
-  "Departemen": "Finance & Treasury",
-  "Divisi": "Finance & Accounting"
-},
-{
-  "2021": "89.5",
-  "2022": "54.30",
-  "2023": "110.00",
-  "No": "59",
-  "Karyawan": "Karyawan 59",
-  "Jabatan": "Payment & Verification Officer",
-  "Departemen": "Finance & Treasury",
-  "Divisi": "Finance & Accounting"
-},
-{
-  "2021": "100.00",
-  "2022": "54.30",
-  "2023": "110.00",
-  "No": "60",
-  "Karyawan": "Karyawan 60",
-  "Jabatan": "Payment & Verification Officer",
-  "Departemen": "Finance & Treasury",
-  "Divisi": "Finance & Accounting"
-},
-{
-  "2021": "100.00",
-  "2022": "54.30",
-  "2023": "110.00",
-  "No": "61",
-  "Karyawan": "Karyawan 61",
-  "Jabatan": "Payment & Verification Officer",
-  "Departemen": "Finance & Treasury",
-  "Divisi": "Finance & Accounting"
-},
-{
-  "2021": "100.00",
-  "2022": "66.03",
-  "2023": "110.00",
-  "No": "62",
-  "Karyawan": "Karyawan 62",
-  "Jabatan": "Ketua Tim Pengelolaan Aset & Piutang Macet",
-  "Departemen": "Tim Pengelolaan Aset & Piutang Macet",
-  "Divisi": "Finance & Accounting"
-},
-{
-  "2021": "73.00",
-  "2022": "62.47",
-  "2023": "97.00",
-  "No": "63",
-  "Karyawan": "Karyawan 63",
-  "Jabatan": "Tim Pengelolaan Aset & Piutang Macet",
-  "Departemen": "Tim Pengelolaan Aset & Piutang Macet",
-  "Divisi": "Finance & Accounting"
-},
-{
-  "2021": "92.00",
-  "2022": "61.65",
-  "2023": "100.00",
-  "No": "64",
-  "Karyawan": "Karyawan 64",
-  "Jabatan": "Tim Pengelolaan Aset & Piutang Macet",
-  "Departemen": "Tim Pengelolaan Aset & Piutang Macet",
-  "Divisi": "Finance & Accounting"
-},
-{
-  "2021": "96.00",
-  "2022": "104.18",
-  "2023": "95.45",
-  "No": "65",
-  "Karyawan": "Karyawan 65",
-  "Jabatan": "AVP Human Capital Development",
-  "Departemen": "Human Capital Development",
-  "Divisi": "Human Capital Management"
-},
-{
-  "2021": "100.00",
-  "2022": "54.30",
-  "2023": "110.00",
-  "No": "66",
-  "Karyawan": "Karyawan 66",
-  "Jabatan": "AVP Human Capital Development",
-  "Departemen": "Human Capital Development",
-  "Divisi": "Human Capital Management"
-},
-{
-  "2021": "89.5",
-  "2022": "89.5",
-  "2023": "94.55",
-  "No": "67",
-  "Karyawan": "Karyawan 67",
-  "Jabatan": "HC Utilization Officer",
-  "Departemen": "Human Capital Development",
-  "Divisi": "Human Capital Management"
-},
-{
-  "2021": "89.5",
-  "2022": "60.00",
-  "2023": "96.05",
-  "No": "68",
-  "Karyawan": "Karyawan 68",
-  "Jabatan": "Human Capital Development Officer",
-  "Departemen": "Human Capital Development",
-  "Divisi": "Human Capital Management"
-},
-{
-  "2021": "89.5",
-  "2022": "89.5",
-  "2023": "110.00",
-  "No": "69",
-  "Karyawan": "Karyawan 69",
-  "Jabatan": "VP Human Capital Management",
-  "Departemen": "Human Capital Management",
-  "Divisi": "Human Capital Management"
-},
-{
-  "2021": "83.00",
-  "2022": "85.60",
-  "2023": "100.00",
-  "No": "70",
-  "Karyawan": "Karyawan 70",
-  "Jabatan": "AVP Organization & Human Capital Services",
-  "Departemen": "Organization & HC Services",
-  "Divisi": "Human Capital Management"
-},
-{
-  "2021": "89.5",
-  "2022": "82.40",
-  "2023": "102.00",
-  "No": "71",
-  "Karyawan": "Karyawan 71",
-  "Jabatan": "HC Services Officer",
-  "Departemen": "Organization & HC Services",
-  "Divisi": "Human Capital Management"
-},
-{
-  "2021": "89.5",
-  "2022": "60.00",
-  "2023": "86.00",
-  "No": "72",
-  "Karyawan": "Karyawan 72",
-  "Jabatan": "Organization & Culture Officer",
-  "Departemen": "Organization & HC Services",
-  "Divisi": "Human Capital Management"
-},
-{
-  "2021": "89",
-  "2022": "96.66",
-  "2023": "97.2",
-  "No": "73",
-  "Karyawan": "Karyawan 73",
-  "Jabatan": "Transformasi Organisasi Specialist",
-  "Departemen": "Transformasi Organisasi Specialist",
-  "Divisi": "Human Capital Management"
-},
-{
-  "2021": "100.00",
-  "2022": "69.77",
-  "2023": "95.00",
-  "No": "74",
-  "Karyawan": "Karyawan 74",
-  "Jabatan": "AVP General Affairs",
-  "Departemen": "General Affairs",
-  "Divisi": "Information Technology & General Affairs"
-},
-{
-  "2021": "86.00",
-  "2022": "69.17",
-  "2023": "98.00",
-  "No": "75",
-  "Karyawan": "Karyawan 75",
-  "Jabatan": "General Affairs Officer",
-  "Departemen": "General Affairs",
-  "Divisi": "Information Technology & General Affairs"
-},
-{
-  "2021": "89.5",
-  "2022": "69.17",
-  "2023": "97.00",
-  "No": "76",
-  "Karyawan": "Karyawan 76",
-  "Jabatan": "Logistic & Asset Management Officer",
-  "Departemen": "General Affairs",
-  "Divisi": "Information Technology & General Affairs"
-},
-{
-  "2021": "96.00",
-  "2022": "98.57",
-  "2023": "110.00",
-  "No": "77",
-  "Karyawan": "Karyawan 77",
-  "Jabatan": "Logistic & Asset Management Officer",
-  "Departemen": "General Affairs",
-  "Divisi": "Information Technology & General Affairs"
-},
-{
-  "2021": "81.00",
-  "2022": "53.28",
-  "2023": "91.00",
-  "No": "78",
-  "Karyawan": "Karyawan 78",
-  "Jabatan": "AVP Information Technology",
-  "Departemen": "Information Technology",
-  "Divisi": "Information Technology & General Affairs"
-},
-{
-  "2021": "89.5",
-  "2022": "52.90",
-  "2023": "100.00",
-  "No": "79",
-  "Karyawan": "Karyawan 79",
-  "Jabatan": "Information Technology Application & System Officer",
-  "Departemen": "Information Technology",
-  "Divisi": "Information Technology & General Affairs"
-},
-{
-  "2021": "86.00",
-  "2022": "53.34",
-  "2023": "94.00",
-  "No": "80",
-  "Karyawan": "Karyawan 80",
-  "Jabatan": "Information Technology Application & System Officer",
-  "Departemen": "Information Technology",
-  "Divisi": "Information Technology & General Affairs"
-},
-{
-  "2021": "100.00",
-  "2022": "53.57",
-  "2023": "100.00",
-  "No": "81",
-  "Karyawan": "Karyawan 81",
-  "Jabatan": "Information Technology Application & System Officer",
-  "Departemen": "Information Technology",
-  "Divisi": "Information Technology & General Affairs"
-},
-{
-  "2021": "89.5",
-  "2022": "89.5",
-  "2023": "100.00",
-  "No": "82",
-  "Karyawan": "Karyawan 82",
-  "Jabatan": "IT Infrastructure & Data Officer",
-  "Departemen": "Information Technology",
-  "Divisi": "Information Technology & General Affairs"
-},
-{
-  "2021": "89.5",
-  "2022": "89.5",
-  "2023": "100.00",
-  "No": "83",
-  "Karyawan": "Karyawan 83",
-  "Jabatan": "IT Infrastructure & Data Officer",
-  "Departemen": "Information Technology",
-  "Divisi": "Information Technology & General Affairs"
-},
-{
-  "2021": "100.00",
-  "2022": "78.65",
-  "2023": "101.26",
-  "No": "84",
-  "Karyawan": "Karyawan 84",
-  "Jabatan": "VP Information Technology & General Affairs",
-  "Departemen": "Information Technology & General Affairs",
-  "Divisi": "Information Technology & General Affairs"
-},
-{
-  "2021": "94.00",
-  "2022": "64.24",
-  "2023": "86.00",
-  "No": "85",
-  "Karyawan": "Karyawan 85",
-  "Jabatan": "AVP Industrial Estate",
-  "Departemen": "Industrial Estate",
-  "Divisi": "Integrated Estate Management"
-},
-{
-  "2021": "89.5",
-  "2022": "60.00",
-  "2023": "96.00",
-  "No": "86",
-  "Karyawan": "Karyawan 86",
-  "Jabatan": "Estate Officer",
-  "Departemen": "Industrial Estate",
-  "Divisi": "Integrated Estate Management"
-},
-{
-  "2021": "98.00",
-  "2022": "61.38",
-  "2023": "97.00",
-  "No": "87",
-  "Karyawan": "Karyawan 87",
-  "Jabatan": "Estate Officer",
-  "Departemen": "Industrial Estate",
-  "Divisi": "Integrated Estate Management"
-},
-{
-  "2021": "97.00",
-  "2022": "66.12",
-  "2023": "88.00",
-  "No": "88",
-  "Karyawan": "Karyawan 88",
-  "Jabatan": "Industrial Estate Monitoring Evaluation Officer",
-  "Departemen": "Industrial Estate",
-  "Divisi": "Integrated Estate Management"
-},
-{
-  "2021": "82.00",
-  "2022": "67.22",
-  "2023": "104.00",
-  "No": "89",
-  "Karyawan": "Karyawan 89",
-  "Jabatan": "Industrial Estate Monitoring Evaluation Officer",
-  "Departemen": "Industrial Estate",
-  "Divisi": "Integrated Estate Management"
-},
-{
-  "2021": "100.00",
-  "2022": "33.57",
-  "2023": "96.00",
-  "No": "90",
-  "Karyawan": "Karyawan 90",
-  "Jabatan": "Industrial Estate Monitoring Evaluation Officer",
-  "Departemen": "Industrial Estate",
-  "Divisi": "Integrated Estate Management"
-},
-{
-  "2021": "100.00",
-  "2022": "85.32",
-  "2023": "87.17",
-  "No": "91",
-  "Karyawan": "Karyawan 91",
-  "Jabatan": "VP Integrated Estate Management",
-  "Departemen": "Integrated Estate Management",
-  "Divisi": "Integrated Estate Management"
-},
-{
-  "2021": "97.00",
-  "2022": "63.71",
-  "2023": "85.00",
-  "No": "92",
-  "Karyawan": "Karyawan 92",
-  "Jabatan": "AVP Property Retail",
-  "Departemen": "Property & Retail",
-  "Divisi": "Integrated Estate Management"
-},
-{
-  "2021": "100.00",
-  "2022": "93.77",
-  "2023": "58.96",
-  "No": "93",
-  "Karyawan": "Karyawan 93",
-  "Jabatan": "Property Monitoring Evaluation Officer",
-  "Departemen": "Property & Retail",
-  "Divisi": "Integrated Estate Management"
-},
-{
-  "2021": "88.00",
-  "2022": "66.19",
-  "2023": "110.00",
-  "No": "94",
-  "Karyawan": "Karyawan 94",
-  "Jabatan": "Property Monitoring Evaluation Officer",
-  "Departemen": "Property & Retail",
-  "Divisi": "Integrated Estate Management"
-},
-{
-  "2021": "89.5",
-  "2022": "65.89",
-  "2023": "83.00",
-  "No": "95",
-  "Karyawan": "Karyawan 95",
-  "Jabatan": "Property Officer",
-  "Departemen": "Property & Retail",
-  "Divisi": "Integrated Estate Management"
-},
-{
-  "2021": "97.00",
-  "2022": "65.16",
-  "2023": "87.00",
-  "No": "96",
-  "Karyawan": "Karyawan 96",
-  "Jabatan": "Property Officer",
-  "Departemen": "Property & Retail",
-  "Divisi": "Integrated Estate Management"
-},
-{
-  "2021": "89.5",
-  "2022": "61.69",
-  "2023": "110.00",
-  "No": "97",
-  "Karyawan": "Karyawan 97",
-  "Jabatan": "Property Officer",
-  "Departemen": "Property & Retail",
-  "Divisi": "Integrated Estate Management"
-},
-{
-  "2021": "100.00",
-  "2022": "63.23",
-  "2023": "86.00",
-  "No": "98",
-  "Karyawan": "Karyawan 98",
-  "Jabatan": "Retail Business Officer",
-  "Departemen": "Retail Business",
-  "Divisi": "Integrated Estate Management"
-},
-{
-  "2021": "88.00",
-  "2022": "66.19",
-  "2023": "110.00",
-  "No": "99",
-  "Karyawan": "Karyawan 99",
-  "Jabatan": "Retail Business Officer",
-  "Departemen": "Retail Business",
-  "Divisi": "Integrated Estate Management"
-},
-{
-  "2021": "100.00",
-  "2022": "93.77",
-  "2023": "110.00",
-  "No": "100",
-  "Karyawan": "Karyawan 100",
-  "Jabatan": "AVP Utility & Infrastructure",
-  "Departemen": "Utility & Infrastructure",
-  "Divisi": "Integrated Estate Management"
-},
-{
-  "2021": "100.00",
-  "2022": "50.01",
-  "2023": "93.00",
-  "No": "101",
-  "Karyawan": "Karyawan 101",
-  "Jabatan": "Utility & Infrastructure Monitoring Evaluation Officer",
-  "Departemen": "Utility & Infrastructure",
-  "Divisi": "Integrated Estate Management"
-},
-{
-  "2021": "100.00",
-  "2022": "50.10",
-  "2023": "93.00",
-  "No": "102",
-  "Karyawan": "Karyawan 102",
-  "Jabatan": "Utility & Infrastructure Monitoring Evaluation Officer",
-  "Departemen": "Utility & Infrastructure",
-  "Divisi": "Integrated Estate Management"
-},
-{
-  "2021": "89.5",
-  "2022": "64.44",
-  "2023": "100.00",
-  "No": "103",
-  "Karyawan": "Karyawan 103",
-  "Jabatan": "Utility & Infrastructure Officer",
-  "Departemen": "Utility & Infrastructure",
-  "Divisi": "Integrated Estate Management"
-},
-{
-  "2021": "89.5",
-  "2022": "66.75",
-  "2023": "94.00",
-  "No": "104",
-  "Karyawan": "Karyawan 104",
-  "Jabatan": "Utility & Infrastructure Officer",
-  "Departemen": "Utility & Infrastructure",
-  "Divisi": "Integrated Estate Management"
-},
-{
-  "2021": "89.5",
-  "2022": "95.87",
-  "2023": "103.00",
-  "No": "105",
-  "Karyawan": "Karyawan 105",
-  "Jabatan": "VP Internal Audit",
-  "Departemen": "Internal Audit",
-  "Divisi": "Internal Audit"
-},
-{
-  "2021": "100.00",
-  "2022": "93.77",
-  "2023": "97.00",
-  "No": "106",
-  "Karyawan": "Karyawan 106",
-  "Jabatan": "Auditor",
-  "Departemen": "Internal Audit",
-  "Divisi": "Internal Audit"
-},
-{
-  "2021": "67.00",
-  "2022": "96.67",
-  "2023": "97.00",
-  "No": "107",
-  "Karyawan": "Karyawan 107",
-  "Jabatan": "Auditor",
-  "Departemen": "Internal Audit",
-  "Divisi": "Internal Audit"
-},
-{
-  "2021": "75.00",
-  "2022": "97.47",
-  "2023": "97.00",
-  "No": "108",
-  "Karyawan": "Karyawan 108",
-  "Jabatan": "Auditor",
-  "Departemen": "Internal Audit",
-  "Divisi": "Internal Audit"
-},
-{
-  "2021": "72.00",
-  "2022": "97.47",
-  "2023": "100.00",
-  "No": "109",
-  "Karyawan": "Karyawan 109",
-  "Jabatan": "Auditor",
-  "Departemen": "Internal Audit",
-  "Divisi": "Internal Audit"
-},
-{
-  "2021": "51.00",
-  "2022": "68.32",
-  "2023": "102.00",
-  "No": "110",
-  "Karyawan": "Karyawan 110",
-  "Jabatan": "VP IT, Facility & Maintenance",
-  "Departemen": "IT, Facility & Maintenance",
-  "Divisi": "IT, Facility & Maintenance"
-},
-{
-  "2021": "100.00",
-  "2022": "64.17",
-  "2023": "97.14",
-  "No": "111",
-  "Karyawan": "Karyawan 111",
-  "Jabatan": "AVP Management System & Compliance",
-  "Departemen": "Management System & Compliance",
-  "Divisi": "Management System & Compliance"
-},
-{
-  "2021": "97.00",
-  "2022": "46.74",
-  "2023": "84.00",
-  "No": "112",
-  "Karyawan": "Karyawan 112",
-  "Jabatan": "Management System & Compliance Officer",
-  "Departemen": "Management System & Compliance",
-  "Divisi": "Management System & Compliance"
-},
-{
-  "2021": "88.00",
-  "2022": "63.97",
-  "2023": "97.14",
-  "No": "113",
-  "Karyawan": "Karyawan 113",
-  "Jabatan": "Management System & Compliance Officer",
-  "Departemen": "Management System & Compliance",
-  "Divisi": "Management System & Compliance"
-},
-{
-  "2021": "100.00",
-  "2022": "67.75",
-  "2023": "96.00",
-  "No": "114",
-  "Karyawan": "Karyawan 114",
-  "Jabatan": "AVP Estate Sales",
-  "Departemen": "Estate Sales",
-  "Divisi": "Marketing & Sales"
-},
-{
-  "2021": "100.00",
-  "2022": "68.57",
-  "2023": "110.00",
-  "No": "115",
-  "Karyawan": "Karyawan 115",
-  "Jabatan": "Estate Sales Executive",
-  "Departemen": "Estate Sales",
-  "Divisi": "Marketing & Sales"
-},
-{
-  "2021": "89.5",
-  "2022": "68.57",
-  "2023": "110.00",
-  "No": "116",
-  "Karyawan": "Karyawan 116",
-  "Jabatan": "Estate Sales Executive",
-  "Departemen": "Estate Sales",
-  "Divisi": "Marketing & Sales"
-},
-{
-  "2021": "100.00",
-  "2022": "70.17",
-  "2023": "110.00",
-  "No": "117",
-  "Karyawan": "Karyawan 117",
-  "Jabatan": "Estate Sales Executive",
-  "Departemen": "Estate Sales",
-  "Divisi": "Marketing & Sales"
-},
-{
-  "2021": "89.5",
-  "2022": "68.97",
-  "2023": "110.00",
-  "No": "118",
-  "Karyawan": "Karyawan 118",
-  "Jabatan": "Estate Sales Executive",
-  "Departemen": "Estate Sales",
-  "Divisi": "Marketing & Sales"
-},
-{
-  "2021": "100.00",
-  "2022": "98.57",
-  "2023": "110.00",
-  "No": "119",
-  "Karyawan": "Karyawan 119",
-  "Jabatan": "AVP Marketing & Customer Relation Management",
-  "Departemen": "Marketing & CRM",
-  "Divisi": "Marketing & Sales"
-},
-{
-  "2021": "89.5",
-  "2022": "65.39",
-  "2023": "73.00",
-  "No": "120",
-  "Karyawan": "Karyawan 120",
-  "Jabatan": "Client Relation Officer",
-  "Departemen": "Marketing & CRM",
-  "Divisi": "Marketing & Sales"
-},
-{
-  "2021": "89.5",
-  "2022": "66.19",
-  "2023": "98.30",
-  "No": "121",
-  "Karyawan": "Karyawan 121",
-  "Jabatan": "General CS Officer",
-  "Departemen": "Marketing & CRM",
-  "Divisi": "Marketing & Sales"
-},
-{
-  "2021": "60.00",
-  "2022": "60.00",
-  "2023": "99.70",
-  "No": "122",
-  "Karyawan": "Karyawan 122",
-  "Jabatan": "General CS Officer",
-  "Departemen": "Marketing & CRM",
-  "Divisi": "Marketing & Sales"
-},
-{
-  "2021": "89.5",
-  "2022": "97.97",
-  "2023": "108.00",
-  "No": "123",
-  "Karyawan": "Karyawan 123",
-  "Jabatan": "Product & Marketing Officer",
-  "Departemen": "Marketing & CRM",
-  "Divisi": "Marketing & Sales"
-},
-{
-  "2021": "96.00",
-  "2022": "98.57",
-  "2023": "105.00",
-  "No": "124",
-  "Karyawan": "Karyawan 124",
-  "Jabatan": "Product & Marketing Officer",
-  "Departemen": "Marketing & CRM",
-  "Divisi": "Marketing & Sales"
-},
-{
-  "2021": "100.00",
-  "2022": "54.12",
-  "2023": "110.00",
-  "No": "125",
-  "Karyawan": "Karyawan 125",
-  "Jabatan": "VP Marketing & Sales",
-  "Departemen": "Marketing & CRM",
-  "Divisi": "Marketing & Sales"
-},
-{
-  "2021": "100.00",
-  "2022": "69.12",
-  "2023": "96.00",
-  "No": "126",
-  "Karyawan": "Karyawan 126",
-  "Jabatan": "AVP Property Sales",
-  "Departemen": "Property Sales",
-  "Divisi": "Marketing & Sales"
-},
-{
-  "2021": "89.5",
-  "2022": "89.5",
-  "2023": "73.00",
-  "No": "127",
-  "Karyawan": "Karyawan 127",
-  "Jabatan": "Property Sales Executive",
-  "Departemen": "Property Sales",
-  "Divisi": "Marketing & Sales"
-},
-{
-  "2021": "100.00",
-  "2022": "67.45",
-  "2023": "87.00",
-  "No": "128",
-  "Karyawan": "Karyawan 128",
-  "Jabatan": "Property Sales Executive",
-  "Departemen": "Property Sales",
-  "Divisi": "Marketing & Sales"
-},
-{
-  "2021": "100.00",
-  "2022": "69.67",
-  "2023": "100.00",
-  "No": "129",
-  "Karyawan": "Karyawan 129",
-  "Jabatan": "Property Sales Executive",
-  "Departemen": "Property Sales",
-  "Divisi": "Marketing & Sales"
-},
-{
-  "2021": "89.5",
-  "2022": "69.67",
-  "2023": "98.00",
-  "No": "130",
-  "Karyawan": "Karyawan 130",
-  "Jabatan": "Property Sales Executive",
-  "Departemen": "Property Sales",
-  "Divisi": "Marketing & Sales"
-},
-{
-  "2021": "98.00",
-  "2022": "69.92",
-  "2023": "110.00",
-  "No": "131",
-  "Karyawan": "Karyawan 131",
-  "Jabatan": "AVP Retail Business",
-  "Departemen": "Retail Business",
-  "Divisi": "Marketing & Sales"
-},
-{
-  "2021": "100.00",
-  "2022": "64.68",
-  "2023": "100.00",
-  "No": "132",
-  "Karyawan": "Karyawan 132",
-  "Jabatan": "Retail Business Officer",
-  "Departemen": "Retail Business",
-  "Divisi": "Marketing & Sales"
-},
-{
-  "2021": "100.00",
-  "2022": "33.57",
-  "2023": "100.00",
-  "No": "133",
-  "Karyawan": "Karyawan 133",
-  "Jabatan": "Retail Business Officer",
-  "Departemen": "Retail Business",
-  "Divisi": "Marketing & Sales"
-},
-{
-  "2021": "100.00",
-  "2022": "68.77",
-  "2023": "99.00",
-  "No": "134",
-  "Karyawan": "Karyawan 134",
-  "Jabatan": "Procurement Officer",
-  "Departemen": "Procurement",
-  "Divisi": "Procurement"
-},
-{
-  "2021": "89.5",
-  "2022": "61.69",
-  "2023": "110.00",
-  "No": "135",
-  "Karyawan": "Karyawan 135",
-  "Jabatan": "Procurement Monitoring Evaluation Officer",
-  "Departemen": "Procurement",
-  "Divisi": "Procurement"
-},
-{
-  "2021": "100.00",
-  "2022": "61.69",
-  "2023": "110.00",
-  "No": "136",
-  "Karyawan": "Karyawan 136",
-  "Jabatan": "Procurement Officer",
-  "Departemen": "Procurement",
-  "Divisi": "Procurement"
-},
-{
-  "2021": "100.00",
-  "2022": "61.69",
-  "2023": "110.00",
-  "No": "137",
-  "Karyawan": "Karyawan 137",
-  "Jabatan": "Procurement Officer",
-  "Departemen": "Procurement",
-  "Divisi": "Procurement"
-},
-{
-  "2021": "100.00",
-  "2022": "79.35",
-  "2023": "110.00",
-  "No": "138",
-  "Karyawan": "Karyawan 138",
-  "Jabatan": "AVP Procurement",
-  "Departemen": "Procurement",
-  "Divisi": "Procurement"
-},
-{
-  "2021": "100.00",
-  "2022": "61.69",
-  "2023": "110.00",
-  "No": "139",
-  "Karyawan": "Karyawan 139",
-  "Jabatan": "Procurement Officer",
-  "Departemen": "Procurement",
-  "Divisi": "Procurement"
-},
-{
-  "2021": "82.00",
-  "2022": "66.36",
-  "2023": "110.00",
-  "No": "140",
-  "Karyawan": "Karyawan 140",
-  "Jabatan": "AVP Quality Assurance",
-  "Departemen": "Quality Assurance",
-  "Divisi": "Quality Assurance"
-},
-{
-  "2021": "100.00",
-  "2022": "66.68",
-  "2023": "86.00",
-  "No": "141",
-  "Karyawan": "Karyawan 141",
-  "Jabatan": "Quality Assurance Operation Officer",
-  "Departemen": "Quality Assurance",
-  "Divisi": "Quality Assurance"
-},
-{
-  "2021": "100.00",
-  "2022": "66.50",
-  "2023": "86.00",
-  "No": "142",
-  "Karyawan": "Karyawan 142",
-  "Jabatan": "Quality Assurance Operation Officer",
-  "Departemen": "Quality Assurance",
-  "Divisi": "Quality Assurance"
-},
-{
-  "2021": "100.00",
-  "2022": "66.87",
-  "2023": "86.00",
-  "No": "143",
-  "Karyawan": "Karyawan 143",
-  "Jabatan": "Quality Assurance Operation Officer",
-  "Departemen": "Quality Assurance",
-  "Divisi": "Quality Assurance"
-},
-{
-  "2021": "100.00",
-  "2022": "93.77",
-  "2023": "53.00",
-  "No": "144",
-  "Karyawan": "Karyawan 144",
-  "Jabatan": "Quality Assurance Operation Officer",
-  "Departemen": "Quality Assurance",
-  "Divisi": "Quality Assurance"
-},
-{
-  "2021": "75.00",
-  "2022": "96.47",
-  "2023": "103.00",
-  "No": "145",
-  "Karyawan": "Karyawan 145",
-  "Jabatan": "AVP Risk Management",
-  "Departemen": "Risk Management",
-  "Divisi": "Risk Management"
-},
-{
-  "2021": "89.5",
-  "2022": "93.25",
-  "2023": "103.00",
-  "No": "146",
-  "Karyawan": "Karyawan 146",
-  "Jabatan": "Risk Management Officer",
-  "Departemen": "Risk Management",
-  "Divisi": "Risk Management"
-},
-{
-  "2021": "100.00",
-  "2022": "69.67",
-  "2023": "110.00",
-  "No": "147",
-  "Karyawan": "Karyawan 147",
-  "Jabatan": "Risk Management Officer",
-  "Departemen": "Risk Management",
-  "Divisi": "Risk Management"
-}
+	{
+		"nama": "Karyawan 1",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 100,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 93.77,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 57.71,
+				"target": 100
+			}
+		],
+		"divisi": "Business Development & Planning",
+		"jabatan": "Business Development Officer",
+		"departemen": "Business Development",
+		"index": 1
+	},
+	{
+		"nama": "Karyawan 2",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 100,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 93.77,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 53,
+				"target": 100
+			}
+		],
+		"divisi": "Business Development & Planning",
+		"jabatan": "Business Development Officer",
+		"departemen": "Business Development",
+		"index": 2
+	},
+	{
+		"nama": "Karyawan 3",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 100,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 95.22,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 53.36,
+				"target": 100
+			}
+		],
+		"divisi": "Business Development & Planning",
+		"jabatan": "AVP Business Development",
+		"departemen": "Business Development",
+		"index": 3
+	},
+	{
+		"nama": "Karyawan 4",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 89.5,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 33.57,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 110,
+				"target": 100
+			}
+		],
+		"divisi": "Business Development & Planning",
+		"jabatan": "VP Business Development & Planning",
+		"departemen": "Business Development & Planning",
+		"index": 4
+	},
+	{
+		"nama": "Karyawan 5",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 89.5,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 69.17,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 99,
+				"target": 100
+			}
+		],
+		"divisi": "Business Development & Planning",
+		"jabatan": "Project Planning Officer",
+		"departemen": "Project Planning",
+		"index": 5
+	},
+	{
+		"nama": "Karyawan 6",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 89.5,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 60.09,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 89,
+				"target": 100
+			}
+		],
+		"divisi": "Business Development & Planning",
+		"jabatan": "Project Planning Officer",
+		"departemen": "Project Planning",
+		"index": 6
+	},
+	{
+		"nama": "Karyawan 7",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 89.5,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 33.57,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 88,
+				"target": 100
+			}
+		],
+		"divisi": "Business Development & Planning",
+		"jabatan": "Project Planning Officer",
+		"departemen": "Project Planning",
+		"index": 7
+	},
+	{
+		"nama": "Karyawan 8",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 75,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 67.09,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 110,
+				"target": 100
+			}
+		],
+		"divisi": "Business Development & Planning",
+		"jabatan": "AVP Project Planning",
+		"departemen": "Project Planning",
+		"index": 8
+	},
+	{
+		"nama": "Karyawan 9",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 99,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 95.02,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 95.62,
+				"target": 100
+			}
+		],
+		"divisi": "Corporate Health, Safety & Environment",
+		"jabatan": "AVP Corp. Health, Safety & Environment",
+		"departemen": "Corporate Health, Safety & Environment",
+		"index": 9
+	},
+	{
+		"nama": "Karyawan 10",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 89.5,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 100.82,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 95.67,
+				"target": 100
+			}
+		],
+		"divisi": "Corporate Health, Safety & Environment",
+		"jabatan": "Environment Officer",
+		"departemen": "Corporate Health, Safety & Environment",
+		"index": 10
+	},
+	{
+		"nama": "Karyawan 11",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 89.5,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 96.12,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 97,
+				"target": 100
+			}
+		],
+		"divisi": "Corporate Health, Safety & Environment",
+		"jabatan": "Environment Officer",
+		"departemen": "Corporate Health, Safety & Environment",
+		"index": 11
+	},
+	{
+		"nama": "Karyawan 12",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 89.5,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 95.88,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 96,
+				"target": 100
+			}
+		],
+		"divisi": "Corporate Health, Safety & Environment",
+		"jabatan": "Health & Safety Officer",
+		"departemen": "Corporate Health, Safety & Environment",
+		"index": 12
+	},
+	{
+		"nama": "Karyawan 13",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 100,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 96.51,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 95.44,
+				"target": 100
+			}
+		],
+		"divisi": "Corporate Health, Safety & Environment",
+		"jabatan": "Health & Safety Officer",
+		"departemen": "Corporate Health, Safety & Environment",
+		"index": 13
+	},
+	{
+		"nama": "Karyawan 14",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 98,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 61.84,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 98,
+				"target": 100
+			}
+		],
+		"divisi": "Corporate Legal",
+		"jabatan": "AVP Litigation & Non Litigation",
+		"departemen": "Litigation & Non-Litigation",
+		"index": 14
+	},
+	{
+		"nama": "Karyawan 15",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 98,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 67.67,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 94,
+				"target": 100
+			}
+		],
+		"divisi": "Corporate Legal",
+		"jabatan": "Corporate Legal Officer (Litigation)",
+		"departemen": "Litigation & Non-Litigation",
+		"index": 15
+	},
+	{
+		"nama": "Karyawan 16",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 98,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 67.82,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 95,
+				"target": 100
+			}
+		],
+		"divisi": "Corporate Legal",
+		"jabatan": "Corporate Legal Officer (Litigation)",
+		"departemen": "Litigation & Non-Litigation",
+		"index": 16
+	},
+	{
+		"nama": "Karyawan 17",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 89.5,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 67.04,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 90,
+				"target": 100
+			}
+		],
+		"divisi": "Corporate Legal",
+		"jabatan": "Corporate Legal Officer (Litigation)",
+		"departemen": "Litigation & Non-Litigation",
+		"index": 17
+	},
+	{
+		"nama": "Karyawan 18",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 100,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 68.3,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 93,
+				"target": 100
+			}
+		],
+		"divisi": "Corporate Legal",
+		"jabatan": "Corporate Regulation Officer (Non Litigation)",
+		"departemen": "Litigation & Non-Litigation",
+		"index": 18
+	},
+	{
+		"nama": "Karyawan 19",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 94,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 64.24,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 86,
+				"target": 100
+			}
+		],
+		"divisi": "Corporate Legal",
+		"jabatan": "Ketua Tim Sertifikasi Pertanahan",
+		"departemen": "Tim Sertifikasi Pertanahan",
+		"index": 19
+	},
+	{
+		"nama": "Karyawan 20",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 99,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 55.2,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 86,
+				"target": 100
+			}
+		],
+		"divisi": "Corporate Legal",
+		"jabatan": "Tim Sertifikasi Pertanahan",
+		"departemen": "Tim Sertifikasi Pertanahan",
+		"index": 20
+	},
+	{
+		"nama": "Karyawan 21",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 95,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 66.3,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 97,
+				"target": 100
+			}
+		],
+		"divisi": "Corporate Legal",
+		"jabatan": "VP Corporate Legal",
+		"departemen": "Corporate Legal",
+		"index": 21
+	},
+	{
+		"nama": "Karyawan 22",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 100,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 68.09,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 110,
+				"target": 100
+			}
+		],
+		"divisi": "Corporate Secretary & TJSL",
+		"jabatan": "AVP Corporate Communication & TJSL",
+		"departemen": "Corporate Communication & TJSL",
+		"index": 22
+	},
+	{
+		"nama": "Karyawan 23",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 100,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 78.86,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 110,
+				"target": 100
+			}
+		],
+		"divisi": "Corporate Secretary & TJSL",
+		"jabatan": "AVP Corporate Communication & TJSL",
+		"departemen": "Corporate Communication & TJSL",
+		"index": 23
+	},
+	{
+		"nama": "Karyawan 24",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 89.5,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 89.5,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 110,
+				"target": 100
+			}
+		],
+		"divisi": "Corporate Secretary & TJSL",
+		"jabatan": "Corporate Communication Officer",
+		"departemen": "Corporate Communication & TJSL",
+		"index": 24
+	},
+	{
+		"nama": "Karyawan 25",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 100,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 72.86,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 110,
+				"target": 100
+			}
+		],
+		"divisi": "Corporate Secretary & TJSL",
+		"jabatan": "Corporate Communication Officer",
+		"departemen": "Corporate Communication & TJSL",
+		"index": 25
+	},
+	{
+		"nama": "Karyawan 26",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 94,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 64.78,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 110,
+				"target": 100
+			}
+		],
+		"divisi": "Corporate Secretary & TJSL",
+		"jabatan": "TJSL Officer",
+		"departemen": "Corporate Communication & TJSL",
+		"index": 26
+	},
+	{
+		"nama": "Karyawan 27",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 94,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 66.79,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 110,
+				"target": 100
+			}
+		],
+		"divisi": "Corporate Secretary & TJSL",
+		"jabatan": "TJSL Officer",
+		"departemen": "Corporate Communication & TJSL",
+		"index": 27
+	},
+	{
+		"nama": "Karyawan 28",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 62,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 51.97,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 94,
+				"target": 100
+			}
+		],
+		"divisi": "Corporate Secretary & TJSL",
+		"jabatan": "VP Corporate Secretary & TJSL",
+		"departemen": "Corporate Secretary & TJSL",
+		"index": 28
+	},
+	{
+		"nama": "Karyawan 29",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 100,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 79.62,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 100,
+				"target": 100
+			}
+		],
+		"divisi": "Corporate Secretary & TJSL",
+		"jabatan": "Administration Management Officer",
+		"departemen": "Secretarial & Administration",
+		"index": 29
+	},
+	{
+		"nama": "Karyawan 30",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 89.5,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 61.43,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 100,
+				"target": 100
+			}
+		],
+		"divisi": "Corporate Secretary & TJSL",
+		"jabatan": "Administration Management Officer",
+		"departemen": "Secretarial & Administration",
+		"index": 30
+	},
+	{
+		"nama": "Karyawan 31",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 100,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 65.57,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 100,
+				"target": 100
+			}
+		],
+		"divisi": "Corporate Secretary & TJSL",
+		"jabatan": "Administration Management Officer",
+		"departemen": "Secretarial & Administration",
+		"index": 31
+	},
+	{
+		"nama": "Karyawan 32",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 98,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 98.57,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 60,
+				"target": 100
+			}
+		],
+		"divisi": "Corporate Secretary & TJSL",
+		"jabatan": "AVP Secretarial & Administration",
+		"departemen": "Secretarial & Administration",
+		"index": 32
+	},
+	{
+		"nama": "Karyawan 33",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 100,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 71.62,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 100,
+				"target": 100
+			}
+		],
+		"divisi": "Corporate Secretary & TJSL",
+		"jabatan": "Secretarial",
+		"departemen": "Secretarial & Administration",
+		"index": 33
+	},
+	{
+		"nama": "Karyawan 34",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 100,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 88.37,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 100,
+				"target": 100
+			}
+		],
+		"divisi": "Corporate Secretary & TJSL",
+		"jabatan": "Secretarial",
+		"departemen": "Secretarial & Administration",
+		"index": 34
+	},
+	{
+		"nama": "Karyawan 35",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 78,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 95.88,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 100,
+				"target": 100
+			}
+		],
+		"divisi": "Corporate Secretary & TJSL",
+		"jabatan": "Secretarial",
+		"departemen": "Secretarial & Administration",
+		"index": 35
+	},
+	{
+		"nama": "Karyawan 36",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 100,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 62.82,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 60,
+				"target": 100
+			}
+		],
+		"divisi": "Corporate Security & Traffic Management",
+		"jabatan": "Security & Traffic Management Officer",
+		"departemen": "Corporate Security & Traffic Management",
+		"index": 36
+	},
+	{
+		"nama": "Karyawan 37",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 100,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 48.12,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 98,
+				"target": 100
+			}
+		],
+		"divisi": "Corporate Security & Traffic Management",
+		"jabatan": "Security & Traffic Management Officer",
+		"departemen": "Corporate Security & Traffic Management",
+		"index": 37
+	},
+	{
+		"nama": "Karyawan 38",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 89.5,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 67.53,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 94,
+				"target": 100
+			}
+		],
+		"divisi": "Corporate Security & Traffic Management",
+		"jabatan": "Security & Traffic Management Officer",
+		"departemen": "Corporate Security & Traffic Management",
+		"index": 38
+	},
+	{
+		"nama": "Karyawan 39",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 51,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 35.57,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 110,
+				"target": 100
+			}
+		],
+		"divisi": "Corporate Security & Traffic Management",
+		"jabatan": "Security & Traffic Management Officer",
+		"departemen": "Corporate Security & Traffic Management",
+		"index": 39
+	},
+	{
+		"nama": "Karyawan 40",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 85,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 91.37,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 86,
+				"target": 100
+			}
+		],
+		"divisi": "Corporate Security & Traffic Management",
+		"jabatan": "AVP Corp. Security & Traffic Management",
+		"departemen": "Corporate Security & Traffic Management",
+		"index": 40
+	},
+	{
+		"nama": "Karyawan 41",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 100,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 93.77,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 53,
+				"target": 100
+			}
+		],
+		"divisi": "Corporate Security & Traffic Management",
+		"jabatan": "Security & Traffic Management Officer",
+		"departemen": "Corporate Security & Traffic Management",
+		"index": 41
+	},
+	{
+		"nama": "Karyawan 42",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 100,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 92.86,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 96.29,
+				"target": 100
+			}
+		],
+		"divisi": "Corporate Strategy & Planning",
+		"jabatan": "AVP Corporate Performance Monitoring Specialist",
+		"departemen": "Corporate Performance Monitoring Specialist",
+		"index": 42
+	},
+	{
+		"nama": "Karyawan 43",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 100,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 69.57,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 98.77,
+				"target": 100
+			}
+		],
+		"divisi": "Corporate Strategy & Planning",
+		"jabatan": "Corporate Performance Monitoring Junior",
+		"departemen": "Corporate Performance Monitoring Specialist",
+		"index": 43
+	},
+	{
+		"nama": "Karyawan 44",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 89.5,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 83.3,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 95,
+				"target": 100
+			}
+		],
+		"divisi": "Corporate Strategy & Planning",
+		"jabatan": "Corporate Performance Monitoring Junior",
+		"departemen": "Corporate Performance Monitoring Specialist",
+		"index": 44
+	},
+	{
+		"nama": "Karyawan 45",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 100,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 90.57,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 98.77,
+				"target": 100
+			}
+		],
+		"divisi": "Corporate Strategy & Planning",
+		"jabatan": "Corporate Planning Specialist",
+		"departemen": "Corporate Planning Specialist",
+		"index": 45
+	},
+	{
+		"nama": "Karyawan 46",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 100,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 65.52,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 110,
+				"target": 100
+			}
+		],
+		"divisi": "Corporate Strategy & Planning",
+		"jabatan": "Corporate Planning Specialist",
+		"departemen": "Corporate Planning Specialist",
+		"index": 46
+	},
+	{
+		"nama": "Karyawan 47",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 100,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 66.6,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 97.03,
+				"target": 100
+			}
+		],
+		"divisi": "Corporate Strategy & Planning",
+		"jabatan": "Corporate Planning Specialist Junior",
+		"departemen": "Corporate Planning Specialist",
+		"index": 47
+	},
+	{
+		"nama": "Karyawan 48",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 89.5,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 62.82,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 93.9,
+				"target": 100
+			}
+		],
+		"divisi": "Corporate Strategy & Planning",
+		"jabatan": "Corporate Planning Specialist Junior",
+		"departemen": "Corporate Planning Specialist",
+		"index": 48
+	},
+	{
+		"nama": "Karyawan 49",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 84,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 65.59,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 97,
+				"target": 100
+			}
+		],
+		"divisi": "Corporate Strategy & Planning",
+		"jabatan": "Corporate Performance Monitoring Specialist",
+		"departemen": "Corporate Strategy & Planning",
+		"index": 49
+	},
+	{
+		"nama": "Karyawan 50",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 99,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 97.73,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 105,
+				"target": 100
+			}
+		],
+		"divisi": "Corporate Strategy & Planning",
+		"jabatan": "VP Corporate Strategy & Planning",
+		"departemen": "Corporate Strategy & Planning",
+		"index": 50
+	},
+	{
+		"nama": "Karyawan 51",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 89.5,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 53.57,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 110,
+				"target": 100
+			}
+		],
+		"divisi": "Finance & Accounting",
+		"jabatan": "Accounting & Financial Analyst Officer",
+		"departemen": "Accounting & Tax",
+		"index": 51
+	},
+	{
+		"nama": "Karyawan 52",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 100,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 53.57,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 110,
+				"target": 100
+			}
+		],
+		"divisi": "Finance & Accounting",
+		"jabatan": "Accounting & Financial Analyst Officer",
+		"departemen": "Accounting & Tax",
+		"index": 52
+	},
+	{
+		"nama": "Karyawan 53",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 100,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 71.57,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 110,
+				"target": 100
+			}
+		],
+		"divisi": "Finance & Accounting",
+		"jabatan": "AVP Accounting & Tax",
+		"departemen": "Accounting & Tax",
+		"index": 53
+	},
+	{
+		"nama": "Karyawan 54",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 89.5,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 53.57,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 110,
+				"target": 100
+			}
+		],
+		"divisi": "Finance & Accounting",
+		"jabatan": "Tax Officer",
+		"departemen": "Accounting & Tax",
+		"index": 54
+	},
+	{
+		"nama": "Karyawan 55",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 89.5,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 53.57,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 110,
+				"target": 100
+			}
+		],
+		"divisi": "Finance & Accounting",
+		"jabatan": "Tax Officer",
+		"departemen": "Accounting & Tax",
+		"index": 55
+	},
+	{
+		"nama": "Karyawan 56",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 100,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 53.57,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 110,
+				"target": 100
+			}
+		],
+		"divisi": "Finance & Accounting",
+		"jabatan": "VP Finance & Accounting",
+		"departemen": "Finance & Accounting",
+		"index": 56
+	},
+	{
+		"nama": "Karyawan 57",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 100,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 54.3,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 110,
+				"target": 100
+			}
+		],
+		"divisi": "Finance & Accounting",
+		"jabatan": "AVP Finance & Treasury",
+		"departemen": "Finance & Treasury",
+		"index": 57
+	},
+	{
+		"nama": "Karyawan 58",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 100,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 61.32,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 91,
+				"target": 100
+			}
+		],
+		"divisi": "Finance & Accounting",
+		"jabatan": "Investment & Financial Risk Officer",
+		"departemen": "Finance & Treasury",
+		"index": 58
+	},
+	{
+		"nama": "Karyawan 59",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 89.5,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 54.3,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 110,
+				"target": 100
+			}
+		],
+		"divisi": "Finance & Accounting",
+		"jabatan": "Payment & Verification Officer",
+		"departemen": "Finance & Treasury",
+		"index": 59
+	},
+	{
+		"nama": "Karyawan 60",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 100,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 54.3,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 110,
+				"target": 100
+			}
+		],
+		"divisi": "Finance & Accounting",
+		"jabatan": "Payment & Verification Officer",
+		"departemen": "Finance & Treasury",
+		"index": 60
+	},
+	{
+		"nama": "Karyawan 61",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 100,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 54.3,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 110,
+				"target": 100
+			}
+		],
+		"divisi": "Finance & Accounting",
+		"jabatan": "Payment & Verification Officer",
+		"departemen": "Finance & Treasury",
+		"index": 61
+	},
+	{
+		"nama": "Karyawan 62",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 100,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 66.03,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 110,
+				"target": 100
+			}
+		],
+		"divisi": "Finance & Accounting",
+		"jabatan": "Ketua Tim Pengelolaan Aset & Piutang Macet",
+		"departemen": "Tim Pengelolaan Aset & Piutang Macet",
+		"index": 62
+	},
+	{
+		"nama": "Karyawan 63",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 73,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 62.47,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 97,
+				"target": 100
+			}
+		],
+		"divisi": "Finance & Accounting",
+		"jabatan": "Tim Pengelolaan Aset & Piutang Macet",
+		"departemen": "Tim Pengelolaan Aset & Piutang Macet",
+		"index": 63
+	},
+	{
+		"nama": "Karyawan 64",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 92,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 61.65,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 100,
+				"target": 100
+			}
+		],
+		"divisi": "Finance & Accounting",
+		"jabatan": "Tim Pengelolaan Aset & Piutang Macet",
+		"departemen": "Tim Pengelolaan Aset & Piutang Macet",
+		"index": 64
+	},
+	{
+		"nama": "Karyawan 65",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 96,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 104.18,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 95.45,
+				"target": 100
+			}
+		],
+		"divisi": "Human Capital Management",
+		"jabatan": "AVP Human Capital Development",
+		"departemen": "Human Capital Development",
+		"index": 65
+	},
+	{
+		"nama": "Karyawan 66",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 100,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 54.3,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 110,
+				"target": 100
+			}
+		],
+		"divisi": "Human Capital Management",
+		"jabatan": "AVP Human Capital Development",
+		"departemen": "Human Capital Development",
+		"index": 66
+	},
+	{
+		"nama": "Karyawan 67",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 89.5,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 89.5,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 94.55,
+				"target": 100
+			}
+		],
+		"divisi": "Human Capital Management",
+		"jabatan": "HC Utilization Officer",
+		"departemen": "Human Capital Development",
+		"index": 67
+	},
+	{
+		"nama": "Karyawan 68",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 89.5,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 60,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 96.05,
+				"target": 100
+			}
+		],
+		"divisi": "Human Capital Management",
+		"jabatan": "Human Capital Development Officer",
+		"departemen": "Human Capital Development",
+		"index": 68
+	},
+	{
+		"nama": "Karyawan 69",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 89.5,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 89.5,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 110,
+				"target": 100
+			}
+		],
+		"divisi": "Human Capital Management",
+		"jabatan": "VP Human Capital Management",
+		"departemen": "Human Capital Management",
+		"index": 69
+	},
+	{
+		"nama": "Karyawan 70",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 83,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 85.6,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 100,
+				"target": 100
+			}
+		],
+		"divisi": "Human Capital Management",
+		"jabatan": "AVP Organization & Human Capital Services",
+		"departemen": "Organization & HC Services",
+		"index": 70
+	},
+	{
+		"nama": "Karyawan 71",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 89.5,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 82.4,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 102,
+				"target": 100
+			}
+		],
+		"divisi": "Human Capital Management",
+		"jabatan": "HC Services Officer",
+		"departemen": "Organization & HC Services",
+		"index": 71
+	},
+	{
+		"nama": "Karyawan 72",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 89.5,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 60,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 86,
+				"target": 100
+			}
+		],
+		"divisi": "Human Capital Management",
+		"jabatan": "Organization & Culture Officer",
+		"departemen": "Organization & HC Services",
+		"index": 72
+	},
+	{
+		"nama": "Karyawan 73",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 89,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 96.66,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 97.2,
+				"target": 100
+			}
+		],
+		"divisi": "Human Capital Management",
+		"jabatan": "Transformasi Organisasi Specialist",
+		"departemen": "Transformasi Organisasi Specialist",
+		"index": 73
+	},
+	{
+		"nama": "Karyawan 74",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 100,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 69.77,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 95,
+				"target": 100
+			}
+		],
+		"divisi": "Information Technology & General Affairs",
+		"jabatan": "AVP General Affairs",
+		"departemen": "General Affairs",
+		"index": 74
+	},
+	{
+		"nama": "Karyawan 75",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 86,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 69.17,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 98,
+				"target": 100
+			}
+		],
+		"divisi": "Information Technology & General Affairs",
+		"jabatan": "General Affairs Officer",
+		"departemen": "General Affairs",
+		"index": 75
+	},
+	{
+		"nama": "Karyawan 76",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 89.5,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 69.17,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 97,
+				"target": 100
+			}
+		],
+		"divisi": "Information Technology & General Affairs",
+		"jabatan": "Logistic & Asset Management Officer",
+		"departemen": "General Affairs",
+		"index": 76
+	},
+	{
+		"nama": "Karyawan 77",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 96,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 98.57,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 110,
+				"target": 100
+			}
+		],
+		"divisi": "Information Technology & General Affairs",
+		"jabatan": "Logistic & Asset Management Officer",
+		"departemen": "General Affairs",
+		"index": 77
+	},
+	{
+		"nama": "Karyawan 78",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 81,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 53.28,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 91,
+				"target": 100
+			}
+		],
+		"divisi": "Information Technology & General Affairs",
+		"jabatan": "AVP Information Technology",
+		"departemen": "Information Technology",
+		"index": 78
+	},
+	{
+		"nama": "Karyawan 79",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 89.5,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 52.9,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 100,
+				"target": 100
+			}
+		],
+		"divisi": "Information Technology & General Affairs",
+		"jabatan": "Information Technology Application & System Officer",
+		"departemen": "Information Technology",
+		"index": 79
+	},
+	{
+		"nama": "Karyawan 80",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 86,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 53.34,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 94,
+				"target": 100
+			}
+		],
+		"divisi": "Information Technology & General Affairs",
+		"jabatan": "Information Technology Application & System Officer",
+		"departemen": "Information Technology",
+		"index": 80
+	},
+	{
+		"nama": "Karyawan 81",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 100,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 53.57,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 100,
+				"target": 100
+			}
+		],
+		"divisi": "Information Technology & General Affairs",
+		"jabatan": "Information Technology Application & System Officer",
+		"departemen": "Information Technology",
+		"index": 81
+	},
+	{
+		"nama": "Karyawan 82",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 89.5,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 89.5,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 100,
+				"target": 100
+			}
+		],
+		"divisi": "Information Technology & General Affairs",
+		"jabatan": "IT Infrastructure & Data Officer",
+		"departemen": "Information Technology",
+		"index": 82
+	},
+	{
+		"nama": "Karyawan 83",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 89.5,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 89.5,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 100,
+				"target": 100
+			}
+		],
+		"divisi": "Information Technology & General Affairs",
+		"jabatan": "IT Infrastructure & Data Officer",
+		"departemen": "Information Technology",
+		"index": 83
+	},
+	{
+		"nama": "Karyawan 84",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 100,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 78.65,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 101.26,
+				"target": 100
+			}
+		],
+		"divisi": "Information Technology & General Affairs",
+		"jabatan": "VP Information Technology & General Affairs",
+		"departemen": "Information Technology & General Affairs",
+		"index": 84
+	},
+	{
+		"nama": "Karyawan 85",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 94,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 64.24,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 86,
+				"target": 100
+			}
+		],
+		"divisi": "Integrated Estate Management",
+		"jabatan": "AVP Industrial Estate",
+		"departemen": "Industrial Estate",
+		"index": 85
+	},
+	{
+		"nama": "Karyawan 86",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 89.5,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 60,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 96,
+				"target": 100
+			}
+		],
+		"divisi": "Integrated Estate Management",
+		"jabatan": "Estate Officer",
+		"departemen": "Industrial Estate",
+		"index": 86
+	},
+	{
+		"nama": "Karyawan 87",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 98,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 61.38,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 97,
+				"target": 100
+			}
+		],
+		"divisi": "Integrated Estate Management",
+		"jabatan": "Estate Officer",
+		"departemen": "Industrial Estate",
+		"index": 87
+	},
+	{
+		"nama": "Karyawan 88",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 97,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 66.12,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 88,
+				"target": 100
+			}
+		],
+		"divisi": "Integrated Estate Management",
+		"jabatan": "Industrial Estate Monitoring Evaluation Officer",
+		"departemen": "Industrial Estate",
+		"index": 88
+	},
+	{
+		"nama": "Karyawan 89",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 82,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 67.22,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 104,
+				"target": 100
+			}
+		],
+		"divisi": "Integrated Estate Management",
+		"jabatan": "Industrial Estate Monitoring Evaluation Officer",
+		"departemen": "Industrial Estate",
+		"index": 89
+	},
+	{
+		"nama": "Karyawan 90",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 100,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 33.57,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 96,
+				"target": 100
+			}
+		],
+		"divisi": "Integrated Estate Management",
+		"jabatan": "Industrial Estate Monitoring Evaluation Officer",
+		"departemen": "Industrial Estate",
+		"index": 90
+	},
+	{
+		"nama": "Karyawan 91",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 100,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 85.32,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 87.17,
+				"target": 100
+			}
+		],
+		"divisi": "Integrated Estate Management",
+		"jabatan": "VP Integrated Estate Management",
+		"departemen": "Integrated Estate Management",
+		"index": 91
+	},
+	{
+		"nama": "Karyawan 92",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 97,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 63.71,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 85,
+				"target": 100
+			}
+		],
+		"divisi": "Integrated Estate Management",
+		"jabatan": "AVP Property Retail",
+		"departemen": "Property & Retail",
+		"index": 92
+	},
+	{
+		"nama": "Karyawan 93",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 100,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 93.77,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 58.96,
+				"target": 100
+			}
+		],
+		"divisi": "Integrated Estate Management",
+		"jabatan": "Property Monitoring Evaluation Officer",
+		"departemen": "Property & Retail",
+		"index": 93
+	},
+	{
+		"nama": "Karyawan 94",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 88,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 66.19,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 110,
+				"target": 100
+			}
+		],
+		"divisi": "Integrated Estate Management",
+		"jabatan": "Property Monitoring Evaluation Officer",
+		"departemen": "Property & Retail",
+		"index": 94
+	},
+	{
+		"nama": "Karyawan 95",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 89.5,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 65.89,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 83,
+				"target": 100
+			}
+		],
+		"divisi": "Integrated Estate Management",
+		"jabatan": "Property Officer",
+		"departemen": "Property & Retail",
+		"index": 95
+	},
+	{
+		"nama": "Karyawan 96",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 97,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 65.16,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 87,
+				"target": 100
+			}
+		],
+		"divisi": "Integrated Estate Management",
+		"jabatan": "Property Officer",
+		"departemen": "Property & Retail",
+		"index": 96
+	},
+	{
+		"nama": "Karyawan 97",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 89.5,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 61.69,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 110,
+				"target": 100
+			}
+		],
+		"divisi": "Integrated Estate Management",
+		"jabatan": "Property Officer",
+		"departemen": "Property & Retail",
+		"index": 97
+	},
+	{
+		"nama": "Karyawan 98",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 100,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 63.23,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 86,
+				"target": 100
+			}
+		],
+		"divisi": "Integrated Estate Management",
+		"jabatan": "Retail Business Officer",
+		"departemen": "Retail Business",
+		"index": 98
+	},
+	{
+		"nama": "Karyawan 99",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 88,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 66.19,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 110,
+				"target": 100
+			}
+		],
+		"divisi": "Integrated Estate Management",
+		"jabatan": "Retail Business Officer",
+		"departemen": "Retail Business",
+		"index": 99
+	},
+	{
+		"nama": "Karyawan 100",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 100,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 93.77,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 110,
+				"target": 100
+			}
+		],
+		"divisi": "Integrated Estate Management",
+		"jabatan": "AVP Utility & Infrastructure",
+		"departemen": "Utility & Infrastructure",
+		"index": 100
+	},
+	{
+		"nama": "Karyawan 101",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 100,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 50.01,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 93,
+				"target": 100
+			}
+		],
+		"divisi": "Integrated Estate Management",
+		"jabatan": "Utility & Infrastructure Monitoring Evaluation Officer",
+		"departemen": "Utility & Infrastructure",
+		"index": 101
+	},
+	{
+		"nama": "Karyawan 102",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 100,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 50.1,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 93,
+				"target": 100
+			}
+		],
+		"divisi": "Integrated Estate Management",
+		"jabatan": "Utility & Infrastructure Monitoring Evaluation Officer",
+		"departemen": "Utility & Infrastructure",
+		"index": 102
+	},
+	{
+		"nama": "Karyawan 103",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 89.5,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 64.44,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 100,
+				"target": 100
+			}
+		],
+		"divisi": "Integrated Estate Management",
+		"jabatan": "Utility & Infrastructure Officer",
+		"departemen": "Utility & Infrastructure",
+		"index": 103
+	},
+	{
+		"nama": "Karyawan 104",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 89.5,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 66.75,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 94,
+				"target": 100
+			}
+		],
+		"divisi": "Integrated Estate Management",
+		"jabatan": "Utility & Infrastructure Officer",
+		"departemen": "Utility & Infrastructure",
+		"index": 104
+	},
+	{
+		"nama": "Karyawan 105",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 89.5,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 95.87,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 103,
+				"target": 100
+			}
+		],
+		"divisi": "Internal Audit",
+		"jabatan": "VP Internal Audit",
+		"departemen": "Internal Audit",
+		"index": 105
+	},
+	{
+		"nama": "Karyawan 106",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 100,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 93.77,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 97,
+				"target": 100
+			}
+		],
+		"divisi": "Internal Audit",
+		"jabatan": "Auditor",
+		"departemen": "Internal Audit",
+		"index": 106
+	},
+	{
+		"nama": "Karyawan 107",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 67,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 96.67,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 97,
+				"target": 100
+			}
+		],
+		"divisi": "Internal Audit",
+		"jabatan": "Auditor",
+		"departemen": "Internal Audit",
+		"index": 107
+	},
+	{
+		"nama": "Karyawan 108",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 75,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 97.47,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 97,
+				"target": 100
+			}
+		],
+		"divisi": "Internal Audit",
+		"jabatan": "Auditor",
+		"departemen": "Internal Audit",
+		"index": 108
+	},
+	{
+		"nama": "Karyawan 109",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 72,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 97.47,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 100,
+				"target": 100
+			}
+		],
+		"divisi": "Internal Audit",
+		"jabatan": "Auditor",
+		"departemen": "Internal Audit",
+		"index": 109
+	},
+	{
+		"nama": "Karyawan 110",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 51,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 68.32,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 102,
+				"target": 100
+			}
+		],
+		"divisi": "IT, Facility & Maintenance",
+		"jabatan": "VP IT, Facility & Maintenance",
+		"departemen": "IT, Facility & Maintenance",
+		"index": 110
+	},
+	{
+		"nama": "Karyawan 111",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 100,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 64.17,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 97.14,
+				"target": 100
+			}
+		],
+		"divisi": "Management System & Compliance",
+		"jabatan": "AVP Management System & Compliance",
+		"departemen": "Management System & Compliance",
+		"index": 111
+	},
+	{
+		"nama": "Karyawan 112",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 97,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 46.74,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 84,
+				"target": 100
+			}
+		],
+		"divisi": "Management System & Compliance",
+		"jabatan": "Management System & Compliance Officer",
+		"departemen": "Management System & Compliance",
+		"index": 112
+	},
+	{
+		"nama": "Karyawan 113",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 88,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 63.97,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 97.14,
+				"target": 100
+			}
+		],
+		"divisi": "Management System & Compliance",
+		"jabatan": "Management System & Compliance Officer",
+		"departemen": "Management System & Compliance",
+		"index": 113
+	},
+	{
+		"nama": "Karyawan 114",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 100,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 67.75,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 96,
+				"target": 100
+			}
+		],
+		"divisi": "Marketing & Sales",
+		"jabatan": "AVP Estate Sales",
+		"departemen": "Estate Sales",
+		"index": 114
+	},
+	{
+		"nama": "Karyawan 115",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 100,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 68.57,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 110,
+				"target": 100
+			}
+		],
+		"divisi": "Marketing & Sales",
+		"jabatan": "Estate Sales Executive",
+		"departemen": "Estate Sales",
+		"index": 115
+	},
+	{
+		"nama": "Karyawan 116",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 89.5,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 68.57,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 110,
+				"target": 100
+			}
+		],
+		"divisi": "Marketing & Sales",
+		"jabatan": "Estate Sales Executive",
+		"departemen": "Estate Sales",
+		"index": 116
+	},
+	{
+		"nama": "Karyawan 117",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 100,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 70.17,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 110,
+				"target": 100
+			}
+		],
+		"divisi": "Marketing & Sales",
+		"jabatan": "Estate Sales Executive",
+		"departemen": "Estate Sales",
+		"index": 117
+	},
+	{
+		"nama": "Karyawan 118",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 89.5,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 68.97,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 110,
+				"target": 100
+			}
+		],
+		"divisi": "Marketing & Sales",
+		"jabatan": "Estate Sales Executive",
+		"departemen": "Estate Sales",
+		"index": 118
+	},
+	{
+		"nama": "Karyawan 119",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 100,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 98.57,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 110,
+				"target": 100
+			}
+		],
+		"divisi": "Marketing & Sales",
+		"jabatan": "AVP Marketing & Customer Relation Management",
+		"departemen": "Marketing & CRM",
+		"index": 119
+	},
+	{
+		"nama": "Karyawan 120",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 89.5,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 65.39,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 73,
+				"target": 100
+			}
+		],
+		"divisi": "Marketing & Sales",
+		"jabatan": "Client Relation Officer",
+		"departemen": "Marketing & CRM",
+		"index": 120
+	},
+	{
+		"nama": "Karyawan 121",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 89.5,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 66.19,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 98.3,
+				"target": 100
+			}
+		],
+		"divisi": "Marketing & Sales",
+		"jabatan": "General CS Officer",
+		"departemen": "Marketing & CRM",
+		"index": 121
+	},
+	{
+		"nama": "Karyawan 122",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 60,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 60,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 99.7,
+				"target": 100
+			}
+		],
+		"divisi": "Marketing & Sales",
+		"jabatan": "General CS Officer",
+		"departemen": "Marketing & CRM",
+		"index": 122
+	},
+	{
+		"nama": "Karyawan 123",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 89.5,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 97.97,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 108,
+				"target": 100
+			}
+		],
+		"divisi": "Marketing & Sales",
+		"jabatan": "Product & Marketing Officer",
+		"departemen": "Marketing & CRM",
+		"index": 123
+	},
+	{
+		"nama": "Karyawan 124",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 96,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 98.57,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 105,
+				"target": 100
+			}
+		],
+		"divisi": "Marketing & Sales",
+		"jabatan": "Product & Marketing Officer",
+		"departemen": "Marketing & CRM",
+		"index": 124
+	},
+	{
+		"nama": "Karyawan 125",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 100,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 54.12,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 110,
+				"target": 100
+			}
+		],
+		"divisi": "Marketing & Sales",
+		"jabatan": "VP Marketing & Sales",
+		"departemen": "Marketing & CRM",
+		"index": 125
+	},
+	{
+		"nama": "Karyawan 126",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 100,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 69.12,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 96,
+				"target": 100
+			}
+		],
+		"divisi": "Marketing & Sales",
+		"jabatan": "AVP Property Sales",
+		"departemen": "Property Sales",
+		"index": 126
+	},
+	{
+		"nama": "Karyawan 127",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 89.5,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 89.5,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 73,
+				"target": 100
+			}
+		],
+		"divisi": "Marketing & Sales",
+		"jabatan": "Property Sales Executive",
+		"departemen": "Property Sales",
+		"index": 127
+	},
+	{
+		"nama": "Karyawan 128",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 100,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 67.45,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 87,
+				"target": 100
+			}
+		],
+		"divisi": "Marketing & Sales",
+		"jabatan": "Property Sales Executive",
+		"departemen": "Property Sales",
+		"index": 128
+	},
+	{
+		"nama": "Karyawan 129",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 100,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 69.67,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 100,
+				"target": 100
+			}
+		],
+		"divisi": "Marketing & Sales",
+		"jabatan": "Property Sales Executive",
+		"departemen": "Property Sales",
+		"index": 129
+	},
+	{
+		"nama": "Karyawan 130",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 89.5,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 69.67,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 98,
+				"target": 100
+			}
+		],
+		"divisi": "Marketing & Sales",
+		"jabatan": "Property Sales Executive",
+		"departemen": "Property Sales",
+		"index": 130
+	},
+	{
+		"nama": "Karyawan 131",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 98,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 69.92,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 110,
+				"target": 100
+			}
+		],
+		"divisi": "Marketing & Sales",
+		"jabatan": "AVP Retail Business",
+		"departemen": "Retail Business",
+		"index": 131
+	},
+	{
+		"nama": "Karyawan 132",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 100,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 64.68,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 100,
+				"target": 100
+			}
+		],
+		"divisi": "Marketing & Sales",
+		"jabatan": "Retail Business Officer",
+		"departemen": "Retail Business",
+		"index": 132
+	},
+	{
+		"nama": "Karyawan 133",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 100,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 33.57,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 100,
+				"target": 100
+			}
+		],
+		"divisi": "Marketing & Sales",
+		"jabatan": "Retail Business Officer",
+		"departemen": "Retail Business",
+		"index": 133
+	},
+	{
+		"nama": "Karyawan 134",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 100,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 68.77,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 99,
+				"target": 100
+			}
+		],
+		"divisi": "Procurement",
+		"jabatan": "Procurement Officer",
+		"departemen": "Procurement",
+		"index": 134
+	},
+	{
+		"nama": "Karyawan 135",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 89.5,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 61.69,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 110,
+				"target": 100
+			}
+		],
+		"divisi": "Procurement",
+		"jabatan": "Procurement Monitoring Evaluation Officer",
+		"departemen": "Procurement",
+		"index": 135
+	},
+	{
+		"nama": "Karyawan 136",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 100,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 61.69,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 110,
+				"target": 100
+			}
+		],
+		"divisi": "Procurement",
+		"jabatan": "Procurement Officer",
+		"departemen": "Procurement",
+		"index": 136
+	},
+	{
+		"nama": "Karyawan 137",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 100,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 61.69,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 110,
+				"target": 100
+			}
+		],
+		"divisi": "Procurement",
+		"jabatan": "Procurement Officer",
+		"departemen": "Procurement",
+		"index": 137
+	},
+	{
+		"nama": "Karyawan 138",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 100,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 79.35,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 110,
+				"target": 100
+			}
+		],
+		"divisi": "Procurement",
+		"jabatan": "AVP Procurement",
+		"departemen": "Procurement",
+		"index": 138
+	},
+	{
+		"nama": "Karyawan 139",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 100,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 61.69,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 110,
+				"target": 100
+			}
+		],
+		"divisi": "Procurement",
+		"jabatan": "Procurement Officer",
+		"departemen": "Procurement",
+		"index": 139
+	},
+	{
+		"nama": "Karyawan 140",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 82,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 66.36,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 110,
+				"target": 100
+			}
+		],
+		"divisi": "Quality Assurance",
+		"jabatan": "AVP Quality Assurance",
+		"departemen": "Quality Assurance",
+		"index": 140
+	},
+	{
+		"nama": "Karyawan 141",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 100,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 66.68,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 86,
+				"target": 100
+			}
+		],
+		"divisi": "Quality Assurance",
+		"jabatan": "Quality Assurance Operation Officer",
+		"departemen": "Quality Assurance",
+		"index": 141
+	},
+	{
+		"nama": "Karyawan 142",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 100,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 66.5,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 86,
+				"target": 100
+			}
+		],
+		"divisi": "Quality Assurance",
+		"jabatan": "Quality Assurance Operation Officer",
+		"departemen": "Quality Assurance",
+		"index": 142
+	},
+	{
+		"nama": "Karyawan 143",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 100,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 66.87,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 86,
+				"target": 100
+			}
+		],
+		"divisi": "Quality Assurance",
+		"jabatan": "Quality Assurance Operation Officer",
+		"departemen": "Quality Assurance",
+		"index": 143
+	},
+	{
+		"nama": "Karyawan 144",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 100,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 93.77,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 53,
+				"target": 100
+			}
+		],
+		"divisi": "Quality Assurance",
+		"jabatan": "Quality Assurance Operation Officer",
+		"departemen": "Quality Assurance",
+		"index": 144
+	},
+	{
+		"nama": "Karyawan 145",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 75,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 96.47,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 103,
+				"target": 100
+			}
+		],
+		"divisi": "Risk Management",
+		"jabatan": "AVP Risk Management",
+		"departemen": "Risk Management",
+		"index": 145
+	},
+	{
+		"nama": "Karyawan 146",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 89.5,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 93.25,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 103,
+				"target": 100
+			}
+		],
+		"divisi": "Risk Management",
+		"jabatan": "Risk Management Officer",
+		"departemen": "Risk Management",
+		"index": 146
+	},
+	{
+		"nama": "Karyawan 147",
+		"kpi": [
+			{
+				"tahun": 2021,
+				"value": 100,
+				"target": 100
+			},
+			{
+				"tahun": 2022,
+				"value": 69.67,
+				"target": 100
+			},
+			{
+				"tahun": 2023,
+				"value": 110,
+				"target": 100
+			}
+		],
+		"divisi": "Risk Management",
+		"jabatan": "Risk Management Officer",
+		"departemen": "Risk Management",
+		"index": 147
+	}
 ]

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { groupArray } from '~/assets/helpers/array';
-import { currency } from '~/assets/helpers/currency';
+import { currency } from '~/assets/helpers/number';
 import { MockDivisionList } from '~/assets/mock/company';
 import { mockKpiKaryawan } from '~/assets/mock/gain-sharing';
 import { mockLaporanAnalisis } from '~/assets/mock/laporan';
@@ -54,13 +54,13 @@ function calculateDivisionGainSharing(d: typeof divisionPercentages.value[number
 }
 
 function calculateEmployeeGainSharing(emp: typeof mockKpiKaryawan[number]): number {
-  const d = divisionPercentages.value.find(v => v.division_name === emp.Divisi);
+  const d = divisionPercentages.value.find(v => v.division_name === emp.divisi);
   if (!d) return 0;
-  const colleagues = mockKpiKaryawan.filter(v => v.Divisi === d.division_name);
+  const colleagues = mockKpiKaryawan.filter(v => v.divisi === d.division_name);
   const colleaguesTotalScore = colleagues
-    .map(v => Number((v as any)[analisis.value.tahun.toString()]))
+    .map((v): number => v.kpi.find(w => w.tahun === analisis.value.tahun)?.value ?? 0)
     .reduce((prev, curr) => prev + curr, 0)
-  const empScore = Number((emp as any)[analisis.value.tahun.toString()]);
+  const empScore = emp.kpi.find(v => v.tahun === analisis.value.tahun)?.value ?? 0;
   return empScore / colleaguesTotalScore * calculateDivisionGainSharing(d);
 }
 
@@ -189,7 +189,7 @@ function calculateEmployeeGainSharing(emp: typeof mockKpiKaryawan[number]): numb
               <h3 class="text-sm font-bold text-neutral-600 text-center">Pembagian per Karyawan Divisi</h3>
               <p class="text-xs text-blue-700 text-center">{{ resultSelectedDivision?.division_name }}</p>
               <div v-if="resultSelectedDivision" class="pt-8">
-                <div v-if="mockKpiKaryawan.filter(v => v.Divisi === resultSelectedDivision?.division_name).length === 0">
+                <div v-if="mockKpiKaryawan.filter(v => v.divisi === resultSelectedDivision?.division_name).length === 0">
                   <p class="text-sm text-neutral-500 italic text-center">Tidak ada data</p>
                 </div>
                 <div v-else class="text-xs">
@@ -205,13 +205,13 @@ function calculateEmployeeGainSharing(emp: typeof mockKpiKaryawan[number]): numb
                     </thead>
                     <tbody class="text-xs">
                       <tr 
-                        v-for="(karyawan, i) in mockKpiKaryawan.filter(v => v.Divisi === resultSelectedDivision?.division_name)"
+                        v-for="(karyawan, i) in mockKpiKaryawan.filter(v => v.divisi === resultSelectedDivision?.division_name)"
                         :key="i"
                         class="text-xs hover:bg-neutral-100"
                       >
                         <td>{{ i + 1 }}</td>
-                        <td>{{ karyawan.Karyawan }}</td>
-                        <td>{{ (karyawan as any)[analisis.tahun.toString()] }}</td>
+                        <td>{{ karyawan.nama }}</td>
+                        <td>{{ karyawan.kpi.find(v => v.tahun === analisis.tahun)?.value ?? 0 }}</td>
                         <td>{{ 100 }}</td>
                         <td>{{ currency(calculateEmployeeGainSharing(karyawan)) }}</td>
                       </tr>

@@ -1,12 +1,18 @@
 <template>
   <div class="flex flex-col relative rounded-xl bg-white shadow-lg border border-gray-200/50">
     <div class="flex justify-between mb-6 bg-gradient-to-r from-blue-100 to-blue-50 py-3">
-      <div class="flex items-center space-x-3 pl-6">
-        <p class="text-gray-600 font-medium">Departemen</p>
-        <select v-model="selectedDept"
-          class="rounded-lg px-4 py-2 text-gray-700 bg-white/50 border border-blue-200 hover:border-blue-400 hover:bg-white transition-all duration-200 focus:ring-2 focus:ring-blue-500 focus:outline-none">
-          <option v-for="dept of deptList" :key="dept">{{ dept }}</option>
-        </select>
+      <div class="flex items-center space-x-3 pl-6 w-full">
+        <div class="w-[50%]">
+          <p class="text-gray-800 font-medium">Divisi {{ props.divisi }}</p>
+          <p class="text-gray-500">Jumlah Pegawai {{ pegawaiCount }}</p>
+        </div>
+        <div>
+          <p class="text-gray-600 font-medium mb-1">Pilih Departemen</p>
+          <select v-model="selectedDept"
+            class="rounded-lg px-4 py-1 text-gray-700 bg-white/50 border border-blue-200 hover:border-blue-400 hover:bg-white transition-all duration-200 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+            <option v-for="dept of deptList" :key="dept">{{ dept }}</option>
+          </select>
+        </div>
       </div>
       <div class="flex items-center space-x-3 pr-6">
         <p class="text-gray-600 font-medium">Tahun</p>
@@ -44,7 +50,7 @@ ChartJS.register(
 );
 const showTooltip = ref(false)
 
-const props = defineProps(['dataset', 'title', 'years'])
+const props = defineProps(['dataset', 'title', 'years', 'divisi', 'pegawaiCount'])
 
 let deptList = computed(() => {
   return (Array.from(new Set(props.dataset.map(x => x.Departemen))))
@@ -64,6 +70,8 @@ let dataset = computed(() => {
   let filterData = props.dataset.filter(x => x.Departemen === selectedDept.value)
   let yearData = filterData.map(x => x[String(selectedYear.value)].length > 0 ? parseFloat(x[String(selectedYear.value)]) : null)
   let karyawanData = filterData.map(x => x.Karyawan)
+  let dataLength = filterData.length
+
 
   // Create gradient colors based on data values
   const colors = yearData.map(value => {
@@ -77,6 +85,7 @@ let dataset = computed(() => {
 
   return {
     labels: karyawanData,
+    dataLength: dataLength,
     datasets: [{
       backgroundColor: colors,
       hoverBackgroundColor: '#2563eb',

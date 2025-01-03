@@ -43,7 +43,7 @@ const props = defineProps(['dataset', 'config', 'title'])
 const lineOptions = {
   responsive: true,
   maintainAspectRatio: false,
-  aspectRatio: 1,
+  aspectRatio: 1.4,
   plugins: {
     legend: {
       display: false,

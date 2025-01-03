@@ -71,7 +71,7 @@ let calculatedData = computed(() => {
 const pieOptions = {
   responsive: true,
   maintainAspectRatio: true,
-  aspectRatio: 1.5,
+  aspectRatio: 2,
   plugins: {
     legend: {
       display: true,

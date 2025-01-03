@@ -1,7 +1,4 @@
 <script setup lang="ts">
-import { MockDivisionList, MockEmployeeList } from '../../assets/mock/company';
-import { groupArray } from '../../assets/helpers/array';
-import type { GainSharingData } from '~/assets/types/gain-sharing';
 import { mockIndicators, mockKpiPerusahaan } from '~/assets/mock/kpi';
 import type { KPIPerusahaan } from '~/assets/types/kpi';
 import { currency, formatNumber } from '~/assets/helpers/number';
@@ -14,8 +11,8 @@ type KpiType = typeof mockKpiPerusahaan[number]['kpi'][number];
 const mode = ref<string>('kpi');
 const gainSharingShow = ref<string>('history');
 const selectedValue = ref(mockIndicators[0]);
-const selectedIndicator = ref<IndicatorType|undefined>(undefined);
-const selectedKpi = ref<KpiType|undefined>(undefined);
+const selectedIndicator = ref<IndicatorType | undefined>(undefined);
+const selectedKpi = ref<KpiType | undefined>(undefined);
 const selectedYear = ref<number>(selectedValue.value.tahun);
 const kpiPerusahaan = computed(() => {
   const v = mockKpiPerusahaan.find(v => v.tahun === selectedValue.value.tahun);
@@ -33,9 +30,9 @@ function onKpiYearSelected(ev: any) {
 
 function isKpiSevere(k: KpiType): boolean {
   if (k.lower_is_better) {
-    return k.target/k.value < SEVERE_VALUE
+    return k.target / k.value < SEVERE_VALUE
   }
-  return k.value/k.target < SEVERE_VALUE;
+  return k.value / k.target < SEVERE_VALUE;
 }
 
 function isIndicatorSevere(i: IndicatorType): boolean {
@@ -50,7 +47,7 @@ function isIndicatorSevere(i: IndicatorType): boolean {
 }
 
 function formatKpi(value: number, kind: KPIPerusahaan['kind']): string {
-  switch(kind) {
+  switch (kind) {
     case 'percentage':
       return `${value}%`
     case 'currency':
@@ -102,41 +99,28 @@ watch(
       <!-- :start KPI -->
       <div v-if="mode == 'kpi'" class="py-4">
         <div class="mb-4 flex gap-8 items-center">
-          <select 
-            class="select select-bordered" 
-            v-model="selectedYear"
-          >
-            <option
-              v-for="y in mockIndicators"
-              :value="y.tahun"
-            >
+          <select class="select select-bordered" v-model="selectedYear">
+            <option v-for="y in mockIndicators" :value="y.tahun">
               {{ y.tahun }}
             </option>
           </select>
-          <button 
-            type="button" 
-            class="rounded-full bg-blue-500 text-white text-sm py-2.5 px-4 w-fit"
-            @click="selectedValue = mockIndicators.find(v => v.tahun === selectedYear) ?? mockIndicators[0]"
-          >
+          <button type="button" class="rounded-full bg-blue-500 text-white text-sm py-2.5 px-4 w-fit"
+            @click="selectedValue = mockIndicators.find(v => v.tahun === selectedYear) ?? mockIndicators[0]">
             Terapkan
-        </button>
+          </button>
         </div>
         <div class="py-4 grid grid-cols-3 gap-8 h-[65vh]">
           <div class="flex flex-col gap-2.5 overflow-y-auto">
             <button type="button" v-for="indicator in selectedValue.indicators"
               class="px-6 py-2.5 rounded-lg border hover:border-blue-500 hover:bg-blue-50 transition ease-in-out border-neutral-200 flex gap-2 justify-between items-center"
-              :class="{'border-blue-500 bg-blue-50': selectedIndicator?.id === indicator.id}"
+              :class="{ 'border-blue-500 bg-blue-50': selectedIndicator?.id === indicator.id }"
               @click="selectedIndicator = indicator">
               <div class="flex flex-col gap-1 text-left">
                 <p class="w-full text-sm">{{ indicator.name }}</p>
                 <p class="font-bold text-xl text-neutral-600">{{ formatNumber(indicator.value) }}</p>
               </div>
               <div v-if="isIndicatorSevere(indicator)">
-                <Icon 
-                  name="mdi:alert"
-                  :size="24"
-                  class="text-red-500"
-                />
+                <Icon name="mdi:alert" :size="24" class="text-red-500" />
               </div>
             </button>
           </div>
@@ -152,12 +136,10 @@ watch(
               <tbody class="text-xs">
                 <tr
                   v-for="kpi in kpiPerusahaan?.kpi.filter(v => v.related_indicator_ids.includes(selectedIndicator?.id ?? '')) ?? []"
-                  class="hover:bg-blue-50 transition ease-in-out cursor-pointer text-sm"
-                  :class="{
+                  class="hover:bg-blue-50 transition ease-in-out cursor-pointer text-sm" :class="{
                     'bg-blue-50': kpi.id === selectedKpi?.id,
                     'bg-red-100': isKpiSevere(kpi),
-                  }"
-                  :key="kpi.id" @click="selectedKpi = kpi">
+                  }" :key="kpi.id" @click="selectedKpi = kpi">
                   <td>{{ kpi.name }}</td>
                   <td class="whitespace-wrap">{{ formatKpi(kpi.value, kpi.kind) }}</td>
                   <td class="whitespace-wrap">{{ formatKpi(kpi.target, kpi.kind) }}</td>
@@ -169,21 +151,16 @@ watch(
             <p class="text-neutral-500 italic text-sm">Silahkan pilih perspektif</p>
           </div>
 
-          <div 
-            v-if="selectedKpi"
-            class="rounded-lg border border-neutral-200 p-4 shadow-sm hover:shadow-lg"
-            :class="{'bg-red-100 border-red-500': isKpiSevere(selectedKpi)}"
-          >
+          <div v-if="selectedKpi" class="rounded-lg border border-neutral-200 p-4 shadow-sm hover:shadow-lg"
+            :class="{ 'bg-red-100 border-red-500': isKpiSevere(selectedKpi) }">
             <h3 class="font-bold text-xl text-neutral-600 mb-2">{{ selectedKpi.name }}</h3>
             <hr />
             <p class="text-sm text-neutral-700 mt-2">{{ selectedKpi.desc }}</p>
             <div class="grid grid-cols-2 gap-2 mt-4">
               <div class="">
                 <h4 class="text-sm font-bold text-neutral-500">Capaian</h4>
-                <p 
-                  class="text-xl font-bold text-green-500"
-                  :class="{'text-red-500': selectedKpi.lower_is_better ? selectedKpi.target < selectedKpi.value : selectedKpi.value < selectedKpi.target }"
-                >
+                <p class="text-xl font-bold text-green-500"
+                  :class="{ 'text-red-500': selectedKpi.lower_is_better ? selectedKpi.target < selectedKpi.value : selectedKpi.value < selectedKpi.target }">
                   {{ formatKpi(selectedKpi.value, selectedKpi.kind) }}
                 </p>
               </div>
@@ -204,9 +181,7 @@ watch(
       <div v-else class="p-4">
         <!-- :start MUTATE GAIN SHAIRNG -->
         <div v-if="gainSharingShow === 'stepper'">
-          <SectionGainSharingStepper 
-            @back="gainSharingShow = 'history'"
-          />
+          <SectionGainSharingStepper @back="gainSharingShow = 'history'" />
         </div>
         <!-- :end MUTATE GAIN SHARING -->
 
@@ -215,10 +190,8 @@ watch(
           <div class="flex justify-between items-center w-full">
             <h3 class="font-bold text-lg text-neutral-600">Riwayat Perhitungan Gain Sharing</h3>
             <div class="flex gap-4">
-              <button
-                class="rounded-full bg-blue-500 text-white font-bold py-2.5 px-4 text-sm"
-                @click="gainSharingShow = 'stepper'"
-              >
+              <button class="rounded-full bg-blue-500 text-white font-bold py-2.5 px-4 text-sm"
+                @click="gainSharingShow = 'stepper'">
                 + Hitung Gain Sharing
               </button>
             </div>

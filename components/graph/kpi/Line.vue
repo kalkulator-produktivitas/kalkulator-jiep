@@ -13,7 +13,7 @@
           </option>
         </select>
       </div>
-      <div class="flex-1 h-[250px]">
+      <div class="flex-1 h-[240px]">
         <Line :options="lineOptions" :key="reaction" :data="lineData" />
       </div>
     </div>
@@ -126,6 +126,7 @@ const lineData = computed(() => {
 const lineOptions = ref({
   responsive: true,
   maintainAspectRatio: false,
+  aspectRatio: 1.5,
   plugins: {
     legend: {
       display: true,

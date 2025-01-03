@@ -2,8 +2,8 @@
   <div class="h-full overflow flex flex-col shadow-lg rounded-lg border border-gray-200 bg-white">
     <div class="flex gap-2 justify-between items-center bg-gradient-to-r from-blue-100 to-blue-50 px-2">
       <form class="w-[100%] px-2">
-        <select id="underline_select bg-transaprent" v-model="selectedLabel"
-          class="py-4 w-full text-md font-semibold text-gray-700 bg-transparent rounded-lg focus:outline-none transition duration-200">
+        <select id="underline_select" v-model="selectedLabel"
+          class="py-2 my-2 px-1 w-full text-md font-semibold text-gray-700 bg-transparent rounded-lg focus:outline-none focus:bg-slate-200 transition duration-200 ">
           <option v-for="title of label" :key="title" class="text-sm">{{ title }}</option>
         </select>
       </form>

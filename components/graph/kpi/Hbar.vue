@@ -1,7 +1,7 @@
 <template>
   <div
     class="flex flex-col relative rounded-xl bg-white shadow-lg border border-gray-100/50 hover:shadow-xl transition-shadow duration-300">
-    <div class="flex justify-between p-4 bg-gradient-to-r from-blue-100 to-blue-50">
+    <div class="flex justify-between px-4 py-2 bg-gradient-to-r from-blue-100 to-blue-50">
       <div class="text-lg font-semibold text-gray-800 w-[50%]">Top 5 Karyawan Divisi</div>
       <div class="w-[40%] flex items-center">
         <p class="text-gray-600 mr-3">Tahun</p>
@@ -62,7 +62,7 @@ const chartOptions = {
   responsive: true,
   indexAxis: 'y',
   maintainAspectRatio: false,
-  aspectRatio: 1.2,
+  aspectRatio: 1.5,
   plugins: {
     legend: {
       display: false,

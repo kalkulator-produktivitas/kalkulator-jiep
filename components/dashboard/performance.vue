@@ -22,7 +22,7 @@
           </div>
           <div class="row-span-2 grid grid-cols-12 gap-4">
             <div class="col-span-5">
-              <GraphGeneralDoughnut id="3" :config="pieOptions" :dataset="pieData" :year="year.maxValue"
+              <GraphGeneralPie id="3" :config="pieOptions" :dataset="pieData" :year="year.maxValue"
                 title="Perbandingan Nilai Tambah" :key="`doughnut-${state}`" />
             </div>
             <div class="col-span-7 ">
@@ -75,6 +75,7 @@
 
 <script setup>
 import dummy from '~/assets/dummy_produktivitas.json'
+import { DistinctColors } from '~/assets/helpers/colors'
 
 const dummyData = dummy
 
@@ -264,7 +265,8 @@ const pieData = ref({
   datasets: [
     {
       label: 'Data One',
-      backgroundColor: ['#41B883', '#E46651', '#00D8FF', '#DD1B16', '#7F00FF'],
+      // backgroundColor: ['#41B883', '#E46651', '#00D8FF', '#DD1B16', '#7F00FF'],
+      backgroundColor: DistinctColors,
       data: null,
     },
   ],
@@ -286,7 +288,7 @@ const pieOptions = {
           size: 10
         }
       }
-    }
+    },
   },
 }
 

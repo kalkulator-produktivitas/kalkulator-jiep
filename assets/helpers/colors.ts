@@ -31,3 +31,19 @@ export const ChartColors: Array<string> = [
   '#3284C2',
   '#6CCCC9',
 ];
+
+export const DistinctColors: Array<string> = [
+  '#32CD32',
+  '#FFD700',
+  '#00FFFF',
+  '#1E90FF',
+  '#DC143C',
+  '#BDB76B',
+  '#006400',
+  '#FF6347',
+  '#000080',
+  '#F0E68C',
+  '#FF1493',
+  '#7FFF00',
+  '#EE82EE',
+];

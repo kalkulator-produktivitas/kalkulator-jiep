@@ -91,10 +91,6 @@ export default {
               to: '/perusahaan/dashboard',
               text: 'Dashboard'
             },
-            {
-              to: '/perusahaan/kpi-dashboard',
-              text: 'Gain Sharing'
-            },
           ]
         },
         {

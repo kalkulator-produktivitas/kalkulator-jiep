@@ -76,11 +76,11 @@ let dataset = computed(() => {
   // Create gradient colors based on data values
   const colors = yearData.map(value => {
     // You can adjust these color ranges
-    if (value >= 80) return '#2563eb'      // Deep blue for highest values
-    if (value >= 60) return '#3b82f6'      // Medium blue
-    if (value >= 40) return '#60a5fa'      // Light blue
-    if (value >= 20) return '#93c5fd'      // Lighter blue
-    return '#bfdbfe'                       // Lightest blue for lowest values
+    if (value >= 90) return '#2563EB'      // Deep blue for highest values
+    if (value >= 70) return '#464BB1'      // Medium blue
+    if (value >= 50) return '#663276'      // Light blue
+    if (value >= 30) return '#86193B'      // Lighter blue
+    return '#A60000'                       // Lightest blue for lowest values
   })
 
   return {
@@ -88,7 +88,6 @@ let dataset = computed(() => {
     dataLength: dataLength,
     datasets: [{
       backgroundColor: colors,
-      hoverBackgroundColor: '#2563eb',
       borderRadius: 6,
       data: yearData
     }]

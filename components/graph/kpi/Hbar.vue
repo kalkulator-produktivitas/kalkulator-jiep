@@ -29,6 +29,7 @@ import {
   LinearScale,
 } from 'chart.js';
 import { ref } from 'vue';
+import { DistinctColors } from '~/assets/helpers/colors';
 ChartJS.register(
   Title,
   Tooltip,
@@ -52,7 +53,7 @@ let dataset = computed(() => {
   return {
     labels: final.map(x => x.karyawan),
     datasets: [{
-      backgroundColor: '#0047AB',
+      backgroundColor: DistinctColors[3],
       data: final.map(x => x.value)
     }]
   }

@@ -43,6 +43,8 @@ ChartJS.register(
   Legend
 );
 
+import { DistinctColors } from '~/assets/helpers/colors'
+
 const props = defineProps(['dataset', 'title', 'years'])
 
 // let karyawanList = computed(() => {
@@ -106,8 +108,8 @@ const lineData = computed(() => {
   for (let kar of selectedKaryawanDetails.value) {
     let data = {
       label: kar.Karyawan,
-      backgroundColor: colors[props.dataset.indexOf(kar)],
-      borderColor: colors[props.dataset.indexOf(kar)],
+      backgroundColor: DistinctColors[props.dataset.indexOf(kar)],
+      borderColor: DistinctColors[props.dataset.indexOf(kar)],
       data: [],
     }
     for (let y of props.years) {

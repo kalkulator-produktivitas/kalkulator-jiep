@@ -117,7 +117,7 @@ const lineData = ref({
     datasets: [
       {
         label: "",
-        backgroundColor: '#034EA2',
+        backgroundColor: DistinctColors[3],
         data: null,
       },
     ]
@@ -127,7 +127,7 @@ const lineData = ref({
     datasets: [
       {
         label: "",
-        backgroundColor: '#034EA2',
+        backgroundColor: DistinctColors[3],
         data: null,
       }
     ]
@@ -140,17 +140,17 @@ const barData = ref({
     datasets: [
       {
         label: 'Nilai Tambah / Jml Tenaga Kerja',
-        backgroundColor: '#7EC27E',
+        backgroundColor: DistinctColors[0],
         data: null,
       },
       {
         label: 'Penjualan / Jml Tenaga Kerja',
-        backgroundColor: '#FFEFA1',
+        backgroundColor: DistinctColors[1],
         data: null,
       },
       {
         label: 'Nilai Tambah / Total Jam Kerja',
-        backgroundColor: '#FFBE85',
+        backgroundColor: DistinctColors[2],
         data: null,
       }
     ],
@@ -160,17 +160,17 @@ const barData = ref({
     datasets: [
       {
         label: 'Nilai Tambah / Biaya Tenaga Kerja',
-        backgroundColor: '#7EC27E',
+        backgroundColor: DistinctColors[0],
         data: null,
       },
       {
         label: 'Biaya Tenaga Kerja / Jml Tenaga Kerja',
-        backgroundColor: '#FFEFA1',
+        backgroundColor: DistinctColors[1],
         data: null,
       },
       {
         label: 'Biaya Tenaga Kerja / Penjualan',
-        backgroundColor: '#FFBE85',
+        backgroundColor: DistinctColors[2],
         data: null,
       },
     ],
@@ -180,7 +180,7 @@ const barData = ref({
     datasets: [
       {
         label: 'Nilai Tambah / Total Aktiva',
-        backgroundColor: '#7EC27E',
+        backgroundColor: DistinctColors[0],
         data: null,
       }
     ],
@@ -190,12 +190,12 @@ const barData = ref({
     datasets: [
       {
         label: 'Aktiva Tetap / Jml Tenaga Kerja',
-        backgroundColor: '#7EC27E',
+        backgroundColor: DistinctColors[0],
         data: null,
       },
       {
         label: 'Nilai Tambah / Total Input',
-        backgroundColor: '#FFEFA1',
+        backgroundColor: DistinctColors[1],
         data: null,
       }
     ],
@@ -205,7 +205,7 @@ const barData = ref({
     datasets: [
       {
         label: 'Nilai Tambah / Total Aktiva',
-        backgroundColor: '#7EC27E',
+        backgroundColor: DistinctColors[0],
         data: null,
       }
     ],
@@ -215,17 +215,17 @@ const barData = ref({
     datasets: [
       {
         label: 'Laba Operasi / Penjualan',
-        backgroundColor: '#7EC27E',
+        backgroundColor: DistinctColors[0],
         data: null,
       },
       {
         label: 'Laba Operasi / Nilai Tambah',
-        backgroundColor: '#FFEFA1',
+        backgroundColor: DistinctColors[1],
         data: null,
       },
       {
         label: 'Laba Operasi / Modal Operasi',
-        backgroundColor: '#FFBE85',
+        backgroundColor: DistinctColors[2],
         data: null,
       },
     ],

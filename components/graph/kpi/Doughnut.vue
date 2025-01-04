@@ -24,6 +24,7 @@ import { Doughnut } from 'vue-chartjs';
 import {
   Chart as ChartJS, ArcElement, Tooltip, Legend
 } from 'chart.js';
+import { DistinctColors } from '~/assets/helpers/colors';
 ChartJS.register(ArcElement, Tooltip, Legend)
 
 const props = defineProps(['dataset', 'title', 'years'])
@@ -48,7 +49,7 @@ function calculateYearAverage(data, th) {
   let sisa = count > 0 ? (110 - (total / count).toFixed(2)) : 0
   return {
     label: '',
-    backgroundColor: ['#0047AB', '#cccccc'],
+    backgroundColor: [DistinctColors[3], '#cccccc'],
     data: [parseFloat(average), sisa]
   } // Return the average, rounded to 2 decimals
 }

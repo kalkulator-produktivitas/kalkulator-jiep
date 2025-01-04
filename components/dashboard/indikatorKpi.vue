@@ -79,12 +79,12 @@ watch(
     </div>
     <div class="py-4 grid grid-cols-3 gap-8 h-[65vh]">
       <div class="flex flex-col gap-2.5 overflow-y-auto">
-        <button type="button" v-for="indicator in selectedValue.indicators"
+        <button type="button" v-for="[i, indicator] in selectedValue.indicators.entries()"
           class="px-6 py-2.5 rounded-lg border hover:border-blue-500 hover:bg-blue-50 transition ease-in-out border-neutral-200 flex gap-2 justify-between items-center"
           :class="{ 'border-blue-500 bg-blue-50': selectedIndicator?.id === indicator.id }"
           @click="selectedIndicator = indicator">
           <div class="flex flex-col gap-1 text-left">
-            <p class="w-full text-sm">{{ indicator.name }}</p>
+            <p class="w-full text-sm">{{ i + 1 }}. {{ indicator.name }}</p>
             <p class="font-bold text-xl text-neutral-600">{{ formatNumber(indicator.value) }}</p>
           </div>
           <div v-if="isIndicatorSevere(indicator)">

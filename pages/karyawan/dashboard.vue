@@ -40,7 +40,7 @@ const global = useRuntimeConfig();
 let available = ref(true)
 const route = useRouter()
 import dummy from '~/assets/dummy_karyawan.json'
-import dummy_2 from '~/assets/dummy_karyawan_new.json'
+import dummy_2 from '~/assets/dummy_karyawan_jiep_real.json'
 
 let loading = ref(false)
 

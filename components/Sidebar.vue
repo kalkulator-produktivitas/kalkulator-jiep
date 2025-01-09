@@ -5,7 +5,7 @@
       aria-label="Sidebar">
       <div class="h-full bg-[#034EA2] overflow-hidden">
         <nuxt-link class="flex items-center" to="/">
-          <img src="~/assets/P3D_logo_2.png" class="w-10 ml-1 pt-3 flex-none" alt="" srcset="">
+          <img src="~/assets/logo_jiep_1.png" class="w-12 pt-3 flex-none" alt="" srcset="">
           <p class="ml-2 font-bold text-white mt-2" :class="!isOpen ? 'visible' : 'invisible'">
             Kalkulator Produktivitas</p>
         </nuxt-link>
@@ -105,6 +105,9 @@ export default {
             }
           ]
         },
+        {
+          text: 'Makro', to: '/macro/dashboard', icon: 'mdi:globe',
+        }
       ]
     }
   }

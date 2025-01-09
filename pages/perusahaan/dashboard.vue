@@ -13,8 +13,10 @@ const mode = ref<string>('produktivitas');
 <template>
   <div id="layout" class="md:mx-auto my-6 mx-auto flex pr-12">
     <div class="shrink-0 w-[5%]"></div>
-    <main class="h-[92vh] w-[100vw]">
-
+    <main class="h-[92vh] w-[100vw] relative">
+      <div class="absolute -top-16 -right-5">
+        <img src="~/assets/logo-jiep-warna.png" class="w-36 ml-1 pt-3 flex-none" alt="" srcset=""/>
+      </div>
       <!-- :start TAB -->
       <div class="flex w-[100%]">
         <div role="tablist" class="tabs tabs-lg tabs-lifted">

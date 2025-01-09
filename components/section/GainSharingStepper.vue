@@ -1,10 +1,8 @@
 <script setup lang="ts">
 import { groupArray } from '~/assets/helpers/array';
 import { currency } from '~/assets/helpers/number';
-import { MockDivisionList } from '~/assets/mock/company';
 import { mockKpiKaryawan } from '~/assets/mock/gain-sharing';
 import { mockLaporanAnalisis } from '~/assets/mock/laporan';
-import type { GainSharingData } from '~/assets/types/gain-sharing';
 
 const MULTIPLIER: number = 0.05;
 
@@ -14,6 +12,8 @@ const MULTIPLIER: number = 0.05;
 const emit = defineEmits(['back']);
 
 const currentStep = ref<number>(0);
+
+const divisions = (new Set(mockKpiKaryawan.map(v => v.divisi)));
 
 const analisis = ref<typeof mockLaporanAnalisis['analisis'][number]>(mockLaporanAnalisis.analisis[0]);
 const rasioNilaiTambah = ref<number>(2.04);
@@ -27,11 +27,11 @@ const divisionPercentages = ref<Array<{
   division_id: string,
   division_name: string,
   value: number,
-}>>(MockDivisionList.map((v, i) => { 
+}>>(Array.from(divisions).map((v, i) => { 
   return {
-    division_id: v.id, 
-    division_name: v.name, 
-    value: i <= 4 ? 10 : i <= 14 ? 4 : 5,
+    division_id: v, 
+    division_name: v, 
+    value: i <= 4 ? 9 : i <= 17 ? 4 : 3,
   }
 }));
 const resultSelectedDivision = ref<typeof divisionPercentages.value[number]|undefined>(undefined)
@@ -130,7 +130,7 @@ function calculateEmployeeGainSharing(emp: typeof mockKpiKaryawan[number]): numb
           <div v-else-if="currentStep === 1" class="flex flex-col gap-2 justify-center items-center">
             <div class="p-4 rounded-lg border border-neutral-200 shadow-sm hover:shadow-md">
               <div class="flex gap-8">
-                <div v-for="grouped in groupArray(divisionPercentages, 6)">
+                <div v-for="grouped in groupArray(divisionPercentages, 7)">
                   <table class="table">
                     <thead>
                       <tr>
@@ -185,7 +185,7 @@ function calculateEmployeeGainSharing(emp: typeof mockKpiKaryawan[number]): numb
                 <p class="text-xs">{{ currency(calculateDivisionGainSharing(division)) }} ({{ division.value }}%)</p>
               </button>
             </div>
-            <div class="w-4/12">
+            <div class="w-4/12 h-[60vh] overflow-auto">
               <h3 class="text-sm font-bold text-neutral-600 text-center">Pembagian per Karyawan Divisi</h3>
               <p class="text-xs text-blue-700 text-center">{{ resultSelectedDivision?.division_name }}</p>
               <div v-if="resultSelectedDivision" class="pt-8">

@@ -29,7 +29,8 @@
         </ul>
       </div>
       <div class="col-span-6 overflow-y-auto flex w-[100%] pl-2">
-        <div class="w-[50%] h-[85vh] overflow-y-auto bg-white rounded-lg shadow-sm p-4">
+        <!-- :start OLD TABLE -->
+        <!-- <div class="w-[50%] h-[85vh] overflow-y-auto bg-white rounded-lg shadow-sm p-4">
           <div class="flex w-full items-center mb-4">
             <div class="w-[150px]"></div>
             <div class="flex items-center">
@@ -58,7 +59,7 @@
             <div v-for="param in selectDiv" :key="param.karyawan"
               class="group flex items-center p-2 transition-colors duration-200 hover:bg-gradient-to-r hover:from-blue-100 hover:to-blue-50 rounded-lg"
               :class="[(param.capaian < (0.5 * param.kpi)) && (param.bobot !== null) ? 'bg-red-200' : '', (param.capaian > (0.9 * param.kpi)) && (param.bobot !== null) ? 'bg-green-200' : '']">
-              <label class="text-sm font-medium text-gray-700 w-[120px] text-right mr-8" :for="param.karyawan">
+              <label class="text-sm font-medium text-gray-700 text-left mr-8 w-[300px]" :for="param.karyawan">
                 {{ param.karyawan }}
               </label>
               <div class="flex w-[400px] items-center space-x-4">
@@ -77,8 +78,8 @@
               </div>
             </div>
           </div>
-        </div>
-        <div class="w-[40%] flex flex-col mx-auto relative bg-white shadow-lg rounded-lg ">
+        </div> -->
+        <!-- <div class="w-[40%] flex flex-col mx-auto relative bg-white shadow-lg rounded-lg ">
           <div class="bg-gradient-to-r from-blue-100 to-blue-50">
             <p class="w-full text-center font-bold text-lg py-2">
               Parameter Pengupahan
@@ -109,9 +110,6 @@
                 </label>
               </div>
               <div class="flex w-[10%] ml-2">
-                <!-- <input disabled
-                  class="appearance-none border-b-2 h-10 py-2.5 ml-2 text-gray-700 text-sm leading-tight w-6 text-center bg-white rounded-l-md"
-                  type="text" value="  "> -->
                 <input
                   class="appearance-none border-b-2 w-20 h-10 py-2.5 px-3 text-gray-800 text-sm leading-tight focus:outline-none focus:shadow-outline bg-gray-50 rounded-md shadow-sm transition duration-200 ease-in-out focus:ring-1 focus:ring-blue-400"
                   type="number" v-model="shareGain['rasio nilai tambah']" />
@@ -192,6 +190,45 @@
               </div>
             </div>
           </div>
+        </div> -->
+        <!-- :end OLD TABLE -->
+        <div class="h-[85vh] overflow-auto w-[60%]">
+          <table class="table table-sm divide-y divide-gray-200">
+            <thead class="sticky top-0 z-10 w-full bg-white border-b border-neutral-200">
+              <tr class="w-full">
+                <th class="font-bold text-lg ">Karyawan</th>
+                <th class="font-bold text-lg ">Capaian</th>
+                <th class="font-bold text-lg">KPI</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y border-t border-neutral-200">
+              <tr 
+                v-for="(param, i) in selectDiv" 
+                class="transition-colors duration-200 hover:bg-gradient-to-r hover:from-blue-100 hover:to-blue-50 rounded-lg h-full items-center"
+                :key="i"
+              >
+                <td class="">
+                  <label class="text-sm font-medium text-gray-700 text-left w-max h-full" :for="`${param.karyawan}-capaian`">
+                    {{ param.karyawan }}
+                  </label>
+                </td>
+                <td class="">
+                  <input
+                    class="w-[80px] py-2 px-3 border border-neutral-200 text-center rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 transition-all duration-200"
+                    :id="`${param.karyawan}-capaian`" type="number" v-model="param.capaian"
+                    @keypress="(e) => !/^\d$/.test(e.key) && e.preventDefault()"
+                  />
+                </td>
+                <td class="">
+                  <input
+                    class="w-[80px] py-2 px-3 border border-neutral-200 text-center rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 transition-all duration-200"
+                    :id="`${param.karyawan}-kpi`" type="number" v-model="param.kpi"
+                    @keypress="(e) => !/^\d$/.test(e.key) && e.preventDefault()"
+                  />
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
@@ -218,7 +255,7 @@
 
 
 const router = useRouter()
-import dummy from '~/assets/dummy_karyawan_new.json'
+import dummy from '~/assets/dummy_karyawan_jiep_real.json'
 import dummy_2 from '~/assets/dummy_produktivitas.json'
 console.log('Loaded dummy_2:', dummy_2)
 

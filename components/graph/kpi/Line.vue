@@ -110,6 +110,7 @@ const lineData = computed(() => {
       label: kar.Karyawan,
       backgroundColor: DistinctColors[props.dataset.indexOf(kar)],
       borderColor: DistinctColors[props.dataset.indexOf(kar)],
+      lineTension: 0.4,
       data: [],
     }
     for (let y of props.years) {

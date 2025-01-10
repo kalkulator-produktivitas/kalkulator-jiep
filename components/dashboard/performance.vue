@@ -21,11 +21,11 @@
               :key="`line2-${state}`" />
           </div>
           <div class="row-span-2 grid grid-cols-12 gap-4">
-            <div class="col-span-5">
+            <div class="col-span-6">
               <GraphGeneralPie id="3" :config="pieOptions" :dataset="pieData" :year="year.maxValue"
                 title="Perbandingan Nilai Tambah" :key="`doughnut-${state}`" />
             </div>
-            <div class="col-span-7 ">
+            <div class="col-span-6 ">
               <GraphGeneralInfo :value="infoData" />
             </div>
 

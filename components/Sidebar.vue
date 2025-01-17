@@ -3,7 +3,7 @@
     <aside @mouseover="isOpen = false" @mouseleave="isOpen = true" id="default-sidebar"
       :class="isOpen ? 'w-12' : 'w-48'" class="fixed top-0 left-0 h-screen transition-all ease-in-out duration-500 z-30"
       aria-label="Sidebar">
-      <div class="h-full bg-[#034EA2] overflow-hidden">
+      <div class="h-full bg-[#034EA2]">
         <nuxt-link class="flex items-center" to="/">
           <img src="~/assets/logo_jiep_1.png" class="w-12 pt-3 flex-none" alt="" srcset="">
           <p class="ml-2 font-bold text-white mt-2" :class="!isOpen ? 'visible' : 'invisible'">
@@ -43,13 +43,15 @@
             </li>
           </ul>
         </div>
-        <div class="h-[60vh]"></div>
-        <div class="flex">
-          <button class="text-white text-xl w-12 ml-[0.6em] flex" @click="navigateTo('/')">
+        <div class="flex border border-white">
+          <button class="text-white text-xl w-12 ml-[0.6em] flex fixed bottom-[100px]" @click="navigateTo('/register')">
+            <Icon name="mdi:account-plus" size="6mm" class="my-auto flex-none mr-[0.5em] self-end" />
+            <p :class="!isOpen ? 'visible' : 'invisible'">Register</p>
+          </button>
+          <button class="text-white text-xl w-12 ml-[0.6em] flex absolute bottom-[50px]" @click="navigateTo('/')">
             <Icon name="mdi:arrow-left-circle" size="6mm" class="my-auto flex-none mr-[0.5em] self-end" />
             <p :class="!isOpen ? 'visible' : 'invisible'">Back</p>
           </button>
-
         </div>
       </div>
     </aside>

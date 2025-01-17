@@ -180,7 +180,7 @@ export const mockKpiPerusahaan: Array<{
       {
         id: 'employee_turnover',
         name: 'Employee Turnover',
-        value: 10,
+        value: 12,
         target: 20,
         kind: 'percentage',
         lower_is_better: true,

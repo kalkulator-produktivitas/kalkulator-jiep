@@ -4,17 +4,27 @@
       <div class="mx-auto flex flex-row gap-4 h-full">
         <div class="w-[60%] flex flex-col">
           <div class="flex justify-center mb-2">
-            <select id="tahun"
+            <select id="tahunMin"
               class="px-4 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               v-model="year.minValue">
-              <option v-for="year in yearOptions" :key="year" :value="year">{{ year }}</option>
+              <option v-for="yearOption in yearOptions.value" :key="yearOption" :value="yearOption">
+                {{ yearOption }}
+              </option>
             </select>
             <p class="my-auto mx-2 text-gray-500 text-xl font-bold"> - </p>
-            <select id="tahun"
+            <select id="tahunMax"
               class="px-4 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               v-model="year.maxValue">
-              <option v-for="year in yearOptions" :key="year" :value="year">{{ year }}</option>
+              <option v-for="yearOption in filteredMaxYearOptions" :key="yearOption" :value="yearOption">
+                {{ yearOption }}
+              </option>
             </select>
+            <button 
+              @click="applyYearFilter"
+              class="ml-4 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+            >
+              Apply
+            </button>
           </div>
           <div class="mb-6">
             <GraphGeneralLine class="" id="2" :dataset="lineData" :title="['Nilai Tambah', 'Pendapatan']"
@@ -77,9 +87,7 @@
 import dummy from '~/assets/dummy_produktivitas.json'
 import { DistinctColors } from '~/assets/helpers/colors'
 
-const dummyData = dummy
-
-let rawData = ref()
+let dummyData = dummy
 let loading = ref(false)
 let available = ref(false)
 
@@ -636,15 +644,48 @@ year.value.max = Math.max(...yearMap)
 year.value.min = Math.min(...yearMap)
 year.value.maxValue = Math.max(...yearMap)
 year.value.minValue = Math.min(...yearMap)
+
+const filteredMaxYearOptions = computed(() => {
+  return yearOptions.value.filter(y => y > year.value.minValue)
+})
+
+// When minValue changes, ensure maxValue is valid
+watch(() => year.value.minValue, (newMin) => {
+  if (year.value.maxValue < newMin) {
+    year.value.maxValue = newMin
+  }
+})
+
 renewData(dummyData.analisis)
 loading.value = false
 showSlider.value = true
 available.value = true
 
+// Add ref for filtered data
+const filteredData = ref()
+filteredData.value = dummyData.analisis
+
+// Function to filter data based on year range
+const applyYearFilter = () => {
+  // Ensure we're working with the existing dummyData
+  filteredData.value = dummyData.analisis.filter(item => {
+    const itemYear = parseInt(item.year)
+    return itemYear >= year.value.minValue && itemYear <= year.value.maxValue
+  })
+}
+
+// Initialize filtered data when component mounts
+onMounted(() => {
+  applyYearFilter()
+})
+
 const formatter = new Intl.NumberFormat('en-US', {
   style: 'currency',
   currency: 'IDR',
 });
+
+
+
 
 
 </script>

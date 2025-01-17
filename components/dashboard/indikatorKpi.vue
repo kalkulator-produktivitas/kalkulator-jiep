@@ -22,9 +22,9 @@ const kpiPerusahaan = computed(() => {
 
 function isKpiSevere(k: KpiType): boolean {
   if (k.lower_is_better) {
-    return k.target / k.value < SEVERE_VALUE
+    return k.target / k.value <= SEVERE_VALUE
   }
-  return k.value / k.target < SEVERE_VALUE;
+  return k.value / k.target <= SEVERE_VALUE;
 }
 
 function isIndicatorSevere(i: IndicatorType): boolean {

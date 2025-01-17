@@ -5,7 +5,7 @@
       aria-label="Sidebar">
       <div class="h-full bg-[#034EA2]">
         <nuxt-link class="flex items-center" to="/">
-          <img src="~/assets/logo_jiep_1.png" class="w-12 pt-3 flex-none" alt="" srcset="">
+          <img :src="logoSrc" class="w-12 pt-3 flex-none" alt="" srcset="">
           <p class="ml-2 font-bold text-white mt-2" :class="!isOpen ? 'visible' : 'invisible'">
             Kalkulator Produktivitas</p>
         </nuxt-link>
@@ -75,12 +75,16 @@
 </style>
 
 <script>
+import { USE_JIEP_DATA } from '~/assets/helpers/const';
+import logoJiep from '~/assets/logo_jiep_1.png';
+import logoP3D from '~/assets/P3D_logo_2.png';
 
 export default {
   components: {
   },
   data() {
     return {
+      logoSrc: USE_JIEP_DATA ? logoJiep : logoP3D,
       isOpen: true,
       items: [
         {

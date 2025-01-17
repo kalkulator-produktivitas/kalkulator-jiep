@@ -242,14 +242,6 @@
           </div>
 
         </form>
-
-        <Loading v-if="loading" text="Menginput Data" />
-        <ModalsPrompt v-if="prompt" @submit="formRequest(true)" @close="prompt = false" title="Submit laporan?"
-          sub="Laporan bersifat final dan hanya bisa diubah dengan izin admin P3D" />
-        <ModalsPrompt v-if="prompt2" @submit="formRequest(false)" @close="prompt2 = false" title="Simpan draft?"
-          sub="Draft laporan dapat diedit" />
-        <Popup v-if="modal.show" :message="modal.message" :status="modal.status" :type="modal.type"
-          @close="closeModal" />
       </div>
     </div>
 

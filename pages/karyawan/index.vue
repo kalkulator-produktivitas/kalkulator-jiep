@@ -243,11 +243,6 @@
         Submit
       </button>
     </div>
-
-    <Loading v-if="loading" text="Menginput Data" />
-    <ModalsPrompt v-if="prompt" @submit="formRequest()" @close="prompt = false" title="Submit laporan?"
-      sub="Laporan bersifat final dan hanya bisa diubah dengan izin admin P3D" />
-    <Popup v-if="modal.show" :message="modal.message" :status="modal.status" :type="modal.type" @close="closeModal" />
   </div>
 </template>
 
@@ -255,9 +250,8 @@
 
 
 const router = useRouter()
-import dummy from '~/assets/dummy_karyawan_jiep_real.json'
+import { dummyKaryawan as dummy } from '~/assets/mock/kpi'
 import dummy_2 from '~/assets/dummy_produktivitas.json'
-console.log('Loaded dummy_2:', dummy_2)
 
 const formatter = new Intl.NumberFormat("de-DE");
 

@@ -68,8 +68,6 @@
         </div>
       </div>
     </div>
-    <Loading v-if="loading" text="Fetching Data" />
-    <Popup v-if="modal.show" :message="modal.message" :status="modal.status" :type="modal.type" @close="closeModal" />
   </div>
 </template>
 

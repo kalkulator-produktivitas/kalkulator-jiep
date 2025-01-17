@@ -1,4 +1,6 @@
-export const mockKpiKaryawan = [
+import { namaKaryawan } from "../helpers/const";
+
+const RAW_MOCK_KPI_KARYAWAN = [
   {
     "nama": "Abdul Malik Hidayatullah",
     "index": 1,
@@ -3528,3 +3530,7 @@ export const mockKpiKaryawan = [
     ]
   }
 ];
+
+export const mockKpiKaryawan = 
+  RAW_MOCK_KPI_KARYAWAN
+    .map((v, i) => ({ ...v, nama: namaKaryawan(v.nama, i) }));

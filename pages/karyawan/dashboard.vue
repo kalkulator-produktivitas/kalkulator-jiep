@@ -40,7 +40,7 @@ const global = useRuntimeConfig();
 let available = ref(true)
 const route = useRouter()
 import dummy from '~/assets/dummy_karyawan.json'
-import dummy_2 from '~/assets/dummy_karyawan_jiep_real.json'
+import { dummyKaryawan as dummy_2 } from '~/assets/mock/kpi'
 
 let loading = ref(false)
 

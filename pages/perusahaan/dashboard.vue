@@ -1,12 +1,15 @@
 <script setup lang="ts">
 import { mockIndicators, mockKpiPerusahaan } from '~/assets/mock/kpi';
-
+import logoJiep from '~/assets/logo_jiep_1.png';
+import logoP3D from '~/assets/P3D_logo_2.png';
+import { USE_JIEP_DATA } from '~/assets/helpers/const';
 
 type IndicatorType = typeof mockIndicators[number]['indicators'][number];
 type KpiType = typeof mockKpiPerusahaan[number]['kpi'][number];
 
 const mode = ref<string>('produktivitas');
 
+const logoSrc = USE_JIEP_DATA ? logoJiep : logoP3D;
 
 </script>
 
@@ -15,7 +18,7 @@ const mode = ref<string>('produktivitas');
     <div class="shrink-0 w-[5%]"></div>
     <main class="h-[92vh] w-[100vw] relative">
       <div class="absolute -top-16 -right-5">
-        <img src="~/assets/logo-jiep-warna.png" class="w-36 ml-1 pt-3 flex-none" alt="" srcset=""/>
+        <img :src="logoSrc" class="w-36 ml-1 pt-3 flex-none" alt="" srcset=""/>
       </div>
       <!-- :start TAB -->
       <div class="flex w-[100%]">

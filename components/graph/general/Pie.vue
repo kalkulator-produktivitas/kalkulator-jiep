@@ -6,7 +6,7 @@
         <h5 class="font-semibold text-lg text-gray-800 my-1.5"> {{ year }} </h5>
       </div>
     </div>
-    <div class="px-4 pb-4">
+    <div class="px-4 py-2">
       <Pie :options="config" :data="dataset" />
     </div>
   </div>

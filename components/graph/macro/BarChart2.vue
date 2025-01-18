@@ -2,7 +2,7 @@
   <div
     class="flex flex-col relative bg-white rounded-xl border border-slate-200 hover:shadow-xl transition-shadow duration-300">
     <div class="flex justify-between px-3 pt-2 bg-gradient-to-r rounded-t-xl">
-      <p class="font-bold text-md ml-2 text-[#034EA2]">{{ title }}</p>
+      <p class="font-bold text-md ml-2 text-[#034EA2] text-balance">{{ title }}</p>
       <div class="justify-end flex text-xs gap-1">
         <div class="w-2 h-2 bg-[#5A8DEE] rounded-full my-auto"></div>
         <p class="my-auto">2020</p>
@@ -52,6 +52,7 @@ const props = defineProps(['title', 'chartData', 'ribuan'])
 const chartOptions = {
   responsive: true,
   maintainAspectRatio: false,
+  aspectRatio: 2.5,
   plugins: {
     legend: {
       display: false,
@@ -77,7 +78,7 @@ const chartOptions = {
     y: {
       ticks: {
         callback: function (value) {
-          return props.ribuan ? `${value / 1000000}M` : value;
+          return props.ribuan ? `${value / 1000000000} milyar` : value;
         },
         color: "#666666",
       },

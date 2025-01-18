@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col relative bg-white rounded-xl border border-slate-200 duration-300 w-full">
+  <div class="flex flex-col relative bg-white rounded-xl border border-slate-200 hover:shadow-xl transition duration-300 w-full">
     <div class="flex justify-between px-3 pt-2 bg-gradient-to-r rounded-t-xl">
       <p class="font-bold text-md ml-2 text-[#034EA2]">{{ title }}</p>
     </div>
@@ -37,6 +37,7 @@ const props = defineProps(['title', 'chartData', 'ribuan'])
 const chartOptions = {
   responsive: true,
   maintainAspectRatio: true,
+  aspectRatio: 2.4,
   plugins: {
     legend: {
       display: false, // Hides the legend
@@ -65,7 +66,7 @@ const chartOptions = {
       },
       ticks: {
         callback: function (value) {
-          return props.ribuan ? `${value / 1000}k` : value;
+          return props.ribuan ? `${value / 1000000} Jt` : value;
         },
         color: "#666666",
       },

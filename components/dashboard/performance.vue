@@ -1,5 +1,5 @@
 <template>
-  <div id="layout" class="md:mx-auto mx-auto flex">
+  <div id="layout" class="md:mx-auto mx-auto flex" :key="reactive">
     <div class="h-[86vh] w-[92vw]">
       <div class="mx-auto flex flex-row gap-4 h-full">
         <div class="w-[60%] flex flex-col">
@@ -7,7 +7,7 @@
             <select id="tahunMin"
               class="px-4 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               v-model="year.minValue">
-              <option v-for="yearOption in yearOptions.value" :key="yearOption" :value="yearOption">
+              <option v-for="yearOption in yearOptions" :key="yearOption" :value="yearOption">
                 {{ yearOption }}
               </option>
             </select>
@@ -23,7 +23,7 @@
               @click="applyYearFilter"
               class="ml-4 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
             >
-              Apply
+              Terapkan
             </button>
           </div>
           <div class="mb-6">
@@ -32,7 +32,7 @@
           </div>
           <div class="row-span-2 grid grid-cols-12 gap-4">
             <div class="col-span-6">
-              <GraphGeneralPie id="3" :config="pieOptions" :dataset="pieData" :year="year.maxValue"
+              <GraphGeneralPie id="3" :config="pieOptions" :dataset="pieData" :year="filteredDataMaxYear"
                 title="Perbandingan Nilai Tambah" :key="`doughnut-${state}`" />
             </div>
             <div class="col-span-6 ">
@@ -88,6 +88,8 @@ import { DistinctColors } from '~/assets/helpers/colors'
 let dummyData = dummy
 let loading = ref(false)
 let available = ref(false)
+
+let reactive = ref(0)
 
 
 const modal = ref({
@@ -281,7 +283,7 @@ const pieData = ref({
 const pieOptions = {
   responsive: true,
   maintainAspectRatio: true,
-  aspectRatio: 1.3,
+  aspectRatio: 2,
   plugins: {
     legend: {
       display: true,
@@ -663,13 +665,20 @@ available.value = true
 const filteredData = ref()
 filteredData.value = dummyData.analisis
 
+const filteredDataMaxYear = computed(() => {
+  const yearMap = filteredData.value.map(item => item.tahun)
+  return Math.max(...yearMap)
+})
+
 // Function to filter data based on year range
 const applyYearFilter = () => {
   // Ensure we're working with the existing dummyData
   filteredData.value = dummyData.analisis.filter(item => {
-    const itemYear = parseInt(item.year)
+    const itemYear = parseInt(item.tahun)
     return itemYear >= year.value.minValue && itemYear <= year.value.maxValue
   })
+  renewData(filteredData.value)
+  state.value += 1
 }
 
 // Initialize filtered data when component mounts

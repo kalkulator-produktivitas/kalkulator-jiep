@@ -1,5 +1,5 @@
 <template>
-  <div class="register-container">
+  <div class="">
     <div class="h-[10px]">
     </div>
     <div class="flex">
@@ -119,7 +119,7 @@
         </div>
 
         <div class="flex">
-          <button @click="nextTab"
+          <button @click="tab = 'Struktur Perusahaan'"
             class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full mx-auto w-28 ease-in-out duration-300 mt-4">
             Next
           </button>
@@ -127,20 +127,25 @@
       </div>
       <div v-if="tab === 'Struktur Perusahaan'" class="w-10/12 p-8 mx-auto" style="min-height: 280px;">
         <div class="w-full mx-auto">
-          <p class="text-xl italic text-gray-500 text-center mb-4">Opsional</p>
+          <p class="text-xl italic text-gray-400 text-center mb-4">Opsional</p>
 
           <!-- Divisions Section -->
           <div class="relative">
             <div v-if="divisions.length < 1" class="flex justify-center mt-4">
               <Icon @click="addDivision" name="mdi:plus-circle" size="10mm" class="text-green-500 cursor-pointer" />
             </div>
-            <div v-for="(division, index) in divisions" :key="`division-${index}`" class="grid grid-cols-7 gap-2 ">
+            <div v-for="(division, index) in divisions" :key="`division-${index}`" class="flex gap-2 justify-center">
               <!-- <InputField3 v-model="division.name" class="col-span-3" label="Input Nama Divisi" type="text"
                 :color="textColor" /> -->
-              <div class="col-span-3" :style="{ width: inputWide }">
+              <div class="w-[40%] relative" :style="{ width: inputWide }">
                 <div class="absolute -left-12 flex">
-                  <Icon @click="removeDivision(index)" name="mdi:minus-circle" size="10mm"
-                    class="flex-none text-red-500 cursor-pointer self-center mt-7" />
+                  <div class="group relative">
+                    <Icon @click="removeDivision(index)" name="mdi:minus-circle" size="10mm"
+                      class="flex-none text-red-500 cursor-pointer self-center mt-7" />
+                    <p
+                      class="absolute -left-1.5 text-center text-xs invisible group-hover:visible bg-gray-800 text-white p-2 rounded shadow-lg">
+                      Hapus Divisi</p>
+                  </div>
                 </div>
                 <label class="block text-sm font-bold mb-2" :style="color ? { color: textColor } : { color: '#334155' }"
                   for="random1">
@@ -150,12 +155,18 @@
                   class="shadow appearance-none border rounded w-full h-100 py-2.5 px-3 text-gray-700 text-sm leading-tight focus:outline-[#1CA83B] focus:shadow-outline"
                   id="random1" :type="text" :placeholder="placeholder">
                 <div class="flex justify-center mt-4">
-                  <Icon @click="addDivision" name="mdi:plus-circle" size="10mm" class="text-green-500 cursor-pointer" />
+                  <div class="group relative">
+                    <Icon @click="addDivision" name="mdi:plus-circle" size="10mm"
+                      class="text-green-500 cursor-pointer" />
+                    <p
+                      class="absolute left-10 top-0 text-center text-xs invisible group-hover:visible bg-gray-800 text-white p-2 rounded shadow-lg">
+                      Tambah Divisi</p>
+                  </div>
                 </div>
               </div>
 
               <!-- Department inputs for this division -->
-              <div class="col-span-3">
+              <div class="w-[40%]">
                 <div v-for="(dept, deptIndex) in division.departments" :key="`dept-${index}-${deptIndex}`"
                   class="grid grid-cols-7 gap-2 relative">
                   <div class="col-span-6">
@@ -168,28 +179,24 @@
                       id="random1" :type="text" :placeholder="placeholder">
                   </div>
                   <div class="my-auto flex flex-col">
-                    <Icon @click="removeDepartment(index, deptIndex)" name="mdi:minus-circle" size="6mm"
-                      class="flex-none mt-8 text-red-500 cursor-pointer" />
+                    <div class="group relative">
+                      <Icon @click="removeDepartment(index, deptIndex)" name="mdi:minus-circle" size="6mm"
+                        class="flex-none mt-8 text-red-500 cursor-pointer" />
+                      <p class="absolute -left-1 text-center text-xs invisible group-hover:visible bg-gray-800 text-white p-2 rounded shadow-lg">Hapus Departemen</p>
+                    </div>
                   </div>
                   <div class="my-auto col-span-6 flex justify-center">
-                    <Icon @click="addDepartment(index)" name="mdi:plus-circle" size="6mm"
-                      class="flex-none text-blue-500 cursor-pointer mb-4" />
+                    <div class="group relative">
+                      <Icon @click="addDepartment(index)" name="mdi:plus-circle" size="6mm"
+                        class="flex-none text-blue-500 cursor-pointer mb-4" />
+                      <p class="absolute left-7 bottom-0 text-center text-xs invisible group-hover:visible bg-gray-800 text-white p-2 rounded shadow-lg">Tambah Departemen</p>
+                    </div>
                   </div>
                 </div>
-
-                <!-- Add Department Button -->
-
               </div>
-
-              <!-- Remove Division Button -->
-
             </div>
           </div>
-
-          <!-- Add Division Button -->
-
         </div>
-
         <div class="flex">
           <button @click="tab = 'Data Pengguna'"
             class="text-white font-bold py-2 px-4 rounded-full mx-auto w-40 ease-in-out duration-300 mt-4 bg-blue-500 hover:bg-blue-700">
@@ -228,8 +235,7 @@
               </div>
             </div>
             <!-- <InputField3 label="" type="number" :color="textColor" v-model="register.nomorPengguna" /> -->
-            <InputField3 label="Email User" type="email" :color="textColor" v-model="register.emailPengguna"
-               />
+            <InputField3 label="Email User" type="email" :color="textColor" v-model="register.emailPengguna" />
           </div>
           <div class="mb-4">
             <InputField3 label="Username" type="text" :color="textColor" v-model="register.username"
@@ -247,16 +253,15 @@
 
         <div class="flex">
           <button @click="registerAuth"
-            class="text-white font-bold py-2 px-4 rounded-full mx-auto w-40 ease-in-out duration-300 mt-4"
-            :class="(validasiPage1.output === 0 && validasiPage2.output === 0) ? 'bg-blue-500 hover:bg-blue-700' : 'bg-gray-500'">
+            class="text-white font-bold py-2 px-4 rounded-full mx-auto w-40 ease-in-out duration-300 mt-4 bg-blue-500 hover:bg-blue-700">
             Daftar
           </button>
         </div>
       </div>
-      <div v-show="showModal">
+      <div v-show="showModal" class="fixed top-0 bottom-0 left-0 right-0 z-20">
         <div class="modal-overlay z-20">
-          <div class="modal p-6 a">
-            <p class="text-4xl font-bold text-center mb-6">Klasifikasi Usaha</p>
+          <div class="w-[50vw] h-[80vh] bg-white p-6 my-auto relative rounded-md">
+            <p class="text-2xl font-bold text-center mb-6 ">Klasifikasi Usaha</p>
             <div class="container h-[60vh] overflow-y-auto">
               <div class="overflow-y-auto ">
                 <ul class="list-none">
@@ -271,7 +276,7 @@
                 </ul>
               </div>
             </div>
-            <div class="flex justify-center items-center">
+            <div class="flex justify-center items-center absolute bottom-5 left-0 right-0">
               <button type="button"
                 class="bg-red-600 hover:bg-red-800 text-white font-bold py-2 px-4 rounded-full w-40 ease-in-out duration-300 mt-2"
                 @click="showModal = false">
@@ -441,32 +446,10 @@ const validasiPage2 = computed(() => {
 })
 
 const registerAuth = async () => {
-  reaction.value.submit += 1
-  if (validasiPage1.value.output === 0 && validasiPage2.value.output === 0) {
-    try {
-      loading.value = true
-      setTimeout(() => {
-        loading.value = false
-        modal.value.show = true
-        modal.value.status = null
-        modal.value.message = 'Registrasi Berhasil'
-        modal.value.type = 'SUCCESS'
-
-        setTimeout(() => {
-          reloadNuxtApp({
-            path: "/",
-            ttl: 5000,
-          });
-        }, 1500);
-      }, 1000)
-
-    } catch (e) {
-      modal.value.type = 'ERROR'
-      modal.value.message = 'An error occurred'
-      modal.value.show = true
-      loading.value = false
-    }
-  }
+  modal.value.type = 'WARNING'
+  modal.value.message = 'Fitur ini belum tersedia'
+  modal.value.show = true
+  loading.value = false
 }
 
 const divisions = ref([

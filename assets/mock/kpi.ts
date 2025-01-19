@@ -707,9 +707,9 @@ const RAW_DUMMY_KARYAWAN_JIEP = {
         "2023": "97.20",
         "No": "26",
         "Karyawan": "Auria Oktaviani",
-        "Jabatan": "Kepala Divisi Jiep Daya Sarana",
-        "Departemen": "Kepala Divisi Jiep Daya Sarana",
-        "Divisi": "Kepala Divisi Jiep Daya Sarana"
+        "Jabatan": "Kepala Divisi Daya Sarana",
+        "Departemen": "Daya Sarana",
+        "Divisi": "Daya Sarana"
       },
       {
         "2021": "100.00",
@@ -1217,9 +1217,9 @@ const RAW_DUMMY_KARYAWAN_JIEP = {
         "2023": "95.45",
         "No": "77",
         "Karyawan": "Lola Cahyana",
-        "Jabatan": "Kepala Perencanaan JIEP Daya Sarana",
-        "Departemen": "Kepala Perencanaan JIEP Daya Sarana",
-        "Divisi": "Kepala Perencanaan JIEP Daya Sarana"
+        "Jabatan": "Kepala Perencanaan Daya Sarana",
+        "Departemen": "Daya Sarana",
+        "Divisi": "Daya Sarana"
       },
       {
         "2021": "100.00",
@@ -1517,9 +1517,9 @@ const RAW_DUMMY_KARYAWAN_JIEP = {
         "2023": "102.00",
         "No": "107",
         "Karyawan": "Nur Chalim",
-        "Jabatan": "Direktur Jiep Daya Sarana",
-        "Departemen": "Direktur Jiep Daya Sarana",
-        "Divisi": "Direktur Jiep Daya Sarana"
+        "Jabatan": "Direktur Daya Sarana",
+        "Departemen": "Daya Sarana",
+        "Divisi": "Daya Sarana"
       },
       {
         "2021": "60.00",

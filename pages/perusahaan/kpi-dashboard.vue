@@ -37,9 +37,9 @@ function isKpiSevere(k: KpiType): boolean {
 
 function isIndicatorSevere(i: IndicatorType): boolean {
   if (!kpiPerusahaan.value) return false;
-  const relatedKpi = kpiPerusahaan.value.kpi.filter(v => v.related_indicator_ids.includes(i.id));
+  const relatedKpi = kpiPerusahaan.value.kpi.filter((v: any) => v.related_indicator_ids.includes(i.id));
   if (!relatedKpi || relatedKpi.length === 0) return false;
-  const severeKpi = relatedKpi.filter(v => isKpiSevere(v));
+  const severeKpi = relatedKpi.filter((v: any) => isKpiSevere(v));
   if (severeKpi.length / relatedKpi.length >= 0.5) {
     return true;
   }
@@ -100,7 +100,7 @@ watch(
       <div v-if="mode == 'kpi'" class="py-4">
         <div class="mb-4 flex gap-8 items-center">
           <select class="select select-bordered" v-model="selectedYear">
-            <option v-for="y in mockIndicators" :value="y.tahun">
+            <option v-for="y in mockIndicators" :value="y.tahun" :key="y.tahun">
               {{ y.tahun }}
             </option>
           </select>
@@ -111,7 +111,7 @@ watch(
         </div>
         <div class="py-4 grid grid-cols-3 gap-8 h-[65vh]">
           <div class="flex flex-col gap-2.5 overflow-y-auto">
-            <button type="button" v-for="indicator in selectedValue.indicators"
+            <button type="button" v-for="indicator in selectedValue.indicators" :key="indicator.id"
               class="px-6 py-2.5 rounded-lg border hover:border-blue-500 hover:bg-blue-50 transition ease-in-out border-neutral-200 flex gap-2 justify-between items-center"
               :class="{ 'border-blue-500 bg-blue-50': selectedIndicator?.id === indicator.id }"
               @click="selectedIndicator = indicator">

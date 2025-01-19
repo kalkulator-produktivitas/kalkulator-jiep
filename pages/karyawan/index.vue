@@ -214,14 +214,14 @@
                 </td>
                 <td class="">
                   <input
-                    class="w-[80px] py-2 px-3 border border-neutral-200 text-center rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 transition-all duration-200"
+                    class="w-[80px] py-2 px-3 border text-center rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 transition-all duration-200"
                     :id="`${param.karyawan}-capaian`" type="number" v-model="param.capaian"
                     @keypress="(e) => !/^\d$/.test(e.key) && e.preventDefault()"
                   />
                 </td>
                 <td class="">
                   <input
-                    class="w-[80px] py-2 px-3 border border-neutral-200 text-center rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 transition-all duration-200"
+                    class="w-[80px] py-2 px-3 border text-center rounded-md border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 transition-all duration-200"
                     :id="`${param.karyawan}-kpi`" type="number" v-model="param.kpi"
                     @keypress="(e) => !/^\d$/.test(e.key) && e.preventDefault()"
                   />

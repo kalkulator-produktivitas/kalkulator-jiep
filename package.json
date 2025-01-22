@@ -1,19 +1,26 @@
 {
   "name": "nuxt-app",
+  "description": "Kalkulator Produktivitas",
+  "author": "PT Jago Rekayasa Komputasi",
+  "version": "0.1.0",
   "private": true,
   "type": "module",
+  "main": "dist-electron/main.js",
   "scripts": {
-    "build": "nuxt build",
+    "build": "nuxi build --prerender && electron-builder",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "build:desktop": "tsc -p electron && electron-builder",
+    "dev:desktop": "cross-env NODE_ENV=development tsc -p electron && electron ."
   },
   "dependencies": {
     "@nuxt/icon": "^1.5.6",
     "apexcharts": "^4.3.0",
     "chart.js": "^4.4.5",
     "nuxt": "^3.13.2",
+    "nuxt-electron": "^0.7.0",
     "vue": "latest",
     "vue-chartjs": "^5.3.1",
     "vue-router": "latest",
@@ -21,6 +28,11 @@
   },
   "devDependencies": {
     "@nuxtjs/tailwindcss": "^6.12.2",
-    "daisyui": "^4.12.23"
+    "@types/electron": "^1.4.38",
+    "daisyui": "^4.12.23",
+    "electron": "^34.0.0",
+    "electron-builder": "^25.1.8",
+    "vite-plugin-electron": "^0.29.0",
+    "vite-plugin-electron-renderer": "^0.14.6"
   }
 }

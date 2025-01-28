@@ -102,6 +102,10 @@ export default {
         {
           text: 'Karyawan', to: '/karyawan', icon: 'mdi:people', sublink: [
             {
+              to: '/karyawan/list',
+              text: 'List Karyawan'
+            },
+            {
               to: '/karyawan',
               text: 'Input'
             },

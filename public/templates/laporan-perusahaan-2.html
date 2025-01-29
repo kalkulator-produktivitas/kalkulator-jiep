@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <body style="height: 100vh; width: 100vw">
+    <div style="height: 29.7cm; width: 21cm; padding: 6rem 4rem">
+      <div style="border: solid black 1px; padding: 1rem 1rem 2rem 1rem; padding-top: 1rem; font-size: 0.8rem; margin-bottom: 1rem;">
+        <!-- :start pertumbuhan produktivitas -> rasio pendukung -->
+        <div style="display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 0.5rem">
+          <div style="text-align: right; grid-column: span 2 / span 2">d.</div>
+          <div style="text-align: left; grid-column: span 6 / span 6">RASIO PENDUKUNG (%)</div>
+          <div style="text-align: right; grid-column: span 1 / span 1">:</div>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 0.5rem">
+          <div style="text-align: right; grid-column: span 3 / span 3">i.</div>
+          <div style="text-align: left; grid-column: span 5 / span 5">Nilai Tambah/Penjualan</div>
+          <div style="text-align: right; grid-column: span 1 / span 1">:</div>
+          <div style="text-align: left; grid-column: span 3 / span 3">{{ .data.growth.rp_1 }}</div>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 0.5rem">
+          <div style="text-align: right; grid-column: span 3 / span 3">ii.</div>
+          <div style="text-align: left; grid-column: span 5 / span 5">Nilai Tambah/Pembelian Bahan</div>
+          <div style="text-align: right; grid-column: span 1 / span 1">:</div>
+          <div style="text-align: left; grid-column: span 3 / span 3">{{ .data.growth.rp_2 }}</div>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 0.5rem">
+          <div style="text-align: right; grid-column: span 3 / span 3">iii.</div>
+          <div style="text-align: left; grid-column: span 5 / span 5">Laba/Biaya Tenaga Kerja</div>
+          <div style="text-align: right; grid-column: span 1 / span 1">:</div>
+          <div style="text-align: left; grid-column: span 3 / span 3">{{ .data.growth.rp_3 }}</div>
+        </div>
+        <!-- :end pertumbuhan produktivitas -> rasio pendukung -->
+
+        <div style="display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 0.5rem">
+          <div style="text-align: right; grid-column: span 1 / span 1">7.</div>
+          <div style="text-align: left; grid-column: span 7 / span 7">KETERKAITAN RASIO PRODUKTIVITAS DENGAN KPI</div>
+          <div style="text-align: right; grid-column: span 1 / span 1">:</div>
+          <div style="text-align: left; grid-column: span 3 / span 3">-</div>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 0.5rem">
+          <div style="text-align: right; grid-column: span 1 / span 1">8.</div>
+          <div style="text-align: left; grid-column: span 7 / span 7">PRODUKTIVITAS PER DIVISI</div>
+          <div style="text-align: right; grid-column: span 1 / span 1">:</div>
+          <div style="text-align: left; grid-column: span 3 / span 3">-</div>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 0.5rem">
+          <div style="text-align: right; grid-column: span 1 / span 1">9.</div>
+          <div style="text-align: left; grid-column: span 7 / span 7">RATA-RATA KPI PER INDIVIDU</div>
+          <div style="text-align: right; grid-column: span 1 / span 1">:</div>
+          <div style="text-align: left; grid-column: span 3 / span 3">{{ .data.avg_kpi }}</div>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 0.5rem">
+          <div style="text-align: right; grid-column: span 1 / span 1">10.</div>
+          <div style="text-align: left; grid-column: span 7 / span 7">PERHITUNGAN MARGIN CAPAIAN NILAI TAMBAH</div>
+          <div style="text-align: right; grid-column: span 1 / span 1">:</div>
+          <div style="text-align: left; grid-column: span 3 / span 3">{{ .data.growth_nt }}</div>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 0.5rem">
+          <div style="text-align: right; grid-column: span 1 / span 1">11.</div>
+          <div style="text-align: left; grid-column: span 7 / span 7">PERHITUNGAN GAIN SHARING & PEMBAGIAN PER INDIVIDU</div>
+          <div style="text-align: right; grid-column: span 1 / span 1">:</div>
+          <div style="text-align: left; grid-column: span 3 / span 3">-</div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

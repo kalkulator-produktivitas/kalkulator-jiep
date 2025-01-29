@@ -102,6 +102,10 @@ export default {
         {
           text: 'Karyawan', to: '/karyawan', icon: 'mdi:people', sublink: [
             {
+              to: '/karyawan/list',
+              text: 'List Karyawan'
+            },
+            {
               to: '/karyawan',
               text: 'Input'
             },
@@ -111,9 +115,9 @@ export default {
             }
           ]
         },
-        {
-          text: 'Makro', to: '/macro/dashboard', icon: 'mdi:globe',
-        }
+        // {
+        //   text: 'Makro', to: '/macro/dashboard', icon: 'mdi:globe',
+        // }
       ]
     }
   }

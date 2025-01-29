@@ -2,6 +2,7 @@
 import { downloadPdfLaporanIndividu } from '~/assets/services/laporan';
 import { dummyKaryawan } from '~/assets/mock/kpi';
 import { mockLaporanAnalisis } from '~/assets/mock/laporan';
+import { mockGainSharing, mockGainSharingKaryawan } from '~/assets/mock/gain-sharing';
 
 const search = ref('');
 const page = ref(1);
@@ -38,7 +39,7 @@ async function downloadLaporanIndividu(karyawan: typeof dummyKaryawan['list'][nu
   await downloadPdfLaporanIndividu({
     tahun,
     perusahaan: {
-      nama: 'PT SINERGI NUSANTARA',
+      nama: 'PT JIEP',
       logo_src: ''
     },
     karyawan: {
@@ -49,10 +50,19 @@ async function downloadLaporanIndividu(karyawan: typeof dummyKaryawan['list'][nu
     },
     data: {
       ptk_perusahaan: analisis?.produktivitas_tenaga_kerja_1 || null,
-      ptk_divisi: null, // TODO:
+      ptk_divisi: mockGainSharing
+        .find(v => v.tahun === tahun)
+        ?.divisi.find(v => v.nama === karyawan['Divisi'])
+        ?.nilai
+        ?? null
+      ,
       ptk_growth: (analisis && analisisPrev) ? ((analisis.produktivitas_tenaga_kerja_1 - analisisPrev.produktivitas_tenaga_kerja_1) / analisis.produktivitas_tenaga_kerja_1 * 100) : null,
       kpi: (karyawan as any)[`${tahun}`] ? Number((karyawan as any)[`${tahun}`]) : null,
-      gain_sharing: 9000000,
+      gain_sharing: mockGainSharingKaryawan
+        .find(v => v.tahun === tahun)?.karyawan
+        .find(v => v.nama == karyawan.Karyawan)
+        ?.gain_sharing
+        ?? null,
     }
   });
 }

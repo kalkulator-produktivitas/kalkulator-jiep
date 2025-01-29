@@ -17,3 +17,5 @@ export function namaKaryawan(s: string, index?: number): string {
   
   return blurred;
 }
+
+export const GAIN_SHARING_KARYAWAN_MULTIPLIER = 0.05;

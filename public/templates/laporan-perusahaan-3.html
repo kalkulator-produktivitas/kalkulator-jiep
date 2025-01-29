@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <body style="height: 100vh; width: 100vw">
+    <div style="height: 29.7cm; width: 21cm; padding: 4rem 4rem">
+      <div style="border: solid black 1px; padding: 1rem 1rem 2rem 1rem; padding-top: 1rem; font-size: 0.8rem; margin-bottom: 1rem;">
+        <div style="display: grid; grid-template-columns: repeat(24, minmax(0, 1fr)); gap: 0.5rem">
+          <div style="text-align: left; grid-column: span 1 / span 1">10.</div>
+          <div style="text-align: left; grid-column: span 14 / span 14">KETERKAITAN RASIO PRODUKTIVITAS DENGAN KPI</div>
+        </div>
+        <div style="display: grid; justify-items: center; align-items: center; width: 100%; padding: 2rem">
+          {{ .table.rasio_kpi }}
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -23,17 +23,33 @@ const logoSrc = USE_JIEP_DATA ? logoJiep : logoP3D;
       <!-- :start TAB -->
       <div class="flex w-[100%]">
         <div role="tablist" class="tabs tabs-lg tabs-lifted">
-          <a role="tab" :class="`tab ${mode === 'produktivitas' ? 'tab-active font-bold text-blue-500' : ''}`"
-            @click="mode = 'produktivitas'">
+          <a 
+            role="tab" 
+            :class="`tab ${mode === 'produktivitas' ? 'tab-active font-bold text-blue-500' : ''}`"
+            @click="mode = 'produktivitas'"
+          >
             Produktivitas Perusahaan
           </a>
-          <a role="tab" :class="`tab ${mode === 'kpi' ? 'tab-active font-bold text-blue-500' : ''}`"
-            @click="mode = 'kpi'">
+          <a 
+            role="tab" 
+            :class="`tab ${mode === 'kpi' ? 'tab-active font-bold text-blue-500' : ''}`"
+            @click="mode = 'kpi'"
+          >
             Indikator Produktivitas
           </a>
-          <a role="tab" :class="`tab ${mode === 'gain-sharing' ? 'tab-active font-bold text-blue-500' : ''}`"
-            @click="mode = 'gain-sharing'">
+          <a 
+            role="tab" 
+            :class="`tab ${mode === 'gain-sharing' ? 'tab-active font-bold text-blue-500' : ''}`"
+            @click="mode = 'gain-sharing'"
+          >
             Gain Sharing
+          </a>
+          <a 
+            role="tab" 
+            :class="`tab ${mode === 'laporan' ? 'tab-active font-bold text-blue-500' : ''}`"
+            @click="mode = 'laporan'"
+          >
+            Laporan
           </a>
         </div>
         <!-- border only -->
@@ -58,6 +74,10 @@ const logoSrc = USE_JIEP_DATA ? logoJiep : logoP3D;
         <DashboardGainSharing />
       </div>
       <!-- :end GAIN SHARING -->
+
+      <div v-else-if="mode == 'laporan'" class="py-4">
+        <DashboardLaporan />
+      </div>
 
     </main>
   </div>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { downloadPdfLaporanIndividu } from '~/assets/helpers/laporan';
+import { downloadPdfLaporanIndividu } from '~/assets/services/laporan';
 import { dummyKaryawan } from '~/assets/mock/kpi';
 import { mockLaporanAnalisis } from '~/assets/mock/laporan';
 

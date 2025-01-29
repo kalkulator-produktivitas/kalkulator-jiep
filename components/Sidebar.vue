@@ -115,9 +115,9 @@ export default {
             }
           ]
         },
-        {
-          text: 'Makro', to: '/macro/dashboard', icon: 'mdi:globe',
-        }
+        // {
+        //   text: 'Makro', to: '/macro/dashboard', icon: 'mdi:globe',
+        // }
       ]
     }
   }

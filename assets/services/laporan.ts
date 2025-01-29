@@ -1,9 +1,11 @@
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import moment from "moment";
-import { currency } from "../helpers/number";
+import { currency, formatNumber } from "../helpers/number";
 import { mockLaporanAnalisis } from "../mock/laporan";
-import { mockKpiKaryawan } from "../mock/gain-sharing";
+import { mockKpiKaryawan, mockRasioKPIDivisi } from "../mock/gain-sharing";
+import { mockIndicators, mockKpiPerusahaan } from "../mock/kpi";
+import { formatKpi } from "../helpers/strings";
 
 async function parseTemplate(
   templatePath: string,
@@ -94,11 +96,11 @@ export async function downloadPdfLaporanIndividu(p: {
           ['karyawan.nip']: p.karyawan.nip.toUpperCase(),
           ['karyawan.divisi']: p.karyawan.divisi.toUpperCase(),
           ['karyawan.masa_kerja']: p.karyawan.masa_kerja === null ? '-' : `${p.karyawan.masa_kerja} TAHUN`,
-          ['data.ptk_perusahaan']: p.data.ptk_perusahaan ? `${(p.data.ptk_perusahaan/1_000_000).toFixed(2)}` : '-',
-          ['data.ptk_divisi']: p.data.ptk_divisi ? `${(p.data.ptk_divisi/1_000_000).toFixed(2)}` : '-',
-          ['data.ptk_growth']: p.data.ptk_growth ? `${(p.data.ptk_growth).toFixed(2)}` : '-',
-          ['data.kpi']: p.data.kpi ? `${(p.data.kpi).toFixed(2)}` : '-',
-          ['data.gain_sharing']: p.data.gain_sharing ? `${currency(p.data.gain_sharing)}` : '-'
+          ['data.ptk_perusahaan']: p.data.ptk_perusahaan ? currency(p.data.ptk_perusahaan) : '-',
+          ['data.ptk_divisi']: p.data.ptk_divisi ? currency(p.data.ptk_divisi) : '-',
+          ['data.ptk_growth']: p.data.ptk_growth ? `${formatNumber(p.data.ptk_growth, 2)}%` : '-',
+          ['data.kpi']: p.data.kpi ? formatNumber(p.data.kpi, 2) : '-',
+          ['data.gain_sharing']: p.data.gain_sharing ? currency(p.data.gain_sharing) : '-'
         }
       },
     ],
@@ -129,6 +131,81 @@ export async function downloadPdfLaporanPerusahaan(tahun: number): Promise<void>
     _avgKpi = _sumKpi / _countKpiKaryawan
   }
 
+  const produktivitasDivisiObj = mockRasioKPIDivisi.find(v => v.tahun === tahun)?.data ?? {};
+  const produktivitasDivisi = Object.entries(produktivitasDivisiObj)
+    .map(([divisi, persentase]) => ({
+      divisi,
+      persentase,
+      nilai: l.produktivitas_tenaga_kerja_1 * persentase,
+    }))
+    .toSorted((a, b) => b.persentase - a.persentase);
+
+  let tableProduktivitasDivisi = `
+    <table style="border-radius: 0.5rem; border: solid black 0.5px; padding: 4rem">
+      <thead>
+        <tr>
+          <th style="border-bottom: solid black 1px; padding: 0.5rem">Divisi</th>
+          <th style="border-bottom: solid black 1px; padding: 0.5rem">Nilai Produktivitas</th>
+        <tr>
+      <thead>
+      <tbody style="padding: 2rem">
+  `
+  for (let d of produktivitasDivisi) {
+    tableProduktivitasDivisi += `<tr><td style="padding: 0.25rem">${d.divisi}</td>`
+    tableProduktivitasDivisi += `<td style="padding: 0.25rem">${currency(d.nilai)}</td>`
+    tableProduktivitasDivisi += `</tr>`
+  }
+  tableProduktivitasDivisi += `<tr><td colspan="2" style="padding: 0.25rem"></td><tr>`
+  tableProduktivitasDivisi += `</tbody></table>`
+
+  const indicators = mockIndicators.find(v => v.tahun === tahun)?.indicators ?? [];
+  const kpiPerusahaan = mockKpiPerusahaan.find(v => v.tahun === tahun)?.kpi ?? [];
+
+  let tableKeterkaitanRasioKPI = `
+    <table style="border-radius: 0.5rem; border: solid black 0.5px; padding: 4rem">
+      <thead>
+        <tr>
+          <th style="border-bottom: solid black 1px; padding: 0.5rem">#</th>
+          <th style="border-bottom: solid black 1px; padding: 0.5rem">Indikator Produktivitas</th>
+          <th style="border-bottom: solid black 1px; padding: 0.5rem">KPI Perusahaan Terkait</th>
+          <th style="border-bottom: solid black 1px; padding: 0.5rem">Capaian KPI</th>
+          <th style="border-bottom: solid black 1px; padding: 0.5rem">Target KPI</th>
+        </tr>
+      </thead>
+      <tbody style="font-size: 0.7rem">
+  `
+  for (let i = 0; i < indicators.length; i++) {
+    const kpiTerkait = kpiPerusahaan.filter(v => v.related_indicator_ids.includes(indicators[i].id));
+    if (kpiTerkait.length === 0) {
+      tableKeterkaitanRasioKPI += `
+        <tr>
+          <td style="padding: 0.25rem">${i+1}</td>
+          <td style="padding: 0.25rem">${indicators[i].name}</td>
+          <td style="padding: 0.25rem">-</td>
+          <td style="padding: 0.25rem">-</td>
+        <tr>
+      `;
+      continue;
+    }
+    for (let j = 0; j < kpiTerkait.length; j++ ) {
+      tableKeterkaitanRasioKPI += `<tr>`;
+      if (j === 0) {
+        tableKeterkaitanRasioKPI += `
+          <td ${j === 0 ? `rowspan=${kpiTerkait.length}` : ''} style="padding: 0.25rem; vertical-align: top; border-bottom: solid 0.25px black; padding-bottom: 1rem">${i+1}</td>
+          <td ${j === 0 ? `rowspan=${kpiTerkait.length}` : ''} style="padding: 0.25rem; vertical-align: top; border-bottom: solid 0.25px black; padding-bottom: 1rem">${indicators[i].name}</td>
+        `
+      }
+      tableKeterkaitanRasioKPI += `
+          <td style="padding: 0.25rem; vertical-align: top; ${j === kpiTerkait.length-1 ? 'border-bottom: solid 0.25px black; padding-bottom: 1rem' : ''}">${kpiTerkait[j].name}</td>
+          <td style="padding: 0.25rem; vertical-align: top; ${j === kpiTerkait.length-1 ? 'border-bottom: solid 0.25px black; padding-bottom: 1rem' : ''}">${formatKpi(kpiTerkait[j].value, kpiTerkait[j].kind)}</td>
+          <td style="padding: 0.25rem; vertical-align: top; ${j === kpiTerkait.length-1 ? 'border-bottom: solid 0.25px black; padding-bottom: 1rem' : ''}">${formatKpi(kpiTerkait[j].target, kpiTerkait[j].kind)}</td>
+      `
+    }
+    tableKeterkaitanRasioKPI += `</tr>`
+  }
+  tableProduktivitasDivisi += `<tr><td colspan="2" style="padding: 0.25rem"></td><tr>`
+  tableKeterkaitanRasioKPI += `</tbody></table>`
+
   await downloadPdfFromTemplate(
     [
       {
@@ -147,55 +224,55 @@ export async function downloadPdfLaporanPerusahaan(tahun: number): Promise<void>
           ['data.keuangan.bunga']: currency(l.total_bunga_pinjaman),
           ['data.keuangan.pajak']: currency(l.total_pajak),
           ['data.keuangan.laba']: currency(l.total_laba),
-          ['data.jumlah_tenaga_kerja']: `${l.jumlah_tenaga_kerja}`,
-          ['data.jumlah_jam_kerja']: `${l.jumlah_jam_kerja}`,
-          ['data.jumlah_jam_lembur']: `${l.jumlah_jam_lembur}`,
+          ['data.jumlah_tenaga_kerja']: formatNumber(l.jumlah_tenaga_kerja),
+          ['data.jumlah_jam_kerja']: formatNumber(l.jumlah_jam_kerja),
+          ['data.jumlah_jam_lembur']: formatNumber(l.jumlah_jam_lembur),
           ['data.reserve_ratio']: '2.05', // TODO:
-          ['data.nilai_tambah']: (l.nilai_tambah / 1_000_000).toFixed(2),
-          ['data.ptk']: (l.produktivitas_tenaga_kerja_1 / 1_000_000).toFixed(2),
+          ['data.nilai_tambah']: currency(l.nilai_tambah),
+          ['data.ptk']: currency(l.produktivitas_tenaga_kerja_1),
           ['data.ptk_growth']: prev 
-            ? ((l.produktivitas_tenaga_kerja_1 - prev.produktivitas_tenaga_kerja_1) / prev.produktivitas_tenaga_kerja_1 * 100).toFixed(2) 
+            ? formatNumber((l.produktivitas_tenaga_kerja_1 - prev.produktivitas_tenaga_kerja_1) / prev.produktivitas_tenaga_kerja_1 * 100, 2)
             : '-',
-          ['data.pjk']: l.produktivitas_tenaga_kerja_3.toFixed(2),
-          ['data.pu']: l.produktivitas_tenaga_kerja_4.toFixed(2),
+          ['data.pjk']: formatNumber(l.produktivitas_tenaga_kerja_3),
+          ['data.pu']: formatNumber(l.produktivitas_tenaga_kerja_4),
           ['data.growth.ptk_1']: prev
-            ? ((l.produktivitas_tenaga_kerja_1 - prev.produktivitas_tenaga_kerja_1) / prev.produktivitas_tenaga_kerja_1 * 100).toFixed(2) 
+            ? formatNumber((l.produktivitas_tenaga_kerja_1 - prev.produktivitas_tenaga_kerja_1) / prev.produktivitas_tenaga_kerja_1 * 100, 2) 
             : '-'
           ,
           ['data.growth.ptk_2']: prev
-            ? ((l.produktivitas_tenaga_kerja_2 - prev.produktivitas_tenaga_kerja_2) / prev.produktivitas_tenaga_kerja_2 * 100).toFixed(2) 
+            ? formatNumber((l.produktivitas_tenaga_kerja_2 - prev.produktivitas_tenaga_kerja_2) / prev.produktivitas_tenaga_kerja_2 * 100, 2)
             : '-'
           ,
           ['data.growth.ptk_3']: prev
-            ? ((l.produktivitas_tenaga_kerja_3 - prev.produktivitas_tenaga_kerja_3) / prev.produktivitas_tenaga_kerja_3 * 100).toFixed(2) 
+            ? formatNumber((l.produktivitas_tenaga_kerja_3 - prev.produktivitas_tenaga_kerja_3) / prev.produktivitas_tenaga_kerja_3 * 100, 2) 
             : '-'
           ,
           ['data.growth.ptk_4']: prev
-            ? ((l.produktivitas_tenaga_kerja_4 - prev.produktivitas_tenaga_kerja_4) / prev.produktivitas_tenaga_kerja_4 * 100).toFixed(2) 
+            ? formatNumber((l.produktivitas_tenaga_kerja_4 - prev.produktivitas_tenaga_kerja_4) / prev.produktivitas_tenaga_kerja_4 * 100, 2)
             : '-'
           ,
           ['data.growth.pm_1']: prev
-            ? ((l.produktivitas_modal_1 - prev.produktivitas_modal_1) / prev.produktivitas_modal_1 * 100).toFixed(2) 
+            ? formatNumber((l.produktivitas_modal_1 - prev.produktivitas_modal_1) / prev.produktivitas_modal_1 * 100, 2) 
             : '-'
           ,
           ['data.growth.pm_2']: prev
-            ? ((l.produktivitas_modal_2 - prev.produktivitas_modal_2) / prev.produktivitas_modal_2 * 100).toFixed(2) 
+            ? formatNumber((l.produktivitas_modal_2 - prev.produktivitas_modal_2) / prev.produktivitas_modal_2 * 100, 2) 
             : '-'
           ,
           ['data.growth.pm_3']: prev
-            ? ((l.produktivitas_modal_3 - prev.produktivitas_modal_3) / prev.produktivitas_modal_3 * 100).toFixed(2) 
+            ? formatNumber((l.produktivitas_modal_3 - prev.produktivitas_modal_3) / prev.produktivitas_modal_3 * 100, 2) 
             : '-'
           ,
           ['data.growth.pr_1']: prev
-            ? ((l.profitabilitas_1 - prev.profitabilitas_1) / prev.profitabilitas_1 * 100).toFixed(2) 
+            ? formatNumber((l.profitabilitas_1 - prev.profitabilitas_1) / prev.profitabilitas_1 * 100, 2) 
             : '-'
           ,
           ['data.growth.pr_2']: prev
-            ? ((l.profitabilitas_2 - prev.profitabilitas_2) / prev.profitabilitas_2 * 100).toFixed(2) 
+            ? formatNumber((l.profitabilitas_2 - prev.profitabilitas_2) / prev.profitabilitas_2 * 100, 2) 
             : '-'
           ,
           ['data.growth.pr_3']: prev
-            ? ((l.profitabilitas_3 - prev.profitabilitas_3) / prev.profitabilitas_3 * 100).toFixed(2) 
+            ? formatNumber((l.profitabilitas_3 - prev.profitabilitas_3) / prev.profitabilitas_3 * 100, 2) 
             : '-'
           ,
         }
@@ -204,19 +281,26 @@ export async function downloadPdfLaporanPerusahaan(tahun: number): Promise<void>
         templatePath: '/templates/laporan-perusahaan-2.html',
         params: {
           ['data.growth.rp_1']: prev
-            ? ((l.rasio_pendukung_1 - prev.rasio_pendukung_1) / prev.rasio_pendukung_1 * 100).toFixed(2) 
+            ? formatNumber((l.rasio_pendukung_1 - prev.rasio_pendukung_1) / prev.rasio_pendukung_1 * 100, 2) 
             : '-'
           ,
           ['data.growth.rp_2']: prev
-            ? ((l.rasio_pendukung_2 - prev.rasio_pendukung_2) / prev.rasio_pendukung_2 * 100).toFixed(2) 
+            ? formatNumber((l.rasio_pendukung_2 - prev.rasio_pendukung_2) / prev.rasio_pendukung_2 * 100, 2) 
             : '-'
           ,
           ['data.growth.rp_3']: prev
-            ? ((l.rasio_pendukung_3 - prev.rasio_pendukung_3) / prev.rasio_pendukung_3 * 100).toFixed(2) 
+            ? formatNumber((l.rasio_pendukung_3 - prev.rasio_pendukung_3) / prev.rasio_pendukung_3 * 100, 2) 
             : '-'
           ,
-          ['data.avg_kpi']: _avgKpi ? _avgKpi.toFixed(2) : '-',
-          ['data.growth_nt']: prev ? ((l.nilai_tambah - prev.nilai_tambah) / prev.nilai_tambah * 100).toFixed(2) + '%' : '-',
+          ['data.avg_kpi']: _avgKpi ? formatNumber(_avgKpi, 2) : '-',
+          ['data.growth_nt']: prev ? formatNumber((l.nilai_tambah - prev.nilai_tambah) / prev.nilai_tambah * 100, 2) + '%' : '-',
+          ['table.pr_divisi']: tableProduktivitasDivisi,
+        }
+      },
+      {
+        templatePath: '/templates/laporan-perusahaan-3.html',
+        params: {
+          ['table.rasio_kpi']: tableKeterkaitanRasioKPI,
         }
       }
     ],

@@ -15,6 +15,12 @@ export function currency(n: number): string {
   return currencyFormat.format(n);
 }
 
-export function formatNumber(n: number): string {
-  return defaultNumberFormat.format(n);
+export function formatNumber(n: number, digits?: number): string {
+  const f = new Intl.NumberFormat(
+    'id-ID',
+    {
+      maximumFractionDigits: digits,
+    },
+  )
+  return f.format(n);
 }

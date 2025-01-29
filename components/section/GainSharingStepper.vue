@@ -1,10 +1,9 @@
 <script setup lang="ts">
 import { groupArray } from '~/assets/helpers/array';
+import { GAIN_SHARING_KARYAWAN_MULTIPLIER } from '~/assets/helpers/const';
 import { currency } from '~/assets/helpers/number';
 import { mockKpiKaryawan } from '~/assets/mock/gain-sharing';
 import { mockLaporanAnalisis } from '~/assets/mock/laporan';
-
-const MULTIPLIER: number = 0.05;
 
 // const props = defineProps<{
 //   initialData: GainSharingData,
@@ -50,7 +49,7 @@ const steps: Array<string> = [
 ];
 
 function calculateDivisionGainSharing(d: typeof divisionPercentages.value[number]): number {
-  return (gainSharingTotal.value ?? 0) * (d.value / 100) * MULTIPLIER;
+  return (gainSharingTotal.value ?? 0) * (d.value / 100) * GAIN_SHARING_KARYAWAN_MULTIPLIER;
 }
 
 function calculateEmployeeGainSharing(emp: typeof mockKpiKaryawan[number]): number {

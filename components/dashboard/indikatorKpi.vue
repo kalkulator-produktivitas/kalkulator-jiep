@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { mockIndicators, mockKpiPerusahaan } from '~/assets/mock/kpi';
-import type { KPIPerusahaan } from '~/assets/types/kpi';
-import { currency, formatNumber } from '~/assets/helpers/number';
+import { formatNumber } from '~/assets/helpers/number';
+import { formatKpi } from '~/assets/helpers/strings';
 
 const SEVERE_VALUE = 0.5;
 
@@ -36,19 +36,6 @@ function isIndicatorSevere(i: IndicatorType): boolean {
     return true;
   }
   return false;
-}
-
-function formatKpi(value: number, kind: KPIPerusahaan['kind']): string {
-  switch (kind) {
-    case 'percentage':
-      return `${value}%`
-    case 'currency':
-      return currency(value)
-    case 'day':
-      return `${value} hari`
-    default:
-      return `${value}`
-  }
 }
 
 watch(

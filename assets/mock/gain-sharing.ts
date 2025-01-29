@@ -1,4 +1,5 @@
-import { namaKaryawan } from "../helpers/const";
+import { GAIN_SHARING_KARYAWAN_MULTIPLIER, namaKaryawan } from "../helpers/const";
+import { mockLaporanAnalisis } from "./laporan";
 
 const RAW_MOCK_KPI_KARYAWAN = [
   {
@@ -3534,3 +3535,104 @@ const RAW_MOCK_KPI_KARYAWAN = [
 export const mockKpiKaryawan = 
   RAW_MOCK_KPI_KARYAWAN
     .map((v, i) => ({ ...v, nama: namaKaryawan(v.nama, i) }));
+
+export const mockDivisi = mockKpiKaryawan
+  .reduce(
+    (prev, curr) => prev.includes(curr.divisi) ? prev : [ ...prev, curr.divisi ],
+    [] as string[],
+  )
+  .toSorted((a, b) => a.localeCompare(b))
+
+export function calculateDivisionKPI(
+  data: typeof mockKpiKaryawan, 
+  tahun: number,
+): { [key: string]: number } {
+  let total: number = 0;
+  const totalDivisi: { [key: string]: number } = {};
+
+  for (let v of data) {
+    const d = v.kpi.find(w => w.tahun === tahun);
+    if (!d) {
+      continue
+    }
+    if (!totalDivisi[v.divisi]) {
+      totalDivisi[v.divisi] = 0;
+    };
+    totalDivisi[v.divisi] += d.value;
+    total += d.value;
+  }
+
+  const r: { [key: string]: number } = {};
+  for (let k in totalDivisi) {
+    r[k] = totalDivisi[k] / total;
+  }
+
+  return r;
+}
+
+export const mockRasioKPIDivisi: { 
+  tahun: number,  
+  data: { [key: string]: number }
+}[] 
+  = mockKpiKaryawan[0] 
+  ? mockKpiKaryawan[0].kpi
+      .map(v => v.tahun)
+      .map(t => ({
+        tahun: t,
+        data: calculateDivisionKPI(mockKpiKaryawan, t)
+      }))
+  : [];
+
+export const mockGainSharing = mockRasioKPIDivisi
+  .map(v => {
+    const analisis = mockLaporanAnalisis.analisis.find(w => w.tahun == v.tahun);
+    const nilai_tambah = analisis?.nilai_tambah ?? 0;
+    const total_biaya_tenaga_kerja = analisis?.total_biaya_tenaga_kerja ?? 0;
+    const rasio_nilai_tambah = v.tahun === 2021 ? 1.98 : v.tahun === 2022 ? 2.01 : 2.04;
+    const reserve_ratio = v.tahun === 2021 ? 26 : v.tahun === 2022 ? 24.5 : 25;
+    const gain_sharing_perusahaan = ((analisis?.nilai_tambah ?? 0) / rasio_nilai_tambah - (analisis?.total_biaya_tenaga_kerja ?? 0)) * (1 - (reserve_ratio / 100))
+    const divisi = Object.entries(v.data)
+      .map(([namaDivisi, rasioDivisi]) => {
+        const gain_sharing_divisi = rasioDivisi * gain_sharing_perusahaan;
+        let total_kpi_divisi = 0;
+        const karyawanDivisi = mockKpiKaryawan
+          .filter(w => w.divisi === namaDivisi)
+          .map(w => {
+            const kpi_tahun = w.kpi.find(x => x.tahun === v.tahun)?.value ?? 0;
+            total_kpi_divisi += kpi_tahun;
+            return { ...w, kpi_tahun }
+          })
+        const kpiKaryawanDivisi = karyawanDivisi
+          .map(w => ({ 
+            nama: w.nama, 
+            kpi: w.kpi_tahun, 
+            gain_sharing: w.kpi_tahun / total_kpi_divisi * gain_sharing_divisi * GAIN_SHARING_KARYAWAN_MULTIPLIER,
+          }));
+        return {
+          nama: namaDivisi,
+          rasio: rasioDivisi,
+          nilai: gain_sharing_divisi,
+          karyawan: kpiKaryawanDivisi,
+        }
+      })
+    return {
+      tahun: v.tahun,
+      nilai_tambah,
+      total_biaya_tenaga_kerja,
+      rasio_nilai_tambah,
+      reserve_ratio,
+      gain_sharing_perusahaan,
+      divisi,
+    }
+  });
+
+export const mockGainSharingKaryawan = mockGainSharing
+  .map(v => {
+    const karyawan: { nama: string, kpi: number, gain_sharing: number }[] = [];
+    v.divisi.forEach(w => w.karyawan.forEach(x => karyawan.push({ nama: x.nama, kpi: x.kpi, gain_sharing: x.gain_sharing })));
+    return {
+      tahun: v.tahun,
+      karyawan,
+    }
+  })
+  

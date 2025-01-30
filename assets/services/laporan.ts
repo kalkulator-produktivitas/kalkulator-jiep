@@ -3,7 +3,7 @@ import jsPDF from "jspdf";
 import moment from "moment";
 import { currency, formatNumber } from "../helpers/number";
 import { mockLaporanAnalisis } from "../mock/laporan";
-import { mockKpiKaryawan, mockRasioKPIDivisi } from "../mock/gain-sharing";
+import { mockGainSharing, mockKpiKaryawan, mockRasioKPIDivisi } from "../mock/gain-sharing";
 import { mockIndicators, mockKpiPerusahaan } from "../mock/kpi";
 import { formatKpi } from "../helpers/strings";
 
@@ -227,7 +227,7 @@ export async function downloadPdfLaporanPerusahaan(tahun: number): Promise<void>
           ['data.jumlah_tenaga_kerja']: formatNumber(l.jumlah_tenaga_kerja),
           ['data.jumlah_jam_kerja']: formatNumber(l.jumlah_jam_kerja),
           ['data.jumlah_jam_lembur']: formatNumber(l.jumlah_jam_lembur),
-          ['data.reserve_ratio']: '2.05', // TODO:
+          ['data.reserve_ratio']:  mockGainSharing.find(v => v.tahun === tahun) ? formatNumber(mockGainSharing.find(v => v.tahun === tahun)?.reserve_ratio ?? 0) : '-',
           ['data.nilai_tambah']: currency(l.nilai_tambah),
           ['data.ptk']: currency(l.produktivitas_tenaga_kerja_1),
           ['data.ptk_growth']: prev 

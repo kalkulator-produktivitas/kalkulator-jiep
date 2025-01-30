@@ -3,8 +3,8 @@ const currencyFormat = new Intl.NumberFormat(
   {
     style: 'currency',
     currency: 'IDR',
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0,
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
   },
 );
 const defaultNumberFormat = new Intl.NumberFormat(
@@ -12,7 +12,7 @@ const defaultNumberFormat = new Intl.NumberFormat(
 )
 
 export function currency(n: number): string {
-  return currencyFormat.format(n);
+  return currencyFormat.format(Math.round(n));
 }
 
 export function formatNumber(n: number, digits?: number): string {

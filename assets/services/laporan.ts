@@ -151,7 +151,7 @@ export async function downloadPdfLaporanPerusahaan(tahun: number): Promise<void>
       <tbody style="padding: 2rem">
   `
   for (let d of produktivitasDivisi) {
-    tableProduktivitasDivisi += `<tr><td style="padding: 0.25rem">${d.divisi}</td>`
+    tableProduktivitasDivisi += `<tr><td style="padding: 0.25rem">${d.divisi}${(d.divisi.startsWith('Kepala') || d.divisi.startsWith('Direktur')) ? '&#42;' : ''}</td>`
     tableProduktivitasDivisi += `<td style="padding: 0.25rem">${currency(d.nilai)}</td>`
     tableProduktivitasDivisi += `</tr>`
   }

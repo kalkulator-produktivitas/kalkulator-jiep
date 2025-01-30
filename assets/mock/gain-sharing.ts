@@ -3636,3 +3636,4 @@ export const mockGainSharingKaryawan = mockGainSharing
     }
   })
   
+console.log(JSON.stringify(mockGainSharing, undefined, '\t'))

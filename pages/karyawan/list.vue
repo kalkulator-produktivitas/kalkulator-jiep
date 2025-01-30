@@ -2,7 +2,7 @@
 import { downloadPdfLaporanIndividu } from '~/assets/services/laporan';
 import { dummyKaryawan } from '~/assets/mock/kpi';
 import { mockLaporanAnalisis } from '~/assets/mock/laporan';
-import { mockGainSharing, mockGainSharingKaryawan } from '~/assets/mock/gain-sharing';
+import { mockGainSharing, mockGainSharingKaryawan, mockRasioKPIDivisi } from '~/assets/mock/gain-sharing';
 
 const search = ref('');
 const page = ref(1);
@@ -50,12 +50,7 @@ async function downloadLaporanIndividu(karyawan: typeof dummyKaryawan['list'][nu
     },
     data: {
       ptk_perusahaan: analisis?.produktivitas_tenaga_kerja_1 || null,
-      ptk_divisi: mockGainSharing
-        .find(v => v.tahun === tahun)
-        ?.divisi.find(v => v.nama === karyawan['Divisi'])
-        ?.nilai
-        ?? null
-      ,
+      ptk_divisi: (mockRasioKPIDivisi.find(v => v.tahun === tahun)?.data[karyawan.Divisi] ?? 0) * (analisis?.produktivitas_tenaga_kerja_1 ?? 0),
       ptk_growth: (analisis && analisisPrev) ? ((analisis.produktivitas_tenaga_kerja_1 - analisisPrev.produktivitas_tenaga_kerja_1) / analisis.produktivitas_tenaga_kerja_1 * 100) : null,
       kpi: (karyawan as any)[`${tahun}`] ? Number((karyawan as any)[`${tahun}`]) : null,
       gain_sharing: mockGainSharingKaryawan
